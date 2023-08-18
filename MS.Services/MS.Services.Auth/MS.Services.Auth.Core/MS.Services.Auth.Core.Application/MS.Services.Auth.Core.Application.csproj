@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\MS.Core\MS.Core.Application\MS.Core.Application.csproj" />
+    <PackageReference Include="LcsEverton.MS.Libs.Core.Application" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

@@ -8,10 +8,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>MS.Libs.Core.Application</Title>
     <PackageId>LcsEverton.MS.Libs.Core.Application</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.3</Version>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
-    <PackageLicenseExpression>AFL-3.0</PackageLicenseExpression>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
