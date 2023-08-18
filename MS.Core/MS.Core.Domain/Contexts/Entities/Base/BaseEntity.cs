@@ -1,4 +1,4 @@
-﻿namespace MS.Core.Domain.Entities.Base;
+﻿namespace MS.Core.Domain.Contexts.Entities.Base;
 
 public class BaseEntity : IEntity
 {

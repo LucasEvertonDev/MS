@@ -1,4 +1,4 @@
-namespace MS.Services.Auth
+namespace MS.Services.Auth.WebAPI
 {
     public class WeatherForecast
     {
@@ -8,6 +8,6 @@ namespace MS.Services.Auth
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-        public string? Summary { get; set; }
+        public string Summary { get; set; }
     }
 }

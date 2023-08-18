@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MS.Core\MS.Core.Domain\MS.Core.Domain.csproj" />
-    <ProjectReference Include="..\MS.Infra.Utils\MS.Infra.Utils.csproj" />
+    <ProjectReference Include="..\MS.Infra.IoC\MS.Infra.IoC.csproj" />
   </ItemGroup>
 
 </Project>

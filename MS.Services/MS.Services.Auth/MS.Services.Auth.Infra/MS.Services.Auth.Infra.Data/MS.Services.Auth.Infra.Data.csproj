@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\MS.Infra\MS.Infra.Data\MS.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
