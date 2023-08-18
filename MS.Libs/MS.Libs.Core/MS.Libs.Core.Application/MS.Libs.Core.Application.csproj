@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>MS.Libs.Core.Application</Title>
+    <PackageId>LcsEverton.MS.Libs.Core.Application</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Lucas Everton Santos de Oliveira</Authors>
+    <PackageLicenseExpression>AFL-3.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MS.Libs.Infra\MS.Libs.Infra.Utils\MS.Libs.Infra.Utils.csproj" />
+    <ProjectReference Include="..\MS.Libs.Core.Domain\MS.Libs.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

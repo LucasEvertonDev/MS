@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>MS.Libs.Infra.Utils</Title>
+    <PackageId>LcsEverton.MS.Libs.Infra.Utils</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Lucas Everton Santos de Oliveira</Authors>
+  </PropertyGroup>
+</Project>

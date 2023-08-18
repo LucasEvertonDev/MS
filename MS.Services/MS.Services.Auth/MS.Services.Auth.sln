@@ -3,11 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MS.Services.Auth.WebAPI", "MS.Services.Auth.WebAPI\MS.Services.Auth.WebAPI.csproj", "{B4CCC4B8-EB31-4032-84D5-DED89C705D98}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4CCC4B8-EB31-4032-84D5-DED89C705D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CCC4B8-EB31-4032-84D5-DED89C705D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4CCC4B8-EB31-4032-84D5-DED89C705D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4CCC4B8-EB31-4032-84D5-DED89C705D98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3187E2D6-877B-42BA-B8ED-40BF559E2D89}
+		SolutionGuid = {0EBAEAD4-E6F9-4487-8849-176381320FA8}
 	EndGlobalSection
 EndGlobal

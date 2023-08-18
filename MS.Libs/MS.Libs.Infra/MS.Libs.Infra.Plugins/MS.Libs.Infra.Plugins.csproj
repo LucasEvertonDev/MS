@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>MS.Libs.Infra.Plugins</Title>
+    <PackageId>LcsEverton.MS.Libs.Infra.Plugins</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Lucas Everton Santos de Oliveira</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MS.Libs.Core\MS.Libs.Core.Domain\MS.Libs.Core.Domain.csproj" />
+    <ProjectReference Include="..\MS.Libs.Infra.Utils\MS.Libs.Infra.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
