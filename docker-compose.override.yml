@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    container_name : catalogdb
+    restart : always
+    ports:
+      - "27017:27017" 
+    volumes:
+      - C:/Temp/Data/:/data/db
+    networks:
+      - bancoMongo
+
+  ms.services.auth.webapi:
+    container_name : msservicesauthwebapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb"
+    depends_on:
+      - catalogdb
+    ports:
+      - "4000:80"
+    networks:
+      - bancoMongo

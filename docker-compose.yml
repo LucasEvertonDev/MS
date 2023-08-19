@@ -1,0 +1,15 @@
+version: '3.4'
+
+networks:
+    bancoMongo:
+
+services:
+  catalogdb:
+    image : mongo
+
+  ms.services.auth.webapi:
+    image: ${DOCKER_REGISTRY-}msservicesauthwebapi
+    build:
+      context: .
+      dockerfile: MS.Services/MS.Services.Auth/MS.Services.Auth.WebAPI/Dockerfile
+

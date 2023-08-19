@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  ms.services.auth.webapi:
+    image: ${DOCKER_REGISTRY-}msservicesauthwebapi
+    build:
+      context: .
+      dockerfile: MS.Services.Auth.WebAPI/Dockerfile
