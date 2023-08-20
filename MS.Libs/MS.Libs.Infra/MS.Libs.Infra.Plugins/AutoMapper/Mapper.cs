@@ -2,7 +2,7 @@
 using AutoMapper;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 
-namespace ControlServices.Infra.Plugins.AutoMapper;
+namespace MS.Libs.Infra.Plugins.AutoMapper;
 
 public class Mapper : IMapperPlugin
 {
@@ -10,7 +10,7 @@ public class Mapper : IMapperPlugin
 
     public Mapper(IMapper mapper)
     {
-        this._mapper = mapper;
+        _mapper = mapper;
     }
 
     public TDestination Map<TDestination>(object source) where TDestination : class

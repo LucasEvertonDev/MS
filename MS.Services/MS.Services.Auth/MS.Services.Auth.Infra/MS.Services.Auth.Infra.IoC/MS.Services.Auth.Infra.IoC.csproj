@@ -10,5 +10,11 @@
     <PackageReference Include="LcsEverton.MS.Libs.Infra.IoC" Version="1.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\MS.Services.Auth.Core\MS.Services.Auth.Core.Application\MS.Services.Auth.Core.Application.csproj" />
+    <ProjectReference Include="..\..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
+    <ProjectReference Include="..\MS.Services.Auth.Infra.Data\MS.Services.Auth.Infra.Data.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace MS.Libs.Infra.Data.Context.Repositorys;
 
-public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository<TEntity>, IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntity
+public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository<TEntity>, IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntityBasic
 {
     protected BaseDbContext _applicationDbContext;
 

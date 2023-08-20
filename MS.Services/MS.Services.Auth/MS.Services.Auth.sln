@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MS.Services.Auth.Infra.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MS.Services.Auth.Infra.IoC", "MS.Services.Auth.Infra\MS.Services.Auth.Infra.IoC\MS.Services.Auth.Infra.IoC.csproj", "{62588FED-4F8D-4E88-9C99-4C2C74D62078}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C6DD8DF8-DFE3-46AF-BF19-67CD8B65DC4E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MS.Services.Auth.Docker", "MS.Services.Auth.Docker", "{FDF8F7DB-39CC-4819-8E77-73B64A3A85E0}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "MS.Services.Auth.Docker\docker-compose.dcproj", "{C6DD8DF8-DFE3-46AF-BF19-67CD8B65DC4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,7 @@ Global
 		{D207B320-0A4F-4F3D-9F95-C5E517562E7A} = {A2E83313-9FDA-4328-B6FB-F069D9CC43D6}
 		{4AB0802F-EAD4-47DE-8BF3-874BAF9B435F} = {7899F5F0-8AA5-4FFC-88C7-0C26A6F3E410}
 		{62588FED-4F8D-4E88-9C99-4C2C74D62078} = {7899F5F0-8AA5-4FFC-88C7-0C26A6F3E410}
+		{C6DD8DF8-DFE3-46AF-BF19-67CD8B65DC4E} = {FDF8F7DB-39CC-4819-8E77-73B64A3A85E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0EBAEAD4-E6F9-4487-8849-176381320FA8}

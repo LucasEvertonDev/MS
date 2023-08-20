@@ -13,7 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="1.0.3" />
+    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DbContexts\Repositorys\" />
   </ItemGroup>
 
 </Project>

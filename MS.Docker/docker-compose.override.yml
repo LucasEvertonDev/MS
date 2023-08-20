@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  sqlserver:
+    container_name : sqlserver
+    restart : always
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "Numsey#2021"
+    volumes:
+      - c:\dados\volumes\mssql:/var/opt/mssql3
+    ports:
+      - '11433:1433'
+    # expose:
+    #   - 1450
+
+  ms.services.auth.webapi:
+    container_name : msservicesauthwebapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021"
+    depends_on:
+      - sqlserver
+    ports:
+      - "4000:80"
+    networks:
+      - sql_server_network
+      - backend
