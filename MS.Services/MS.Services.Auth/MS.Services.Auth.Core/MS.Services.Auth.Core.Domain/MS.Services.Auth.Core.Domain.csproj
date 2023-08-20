@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="DbContexts\Repositorys\" />
+    <Folder Include="IMapper\" />
   </ItemGroup>
 
 </Project>

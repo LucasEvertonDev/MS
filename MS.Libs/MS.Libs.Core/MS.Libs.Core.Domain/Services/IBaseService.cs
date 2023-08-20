@@ -4,7 +4,7 @@ public interface IBaseService<TParam, TResult>
 {
     public Task<TResult> ExecuteAsync(TParam param);
 
-    protected Task ValidateAsync(TParam clientsModel);
+    protected Task ValidateAsync(TParam param);
 }
 
 public interface IBaseService<TResult>

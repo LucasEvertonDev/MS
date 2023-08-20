@@ -1,16 +1,15 @@
 ﻿using MS.Libs.Core.Domain.DbContexts.Entities.Base;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 using MS.Libs.Infra.Utils.Exceptions;
-using MS.Libs.Infra.Utils.Extensions;
 
-namespace MS.Libs.Core.Application.Services;
+namespace MS.Services.Auth.Core.Application.Base;
 public class BaseService
 {
     private readonly IUnitOfWork _unitOfWork;
 
     public BaseService(IServiceProvider serviceProvider)
     {
-        _unitOfWork = serviceProvider.GetService<IUnitOfWork>();
+        _unitOfWork =  serviceProvider.GetService<IUnitOfWork>(); 
     }
 
     public async Task OnTransactionAsync(Func<Task> func)
@@ -42,19 +41,11 @@ public class BaseService
         }
     }
 
-    protected void ValidateAddEntity(BaseEntityBasic entityBasic)
+    protected void ValidatePersistedEntity(BaseEntityBasic entityBasic)
     {
         if (entityBasic == null || string.IsNullOrEmpty(entityBasic.Id.ToString()))
         {
             throw new BusinessException("Algo não ocorreu bem ao persistir a entidade");
-        }
-    }
-
-    protected void ValidateSearchEntityId(BaseEntityBasic entityBasic)
-    {
-        if (entityBasic == null || string.IsNullOrEmpty(entityBasic.Id.ToString()))
-        {
-            throw new BusinessException("Não existe nenhuma entidade para o ide informado.");
         }
     }
 }

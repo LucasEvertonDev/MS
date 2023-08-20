@@ -6,7 +6,6 @@ using MS.Services.Auth.Infra.Data.Context;
 
 namespace MS.Services.Auth.WebAPI.Controllers
 {
-    [Route("api/v2/[Controller]")]
     public class AuthController : BaseController
     {
         public AuthController(AuthDbContext authDbContext)

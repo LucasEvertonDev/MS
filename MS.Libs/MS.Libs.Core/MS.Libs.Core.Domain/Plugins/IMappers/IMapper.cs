@@ -2,4 +2,5 @@
 
 public interface IMapperPlugin
 {
+    TDestination Map<TDestination>(object source) where TDestination : class;
 }
