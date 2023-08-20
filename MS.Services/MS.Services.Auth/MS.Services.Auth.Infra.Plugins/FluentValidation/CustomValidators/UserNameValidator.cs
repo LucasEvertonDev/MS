@@ -18,9 +18,9 @@ internal class UserNameValidator : AbstractValidator<string>
                     contexto.AddFailure(new ValidationFailure(nameof(UserModel.Username),"Login inválido"));
                 }
 
-                if (username.Length < 10)
+                if (username.Length > 20)
                 {
-                    contexto.AddFailure(new ValidationFailure(nameof(UserModel.Username), "Login deve ter x caracteres"));
+                    contexto.AddFailure(new ValidationFailure(nameof(UserModel.Username), "Login deve ter no máximo 20 caracteres"));
                 }
             });
         });

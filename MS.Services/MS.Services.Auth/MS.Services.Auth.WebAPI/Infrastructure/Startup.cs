@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
@@ -7,9 +9,9 @@ using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Services.Auth.Infra.IoC;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
+using System.Text;
 
 namespace MS.Services.Auth.WebAPI.Infrastructure;
-
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -24,7 +26,7 @@ public class Startup
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            options.Filters.Add(typeof(ExceptionFilter));
+            //options.Filters.Add(typeof(ExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseDTO<ErrorsModel>), 500));
         });
 
@@ -35,7 +37,25 @@ public class Startup
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
 
-        /// Register dependencys application
+        var key = Encoding.ASCII.GetBytes("15e0e0beaaac6edb63dc815b5a732481ef2ff6fc7ee412ecbdd43d989f121069");
+        services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(x =>
+        {
+            x.RequireHttpsMetadata = false;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+
+        // Register dependencys application
         App.Init<DependencyInjection>()
             .AddInfraSctructure(services, Configuration);
 
@@ -73,7 +93,6 @@ public class Startup
 
         services.AddSwaggerExamples();
     }
-}
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
@@ -91,10 +110,8 @@ public class Startup
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-
         app.UseSwagger();
         app.UseSwaggerUI();
-
 
         app.UseAuthentication();
 

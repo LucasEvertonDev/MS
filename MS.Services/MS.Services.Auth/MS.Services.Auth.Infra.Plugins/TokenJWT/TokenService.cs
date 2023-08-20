@@ -13,7 +13,7 @@ public class TokenService : ITokenService
     public Task<string> GenerateToken(User user, List<Role> roles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("DEFINIR CHAVE");
+        var key = Encoding.ASCII.GetBytes("15e0e0beaaac6edb63dc815b5a732481ef2ff6fc7ee412ecbdd43d989f121069");
 
         user.Password = "";
         user.PasswordHash = "";
