@@ -18,6 +18,7 @@ using MS.Services.Auth.Core.Domain.Plugins.JWT;
 using MS.Services.Auth.Infra.Data.Contexts;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys.Base;
 using MS.Services.Auth.Infra.IoC.Extensions;
+using MS.Services.Auth.Infra.Plugins.AutoMapper.Profiles;
 using MS.Services.Auth.Infra.Plugins.FluentValidation.User;
 using MS.Services.Auth.Infra.Plugins.Hasher;
 using MS.Services.Auth.Infra.Plugins.TokenJWT;
@@ -46,6 +47,11 @@ public class DependencyInjection : BaseDependencyInjection
     protected override void AddMappers(IServiceCollection services, IConfiguration configuration) 
     {
         services.AddScoped<IMapperPlugin, Mapper>();
+
+        services.AddScoped(provider => new AutoMapper.MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile(new AutoMapperProfile());
+        }).CreateMapper());
     }
 
     protected override void AddRepositorys(IServiceCollection services, IConfiguration configuration) 

@@ -7,9 +7,3 @@ public interface IBaseService<TParam, TResult>
     protected Task ValidateAsync(TParam param);
 }
 
-public interface IBaseService<TResult>
-{
-    public Task<TResult> ExecuteAsync();
-
-    protected Task ValidateAsync();
-}

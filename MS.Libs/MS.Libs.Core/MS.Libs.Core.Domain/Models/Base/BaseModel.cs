@@ -9,6 +9,5 @@ public class BaseModel : IModel
 
     }
 
-    [JsonIgnore]
     public virtual string Id { get; set; }
 }

@@ -1,8 +1,12 @@
-﻿using MS.Libs.Core.Domain.Models.Error;
+﻿using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.OpenApi.Models;
+using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.HttpContainers;
 using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Services.Auth.Infra.IoC;
+using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
 
 namespace MS.Services.Auth.WebAPI.Infrastructure;
 
@@ -21,8 +25,6 @@ public class Startup
         services.AddMvc(options =>
         {
             options.Filters.Add(typeof(ExceptionFilter));
-            ////options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseDTO<ErrorsModel>), 400));
-            ////options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseDTO<ErrorsModel>), 401));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseDTO<ErrorsModel>), 500));
         });
 
@@ -33,12 +35,45 @@ public class Startup
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
 
-        services.AddSwaggerGen();
-
         /// Register dependencys application
         App.Init<DependencyInjection>()
             .AddInfraSctructure(services, Configuration);
+
+        services.AddSwaggerGen(c =>
+        {
+            c.ExampleFilters();
+
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "CpontrolServices.API", Version = "v1" });
+
+
+            c.OrderActionsBy((apiDesc) => $"{apiDesc.ActionDescriptor.RouteValues["controller"]}_{apiDesc.HttpMethod}");
+
+            c.TagActionsBy(api =>
+            {
+                if (api.GroupName != null)
+                {
+                    return new[] { api.GroupName };
+                }
+
+                var controllerActionDescriptor = api.ActionDescriptor as ControllerActionDescriptor;
+                if (controllerActionDescriptor != null)
+                {
+                    return new[] { controllerActionDescriptor.ControllerName };
+                }
+
+                throw new InvalidOperationException("Unable to determine tag for endpoint.");
+            });
+
+            c.DocInclusionPredicate((name, api) => true);
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), includeControllerXmlComments: false);
+
+        });
+
+        services.AddSwaggerExamples();
     }
+}
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
