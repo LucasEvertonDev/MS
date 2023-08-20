@@ -6,7 +6,7 @@ using System.Data;
 
 namespace MS.Services.Auth.Infra.Data.Context;
 
-public class AuthDbContext : DbContext
+public class AuthDbContext : BaseDbContext<AuthDbContext>
 {
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
        : base(options)
@@ -24,27 +24,5 @@ public class AuthDbContext : DbContext
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(AuthDbContext).Assembly);
-    }
-
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
-    {
-        foreach (EntityEntry item in from entry in ChangeTracker.Entries()
-                                     where entry.Entity.GetType().GetProperty("UpdateDate") != null
-                                     select entry)
-        {
-            if (item.State == EntityState.Modified)
-            {
-                if (item.Property("UpdateDate").CurrentValue == null)
-                {
-                    item.Property("UpdateDate").CurrentValue = DateTime.Now;
-                }
-            }
-            else if (item.State == EntityState.Added && item.Property("CreateDate").CurrentValue == null)
-            {
-                item.Property("CreateDate").CurrentValue = DateTime.Now;
-            }
-        }
-
-        return base.SaveChangesAsync(cancellationToken);
     }
 }

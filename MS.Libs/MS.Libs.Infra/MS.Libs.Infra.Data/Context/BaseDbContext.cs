@@ -3,17 +3,11 @@ using System.Data;
 
 namespace MS.Libs.Infra.Data.Context;
 
-public class BaseDbContext : DbContext
+public class BaseDbContext<TContext> : DbContext where TContext : DbContext
 {
-    public BaseDbContext(DbContextOptions<BaseDbContext> options)
+    public BaseDbContext(DbContextOptions<TContext> options)
        : base(options)
     { }
-
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-        builder.ApplyConfigurationsFromAssembly(typeof(BaseDbContext).Assembly);
-    }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MS.Libs.Infra.Data.Context.Configurations;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 
 namespace MS.Services.Auth.Infra.Data.Context.Configurations;

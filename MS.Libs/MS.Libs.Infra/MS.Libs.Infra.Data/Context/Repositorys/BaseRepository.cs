@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 
 namespace MS.Libs.Infra.Data.Context.Repositorys;
 
-public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository<TEntity>, IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntityBasic
+public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDeleteRepository<TEntity>, IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntityBasic where TContext : DbContext
 {
-    protected BaseDbContext _applicationDbContext;
+    protected TContext _applicationDbContext;
 
-    public Repository(BaseDbContext applicationDbContext)
+    public BaseRepository(TContext applicationDbContext)
     {
         _applicationDbContext = applicationDbContext;
     }
@@ -19,7 +19,7 @@ public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository
     /// </summary>
     /// <param name="domain"></param>
     /// <returns></returns>
-    public Task<TEntity> Delete(TEntity domain)
+    public virtual Task<TEntity> Delete(TEntity domain)
     {
         _applicationDbContext.Remove(domain);
         return Task.FromResult(domain);
@@ -30,7 +30,7 @@ public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<TEntity> FindById(Expression<Func<TEntity, bool>> predicate)
+    public virtual async Task<TEntity> FindById(Expression<Func<TEntity, bool>> predicate)
     {
         return await _applicationDbContext.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(predicate); ;
     }
@@ -39,7 +39,7 @@ public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository
     /// 
     /// </summary>
     /// <returns></returns>
-    public async Task<IEnumerable<TEntity>> FindAll()
+    public virtual async Task<IEnumerable<TEntity>> FindAll()
     {
         return await _applicationDbContext.Set<TEntity>().AsNoTracking().ToListAsync();
     }
@@ -50,7 +50,7 @@ public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository
     /// </summary>
     /// <param name="domain"></param>
     /// <returns></returns>
-    public Task<TEntity> CreateAsync(TEntity domain)
+    public virtual Task<TEntity> CreateAsync(TEntity domain)
     {
         _applicationDbContext.Entry(domain).State = EntityState.Added;
 
@@ -63,7 +63,7 @@ public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository
     /// </summary>
     /// <param name="domain"></param>
     /// <returns></returns>
-    public Task<TEntity> Update(TEntity domain)
+    public virtual Task<TEntity> Update(TEntity domain)
     {
         _applicationDbContext.Entry(domain).State = EntityState.Modified;
 
@@ -76,7 +76,7 @@ public class Repository<TEntity> : ICreateRepository<TEntity>, IDeleteRepository
     /// 
     /// </summary>
     /// <returns></returns>
-    public IQueryable<TEntity> Get()
+    public virtual IQueryable<TEntity> Get()
     {
         return _applicationDbContext.Set<TEntity>().AsNoTracking();
     }

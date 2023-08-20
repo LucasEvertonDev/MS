@@ -32,6 +32,8 @@ public class Startup
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
 
+        services.AddSwaggerGen();
+
         /// Register dependencys application
         Activator.CreateInstance<DependencyInjection>()
             .AddInfraSctructure(services, Configuration);
@@ -53,18 +55,10 @@ public class Startup
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-        //Swagger
-        app.UseSwagger(options =>
-        {
-            options.SerializeAsV2 = true;
-        });
 
-        //SwaggerUI
-        app.UseSwaggerUI(c =>
-        {
-            //c.DocExpansion(DocExpansion.List);
-            //c.DocExpansion(DocExpansion.None);
-        });
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
 
         app.UseAuthentication();
 
