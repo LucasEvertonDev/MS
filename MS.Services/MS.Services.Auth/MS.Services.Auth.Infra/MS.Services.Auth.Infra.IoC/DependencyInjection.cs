@@ -4,12 +4,23 @@ using Microsoft.Extensions.DependencyInjection;
 using MS.Libs.Core.Domain.DbContexts.Entities.Base;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
+using MS.Libs.Core.Domain.Plugins.IMappers;
+using MS.Libs.Core.Domain.Plugins.Validators;
+using MS.Libs.Core.Domain.Services.Crud;
 using MS.Libs.Infra.Data.Context.UnitOfWork;
 using MS.Libs.Infra.IoC;
+using MS.Libs.Infra.Plugins.AutoMapper;
+using MS.Services.Auth.Core.Application.Services.UserServices;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
-using MS.Services.Auth.Infra.Data.Context;
+using MS.Services.Auth.Core.Domain.Models.Users;
+using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
+using MS.Services.Auth.Core.Domain.Plugins.JWT;
+using MS.Services.Auth.Infra.Data.Contexts;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys.Base;
 using MS.Services.Auth.Infra.IoC.Extensions;
+using MS.Services.Auth.Infra.Plugins.FluentValidation.User;
+using MS.Services.Auth.Infra.Plugins.Hasher;
+using MS.Services.Auth.Infra.Plugins.TokenJWT;
 
 namespace MS.Services.Auth.Infra.IoC;
 
@@ -32,15 +43,25 @@ public class DependencyInjection : BaseDependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork<AuthDbContext>>();
     }
 
-    protected override void AddMappers(IServiceCollection services, IConfiguration configuration) {}
+    protected override void AddMappers(IServiceCollection services, IConfiguration configuration) 
+    {
+        services.AddScoped<IMapperPlugin, Mapper>();
+    }
 
     protected override void AddRepositorys(IServiceCollection services, IConfiguration configuration) 
     {
         services.AddRepository<User>(); 
     }
 
-    protected override void AddServices(IServiceCollection services, IConfiguration configuration) { }
+    protected override void AddServices(IServiceCollection services, IConfiguration configuration) 
+    {
+        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPasswordHash, PasswordHash>();
+    }
 
-    protected override void AddValidators(IServiceCollection services, IConfiguration configuration) { }
-
+    protected override void AddValidators(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddScoped<IValidatorModel<UserModel>, CreateUserValidator>();
+    }
 }

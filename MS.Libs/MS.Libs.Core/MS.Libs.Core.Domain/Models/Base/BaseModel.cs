@@ -1,4 +1,6 @@
-﻿namespace MS.Libs.Core.Domain.Models.Base;
+﻿using System.Text.Json.Serialization;
+
+namespace MS.Libs.Core.Domain.Models.Base;
 
 public class BaseModel : IModel
 {
@@ -6,4 +8,7 @@ public class BaseModel : IModel
     {
 
     }
+
+    [JsonIgnore]
+    public virtual string Id { get; set; }
 }

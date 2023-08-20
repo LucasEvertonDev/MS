@@ -42,14 +42,6 @@ public class BaseService
         }
     }
 
-    protected void ValidateAddEntity(BaseEntityBasic entityBasic)
-    {
-        if (entityBasic == null || string.IsNullOrEmpty(entityBasic.Id.ToString()))
-        {
-            throw new BusinessException("Algo não ocorreu bem ao persistir a entidade");
-        }
-    }
-
     protected void ValidateSearchEntityId(BaseEntityBasic entityBasic)
     {
         if (entityBasic == null || string.IsNullOrEmpty(entityBasic.Id.ToString()))

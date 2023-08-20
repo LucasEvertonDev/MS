@@ -3,18 +3,19 @@ using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Core.Domain.Models.Base;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Core.Domain.Plugins.Validators;
-using MS.Libs.Core.Domain.Services;
+using MS.Libs.Core.Domain.Services.Crud;
+using MS.Libs.Infra.Utils.Exceptions;
 using MS.Libs.Infra.Utils.Extensions;
 
-namespace MS.Libs.Core.Application.Services.Crud;
+namespace MS.Libs.Core.Application.Services.Base;
 
-public class CreateService<TModel, TEntity> : BaseService, IBaseService<TModel, TModel> where TModel : BaseModel where TEntity : BaseEntityBasic
+public class CreateServiceBase<TModel, TEntity> : BaseService, ICreateService<TModel> where TModel : BaseModel where TEntity : BaseEntityBasic
 {
-    private readonly IValidatorModel<TModel> _validatorModel;
-    private readonly ICreateRepository<TEntity> _createRepository;
-    private readonly IMapperPlugin _imapper;
+    protected readonly IValidatorModel<TModel> _validatorModel;
+    protected readonly ICreateRepository<TEntity> _createRepository;
+    protected readonly IMapperPlugin _imapper;
 
-    public CreateService(IServiceProvider serviceProvider) : base(serviceProvider)
+    public CreateServiceBase(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         _validatorModel = serviceProvider.GetService<IValidatorModel<TModel>>();
         _createRepository = serviceProvider.GetService<ICreateRepository<TEntity>>();
@@ -31,14 +32,23 @@ public class CreateService<TModel, TEntity> : BaseService, IBaseService<TModel, 
 
             var retorno = await _createRepository.CreateAsync(entity);
 
-            ValidatePersistedEntity(retorno);
+            ValidateAddEntity(retorno);
 
             return _imapper.Map<TModel>(retorno);
         });
     }
 
-    public async Task ValidateAsync(TModel param)
+    protected virtual async Task ValidateAsync(TModel param)
     {
         await _validatorModel.ValidateModelAsync(param);
     }
+
+    protected void ValidateAddEntity(BaseEntityBasic entityBasic)
+    {
+        if (entityBasic == null || string.IsNullOrEmpty(entityBasic.Id.ToString()))
+        {
+            throw new BusinessException("Algo não ocorreu bem ao persistir a entidade");
+        }
+    }
 }
+

@@ -1,4 +1,5 @@
 ﻿using MS.Libs.Core.Domain.Models.Error;
+using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.HttpContainers;
 using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Services.Auth.Infra.IoC;
@@ -35,7 +36,7 @@ public class Startup
         services.AddSwaggerGen();
 
         /// Register dependencys application
-        Activator.CreateInstance<DependencyInjection>()
+        App.Init<DependencyInjection>()
             .AddInfraSctructure(services, Configuration);
     }
 

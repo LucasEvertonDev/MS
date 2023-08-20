@@ -8,5 +8,5 @@ public interface IUpdateRepository<T> where T : IEntity
     /// </summary>
     /// <param name="domain"></param>
     /// <returns></returns>
-    Task<T> Update(T domain);
+    Task<T> UpdateAsync(T domain);
 }

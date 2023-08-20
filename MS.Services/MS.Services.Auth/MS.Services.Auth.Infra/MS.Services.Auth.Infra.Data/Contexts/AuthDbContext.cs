@@ -4,7 +4,7 @@ using MS.Libs.Infra.Data.Context;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using System.Data;
 
-namespace MS.Services.Auth.Infra.Data.Context;
+namespace MS.Services.Auth.Infra.Data.Contexts;
 
 public class AuthDbContext : BaseDbContext<AuthDbContext>
 {

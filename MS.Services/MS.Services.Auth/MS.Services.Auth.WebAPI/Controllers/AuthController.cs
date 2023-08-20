@@ -2,7 +2,7 @@
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.HttpContainers;
 using MS.Services.Auth.Core.Domain.Models;
-using MS.Services.Auth.Infra.Data.Context;
+using MS.Services.Auth.Infra.Data.Contexts;
 
 namespace MS.Services.Auth.WebAPI.Controllers
 {

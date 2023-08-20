@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MS.Libs.Core.Domain.DbContexts.Entities.Base;
+using MS.Libs.Core.Domain.DbContexts.Enuns;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using System.Linq.Expressions;
 
@@ -14,56 +15,33 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
         _applicationDbContext = applicationDbContext;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="domain"></param>
-    /// <returns></returns>
-    public virtual Task<TEntity> Delete(TEntity domain)
+    public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        _applicationDbContext.Remove(domain);
-        return Task.FromResult(domain);
+        var remove = await this.Queryable().Where(predicate).ToListAsync();
+
+        _applicationDbContext.Remove(remove);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public virtual async Task<TEntity> FindById(Expression<Func<TEntity, bool>> predicate)
+    public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await _applicationDbContext.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(predicate); ;
+        return await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(e => e.Situation != (int)Situation.Deleted).SingleOrDefaultAsync(predicate);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<IEnumerable<TEntity>> FindAll()
+    public virtual async Task<IEnumerable<TEntity>> ToListAsync()
     {
         return await _applicationDbContext.Set<TEntity>().AsNoTracking().ToListAsync();
     }
 
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="domain"></param>
-    /// <returns></returns>
     public virtual Task<TEntity> CreateAsync(TEntity domain)
     {
         _applicationDbContext.Entry(domain).State = EntityState.Added;
 
         _applicationDbContext.AddAsync(domain);
+
         return Task.FromResult(domain);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="domain"></param>
-    /// <returns></returns>
-    public virtual Task<TEntity> Update(TEntity domain)
+    public virtual Task<TEntity> UpdateAsync(TEntity domain)
     {
         _applicationDbContext.Entry(domain).State = EntityState.Modified;
 
@@ -72,12 +50,8 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
         return Task.FromResult(domain);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public virtual IQueryable<TEntity> Get()
+    public virtual IQueryable<TEntity> Queryable()
     {
-        return _applicationDbContext.Set<TEntity>().AsNoTracking();
+        return _applicationDbContext.Set<TEntity>().AsNoTracking().Where(e => e.Situation != (int)Situation.Deleted);
     }
 }
