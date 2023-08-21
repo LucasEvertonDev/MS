@@ -1,12 +1,12 @@
 ﻿
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
+using MS.Libs.Core.Domain.Models.Base;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Infra.Utils.Extensions;
-using MS.Services.Auth.Core.Domain.Models;
 
 namespace MS.Services.Auth.Core.Application.Services;
 
-public abstract class BaseService<TDto> where TDto : IServiceDTO
+public abstract class BaseService<TModel> where TModel : IModel
 {
     private readonly IUnitOfWork _unitOfWork;
     protected readonly IMapperPlugin _imapper;
@@ -15,6 +15,13 @@ public abstract class BaseService<TDto> where TDto : IServiceDTO
     {
         _unitOfWork = serviceProvider.GetService<IUnitOfWork>();
         _imapper = serviceProvider.GetService<IMapperPlugin>();
+    }
+
+    public abstract Task ExecuteAsync(TModel param);
+
+    protected virtual Task ValidateAsync(TModel param)
+    {
+        return Task.CompletedTask;
     }
 
     public async Task OnTransactionAsync(Func<Task> func)
@@ -45,8 +52,4 @@ public abstract class BaseService<TDto> where TDto : IServiceDTO
             throw;
         }
     }
-
-    public abstract Task<TDto> ExecuteAsync(TDto serviceDTO);
-
-    public abstract Task ValidateAsync(TDto serviceDTO);
 }
