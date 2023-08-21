@@ -1,0 +1,10 @@
+####Comandos container Geral
+
+--name lucas -> seto nome pro container pra lucas
+-it -> modo iterativo abrir terminal no container sendo t -topção vai para como o Unix/Linux lida com o acesso ao terminal.
+-ia -> modo iterativo modo a atach
+-p 8080:80 -> seto a porta externa como 8080 mas a interna do container é a 80
+-d -> exceutar o container em segundo plano e liberar o terminal 
+--rm -> excluir o container assim que ele foi executado
+-v c:/temp/html:/usr/share/nginx/html -> Indica a criação de volume o primeiro caminho e o mapeamento da maquina o segundo caminho e o mapemanto dentro do arquivo
+/bin/bash obter um shell no container

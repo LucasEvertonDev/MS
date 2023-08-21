@@ -23,6 +23,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MS.Libs.WebApi", "MS.Libs.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MS.Libs.WebApi", "MS.Libs.WebApi\MS.Libs.WebApi.csproj", "{908A2ABE-4C92-4455-8A62-D8E7D9A51F14}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentos", "Documentos", "{EBD21F3D-FD82-4564-938F-0A04620DA82A}"
+	ProjectSection(SolutionItems) = preProject
+		..\MS.Docker\Doc\docker_coratti.txt = ..\MS.Docker\Doc\docker_coratti.txt
+		..\MS.Docker\Doc\explicação comandos docker.txt = ..\MS.Docker\Doc\explicação comandos docker.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,0 +1,248 @@
+
+### docker containers 
+## o itt indica que abri uma interaçãop dentro do container ai ele abre o cmd do container linux alpine e o caminho é pra invadir o container kk isso é o terminal do docker desktop
+docker container run -it alpine /bin/sh
+
+--Reutilizar container 
+
+Lista todos os containers
+docker container ps -a 
+
+Somente atibvos
+docker container ps
+
+--- start container existente  container id  -> pode ser o name tbm 
+docker container start 9e8bf3b1f925
+
+--- Execuntado container que já existe e aplicando comand No caso o ls e o comando do container 
+docker container exec 9e8bf3b1f925 ls -l
+
+--Parando container me execução por nome // Só usar o id ou o nome dos containers
+docker container stop nervous_shirley
+
+--Criando container com nome predefinido
+docker container run --name lucas alpine
+
+--Remover o container 
+docker container rm lucas
+
+
+### Mapeando portas
+docker container run --name ws1 -p 8080:80 nginx
+
+
+-- Executar container em background sem travar o terminal 
+docker container run --name ws1 -p 8080:80 -d nginx
+
+### Mapear volumes // Criei o arquivo index e substitui violento
+docker container run --name ws3 -p 8080:80 -v c:/temp/html:/usr/share/nginx/html -d nginx
+
+
+###Verificando informações do container 
+docker container inspect ws3
+no resulta procurar mounts para ver o mapeamento
+ "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "c:/temp/html",
+                "Destination": "/usr/share/nginx/html",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+		
+
+	
+### Subir o container do sdk do .net e criar um projeto dentro dele 
+docker container run --name demonet -it mcr.microsoft.com/dotnet/sdk:7.0
+
+Cria pasta e programa la dentro doidera
+
+
+## limpando tudo
+docker contrainer prune
+docker image prune
+
+
+
+####Imagens
+
+As imagens são inalteráveies os container são a instancia da imagem com possibilidades de escrita e leitura 
+
+### Comando FROM
+
+Define imagem base
+
+### Comando label
+
+Definir informações da imagem
+
+
+## criando a minha imagem
+docker build -t lucas/img:1.0 .
+
+docker build -> Comando que constroi a imagem
+
+-t -> Usado para informa que a imagem pertence ao meu usuario
+
+lucas/img:1.0 -> Nome da image e atg atribuida a minha imagem 
+
+. -> Diretorio atual (Porque o build ta na pasta do dockerfile) se fosse outro lugar tinha que passar o caminho
+
+docker build -t aspnetcoremvc/app1:1.0 .
+
+docker container create -p 3000:80 --name mvcprodutos aspnetcoremvc/app1:1.0
+
+#### publicar imagem no docker hub 
+docker image tag aspnetcoremvc/app1:1.0 lcseverton/mvcprodutos:1.0
+
+logando docker hub 
+docker login -u lcseverton
+
+### publicando image: 
+docker image push lcseverton/mvcprodutos:1.0
+
+### puchando a image
+docker image pull lcseverton/mvcprodutos:1.0
+
+### Create container
+docker container create -p 3000:80 --name mvcprodutos lcseverton/mvcprodutos:1.0
+
+### Volumes criando fora do contexto do container um geral mesmo 
+docker volume create dadosdb
+
+
+### Carrega os volumes já criados 
+docker volume ls
+
+### Instalando o my sql 
+docker image pull mysql:8.0
+
+
+### Inpecionando a image do my sql 
+
+docker image inspect mysql:8.0
+
+###procurar a tag volumes
+ "Volumes": {
+                "/var/lib/mysql": {}
+            },
+			
+			
+## Create container 
+docker container run -d --name mysql -v dadosDb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=lucas mysql:8.0
+
+###Testando my Sql
+docker container exec -it mysql /bin/bash
+
+###Colocando a senha
+mysql -u root -p
+
+### Salvando o bakcup no windows
+docker container run -d --name mysqldb -v c:/backup/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=lucas mysql:8.0
+
+docker run --name mysql8 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d mysql:8.0.20
+
+
+### Verificando a configuração da rede do do container
+docker network inspect bridge
+
+pegar endereço ipv4 
+
+  "Containers": {
+            "006e8dda14423292740bb9af9f49e14045f4142c67bfea270250a03fd6f0a1d1": {
+                "Name": "mysql8",
+                "EndpointID": "989b01464cba6b28aa8ee905144f0017260ed9c9ed5b50c049bca7fc42c92c23",
+                "MacAddress": "02:42:ac:11:00:03",
+                "IPv4Address": "172.17.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+		
+### pansando variavel ambiente 
+
+dotnet publish --configuration Release --output dist
+
+docker build -t lcseverton/mvcprodutos:2.0 .
+
+
+logando docker hub 
+docker login -u lcseverton
+
+### publicando image: 
+docker image push lcseverton/mvcprodutos:2.0
+
+### puchando a image
+docker image pull lcseverton/mvcprodutos:2.0 
+
+
+### Subir ontaner aplicação .net core apontando pro banco passando o ip como vairavel de ambiente DB Host é pegado no configuration da aplicação dessea forma: Configuration["DBPORT"] 
+docker container run -d --name appmvc -p 3000:80 -e DBHOST=172.17.0.3 lcseverton/mvcprodutos:2.0
+
+
+### Network
+
+docker network ls
+
+host -> rede servidor host 
+none -> sem conectividade é pra isolar mesmo o container 
+bridge -> é a q nos interessa docker coloca todos lá a mesnos que associamos as acima explicitamente.
+
+#### Criando rede customizada
+
+docker network create --driver bridge redealpine
+
+## Subindo container na rede customizada 
+
+docker container run -it --name aap1 --network redealpine alpine 
+
+### Verificar ip do container acima
+hostname -i
+
+## Subindo container na rede customizada 
+
+docker container run -it --name aap2 --network redealpine alpine 
+
+### Verificar ip do container acima
+hostname -i
+
+###Conectando container a rede de customizada container containers 
+
+docker network connect redealpine alp3
+
+### Quando na mesma rede customizada abandona o ip pode chamar o nome do container 
+
+
+
+### Processar no arquivo de compose
+
+docker-compose -f docker-compose.yml build 
+
+
+### Inicializar tudo 
+
+
+docker-compose up
+
+
+### Desfazer tudo 
+docker-compose down
+
+
+### Exibir compose no cms tudo 
+docker-compose cat
+
+
+
+### ver log
+docker-compose logs
+
+
+docker-compose -f docker-compose.yml -f docker-compose.overryde.yml build
+
+
+docker-compose -f docker-compose.yml -f docker-compose.overryde.yml up
+
+
+docker-compose -f docker-compose.yml -f docker-compose.overryde.yml down
