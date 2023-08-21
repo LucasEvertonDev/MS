@@ -13,14 +13,13 @@ public class AutoMapperProfile : Profile
         ConvertModelToDomain();
     }
 
-
     public void ConvertDomainToModel()
     {
-        CreateMap<User, UserModel>();
+        CreateMap<User, CreatedUserModel>().ReverseMap();
     }
 
     public void ConvertModelToDomain()
     {
-        CreateMap<UserModel, User>();
+        CreateMap<CreateUserModel, User>().ReverseMap();
     }
 }

@@ -1,58 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MS.Libs.Core.Domain.Services;
 using MS.Libs.Core.Domain.Services.Crud;
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.HttpContainers;
 using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
+using MS.Services.Auth.Core.Domain.Services.AuthServices;
+using MS.Services.Auth.Core.Domain.Services.UserServices;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
 
 [Route("api/v1/auth")]
 public class AuthController : BaseController
 {
-    private readonly IActionService<AuthModel, TokenModel> _loginService;
-    private readonly ICreateService<UserModel> _createUserService;
+    private readonly ILoginService _loginService;
+    private readonly ICreateUserService _createUserService;
 
-    public AuthController(ICreateService<UserModel> createUserService,
-         IActionService<AuthModel, TokenModel> loginservice)
+    public AuthController(ICreateUserService createUserService,
+         ILoginService loginservice)
     {
         _loginService = loginservice;
         _createUserService = createUserService;
     }
 
-
-    /// <summary>
-
-    /// </summary>
-    /// <param name="requestDTO"></param>
-    /// <returns></returns>
     [HttpPost("register")]
-    [ProducesResponseType(typeof(ResponseDTO<UserModel>), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Register([FromBody] RequestDTO<UserModel> requestDTO)
+    [ProducesResponseType(typeof(CreatedUserModel), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Register([FromBody] CreateUserModel createUserModel)
     {
-        var retorno = await _createUserService.ExecuteAsync(requestDTO.Body);
+        await _createUserService.ExecuteAsync(createUserModel);
 
-        var response = new ResponseDTO<UserModel>()
-        {
-            Content = retorno,
-            Sucess = true
-        };
-
-        return Ok(response);
+        return Ok(_createUserService.CreatedUser);
     }
 
     [HttpPost("login")]
-    [ProducesResponseType(typeof(ResponseDTO<AuthModel>), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Login([FromBody] RequestDTO<AuthModel> requestDTO)
+    [ProducesResponseType(typeof(LoginModel), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Login([FromBody] LoginModel loginModel)
     {
-        var retorno = await _loginService.ExecuteAsync(requestDTO.Body);
+        await _loginService.ExecuteAsync(loginModel);
 
-        var response = new ResponseDTO<TokenModel>()
-        {
-            Content = retorno,
-            Sucess = true
-        };
-        return Ok(response);
+        return Ok(_loginService.TokenRetorno);
     }
 }

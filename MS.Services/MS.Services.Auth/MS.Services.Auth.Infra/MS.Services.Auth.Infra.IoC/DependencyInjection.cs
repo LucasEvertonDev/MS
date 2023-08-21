@@ -19,6 +19,8 @@ using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
 using MS.Services.Auth.Core.Domain.Plugins.JWT;
+using MS.Services.Auth.Core.Domain.Services.AuthServices;
+using MS.Services.Auth.Core.Domain.Services.UserServices;
 using MS.Services.Auth.Infra.Data.Contexts;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys.Base;
@@ -77,17 +79,14 @@ public class DependencyInjection : BaseDependencyInjection
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration) 
     {
-        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHash, PasswordHash>();
-        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
-        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
-        services.AddScoped<IActionService<AuthModel, TokenModel>, LoginService>();
+        services.AddScoped<ICreateUserService, CreateUserService>();
+        services.AddScoped<ILoginService, LoginService>();
     }
 
     protected override void AddValidators(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IValidatorModel<UserModel>, CreateUserValidator>();
-
+        services.AddScoped<IValidatorModel<CreateUserModel>, CreateUserValidator>();
     }
 }

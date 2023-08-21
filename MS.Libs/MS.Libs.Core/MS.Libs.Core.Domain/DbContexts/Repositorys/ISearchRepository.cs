@@ -3,11 +3,13 @@ using System.Linq.Expressions;
 
 namespace MS.Libs.Core.Domain.DbContexts.Repositorys;
 
-public interface ISearchRepository<T> where T : IEntity
+public interface ISearchRepository<TEntity> where TEntity : IEntity
 {
-    IQueryable<T> Queryable();
+    IQueryable<TEntity> AsQueriable();
 
-    Task<IEnumerable<T>> ToListAsync();
+    Task<IEnumerable<TEntity>> ToListAsync();
    
-    Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+    Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+
+    Task<IEnumerable<TEntity>> ToListAsync(Expression<Func<TEntity, bool>> predicate);
 }

@@ -5,7 +5,7 @@ using MS.Services.Auth.Infra.Plugins.FluentValidation.CustomValidators;
 
 namespace MS.Services.Auth.Infra.Plugins.FluentValidation.User;
 
-public class CreateUserValidator : BaseValidator<UserModel>, IValidatorModel<UserModel>
+public class CreateUserValidator : BaseValidator<CreateUserModel>, IValidatorModel<CreateUserModel>
 {
     public CreateUserValidator()
     {

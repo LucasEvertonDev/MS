@@ -1,21 +1,22 @@
-﻿using MS.Libs.Core.Application.Services.Common;
-using MS.Libs.Core.Domain.DbContexts.Repositorys;
-using MS.Libs.Core.Domain.Services;
+﻿using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
 using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
 using MS.Services.Auth.Core.Domain.Plugins.JWT;
+using MS.Services.Auth.Core.Domain.Services.AuthServices;
 
 namespace MS.Services.Auth.Core.Application.Services.AuthServices;
 
-public class LoginService : ActionService<AuthModel, TokenModel>, IActionService<AuthModel, TokenModel>
+public class LoginService : BaseService<LoginModel>, ILoginService
 {
     private readonly ISearchRepository<User> _userSearchRepository;
     private readonly IPasswordHash _passwordHash;
     private readonly ITokenService _tokenService;
     private readonly ISearchMapUserGroupRolesRepository _mapuserGroupSearchRepository;
+
+    public TokenModel TokenRetorno { get; set; }
 
     public LoginService(IServiceProvider serviceProvider,
         ISearchRepository<User> userSearchRepository,
@@ -28,11 +29,11 @@ public class LoginService : ActionService<AuthModel, TokenModel>, IActionService
         _passwordHash = passwordHash;
         _tokenService = tokenService;
         _mapuserGroupSearchRepository = mapuserGroupSearchRepository;
-}
+    }
 
-    public override async Task<TokenModel> ExecuteAsync(AuthModel param)
+    public async override Task ExecuteAsync(LoginModel param)
     {
-        return await OnTransactionAsync(async () =>
+        await OnTransactionAsync(async () =>
         {
             await ValidateAsync(param);
 
@@ -42,15 +43,15 @@ public class LoginService : ActionService<AuthModel, TokenModel>, IActionService
 
             var tokem = await _tokenService.GenerateToken(user, roles);
 
-            return new TokenModel
+            TokenRetorno = new TokenModel
             {
                 TokenJWT = tokem,
                 DataExpiracao = DateTime.Now.AddHours(2)
             };
         });
     }
-   
-    protected override async Task ValidateAsync(AuthModel param)
+
+    protected override async Task ValidateAsync(LoginModel param)
     {
         var user = await _userSearchRepository.FirstOrDefaultAsync(a => a.Username == param.Username);
         if (user == null || string.IsNullOrEmpty(user.Id.ToString()))

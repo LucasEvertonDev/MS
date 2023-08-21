@@ -1,16 +1,26 @@
-﻿using MS.Libs.Core.Domain.DbContexts.Entities.Base;
-using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
-using MS.Libs.Infra.Utils.Exceptions;
+﻿using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
+using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Infra.Utils.Extensions;
 
 namespace MS.Libs.Core.Application.Services;
-public class BaseService
+
+public abstract class BaseService<TModel> where TModel : IModel
 {
     private readonly IUnitOfWork _unitOfWork;
+    protected readonly IMapperPlugin _imapper;
 
     public BaseService(IServiceProvider serviceProvider)
     {
         _unitOfWork = serviceProvider.GetService<IUnitOfWork>();
+        _imapper = serviceProvider.GetService<IMapperPlugin>();
+    }
+
+    public abstract Task ExecuteAsync(TModel param);
+
+    protected virtual Task ValidateAsync(TModel param)
+    {
+        return Task.CompletedTask;
     }
 
     public async Task OnTransactionAsync(Func<Task> func)
@@ -39,14 +49,6 @@ public class BaseService
         {
             await _unitOfWork.RollbackAsync();
             throw;
-        }
-    }
-
-    protected void ValidateSearchEntityId(BaseEntityBasic entityBasic)
-    {
-        if (entityBasic == null || string.IsNullOrEmpty(entityBasic.Id.ToString()))
-        {
-            throw new BusinessException("Não existe nenhuma entidade para o ide informado.");
         }
     }
 }

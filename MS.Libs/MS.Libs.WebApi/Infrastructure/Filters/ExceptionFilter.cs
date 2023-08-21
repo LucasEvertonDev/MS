@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Libs.Infra.Utils.Exceptions.Base;
-using MS.Libs.WebApi.HttpContainers;
 using System.Net;
 
 namespace MS.Libs.WebApi.Infrastructure.Filters;
 
-public class ExceptionFilter : IExceptionFilter
+public partial class ExceptionFilter : IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
@@ -31,11 +30,7 @@ public class ExceptionFilter : IExceptionFilter
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new ObjectResult
                 (
-                        new ResponseDTO<ErrorsModel>()
-                        {
-                            Sucess = false,
-                            Content = new ErrorsModel(validationException.ErrorsMessages.ToArray())
-                        }
+                    new ErrorsModel(validationException.ErrorsMessages.ToArray())
                 );
         }
         else
@@ -45,11 +40,7 @@ public class ExceptionFilter : IExceptionFilter
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new ObjectResult
                 (
-                        new ResponseDTO<ErrorsModel>()
-                        {
-                            Sucess = false,
-                            Content = new ErrorsModel(exception.Message)
-                        }
+                    new ErrorsModel(exception.Message)
                 );
         }
     }
@@ -59,11 +50,7 @@ public class ExceptionFilter : IExceptionFilter
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         context.Result = new ObjectResult
            (
-                   new ResponseDTO<ErrorsModel>()
-                   {
-                       Sucess = false,
-                       Content = new ErrorsModel("Erro desconhecido")
-                   }
+                new ErrorsModel("Erro desconhecido")
            );
     }
 }

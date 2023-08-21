@@ -1,56 +1,64 @@
-﻿using MS.Libs.Core.Application.Services.Common;
-using MS.Libs.Core.Domain.DbContexts.Repositorys;
-using MS.Libs.Core.Domain.Services;
-using MS.Libs.Core.Domain.Services.Crud;
+﻿using MS.Libs.Core.Domain.DbContexts.Repositorys;
+using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
+using MS.Services.Auth.Core.Domain.Services.UserServices;
 
-namespace MS.Services.Auth.Core.Application.Services.UserServices;
-
-public class CreateUserService : CreateService<UserModel, User>, ICreateService<UserModel>
+namespace MS.Services.Auth.Core.Application.Services.UserServices
 {
-    private readonly ISearchRepository<User> _searchRepository;
-    private readonly IPasswordHash _passwordHash;
-
-    public CreateUserService(IServiceProvider serviceProvider,
-        ISearchRepository<User> searchRepository,
-        IPasswordHash passwordHash) : base(serviceProvider)
+    public class CreateUserService : BaseService<CreateUserModel>, ICreateUserService
     {
-        _searchRepository = searchRepository;
-        _passwordHash = passwordHash;
-    }
+        private readonly ISearchRepository<User> _searchRepository;
+        private readonly IPasswordHash _passwordHash;
+        private readonly IValidatorModel<CreateUserModel> _createUserValidatorModel;
+        private readonly ICreateRepository<User> _createRepository;
 
-    public override async Task<UserModel> ExecuteAsync(UserModel param)
-    {
-        return await OnTransactionAsync(async () =>
+        public CreatedUserModel CreatedUser { get; set; }
+
+        public CreateUserService(IServiceProvider serviceProvider,
+            ISearchRepository<User> searchRepository,
+            IPasswordHash passwordHash,
+            IValidatorModel<CreateUserModel> createUserValidatorModel,
+            ICreateRepository<User> createRepository) : base(serviceProvider)
         {
-            var user = _imapper.Map<User>(param);
-
-            await ValidateAsync(param);
-
-            user.PasswordHash = _passwordHash.GeneratePasswordHash();
-            user.Password = _passwordHash.EncryptPassword(user.Password, user.PasswordHash);
-
-            user = await _createRepository.CreateAsync(user);
-
-            return _imapper.Map<UserModel>(user);
-        });
-    }
-
-    protected override async Task ValidateAsync(UserModel param)
-    {
-        if (_searchRepository.Queryable().Where(u => u.Username == param.Username).Any())
-        {
-            throw new BusinessException("There is already a registered user with the entered username.");
+            _createRepository = createRepository;
+            _searchRepository = searchRepository;
+            _passwordHash = passwordHash;
+            _createUserValidatorModel = createUserValidatorModel;
         }
 
-        if (_searchRepository.Queryable().Where(u => u.Email == param.Email).Any())
+        public override async Task ExecuteAsync(CreateUserModel param)
         {
-            throw new BusinessException("There is already a registered user with the email provided");
+            await OnTransactionAsync(async () =>
+            {
+                var user = _imapper.Map<User>(param);
+
+                await ValidateAsync(param);
+
+                user.PasswordHash = _passwordHash.GeneratePasswordHash();
+                user.Password = _passwordHash.EncryptPassword(user.Password, user.PasswordHash);
+
+                user = await _createRepository.CreateAsync(user);
+
+                this.CreatedUser = _imapper.Map<CreatedUserModel>(user);
+            });
         }
 
-        await base.ValidateAsync(param);
+        protected override async Task ValidateAsync(CreateUserModel param)
+        {
+            if (_searchRepository.Queryable().Where(u => u.Username == param.Username).Any())
+            {
+                throw new BusinessException("There is already a registered user with the entered username.");
+            }
+
+            if (_searchRepository.Queryable().Where(u => u.Email == param.Email).Any())
+            {
+                throw new BusinessException("There is already a registered user with the email provided");
+            }
+
+            await _createUserValidatorModel.ValidateModelAsync(param);
+        }
     }
 }
