@@ -14,7 +14,7 @@ public class MapUserGroupRolesRepository : Repository<MapUserGroupRoles>, ISearc
 
     public async Task<List<Role>> GetRolesByUserGroup(string userGroupId)
     {
-        return await this.Queryable().Include(c => c.Role)
+        return await this.AsQueriable().Include(c => c.Role)
                 .Where(p => p.UserGroupId.ToString() == userGroupId)
                 .Select(a => a.Role)
                 .ToListAsync();

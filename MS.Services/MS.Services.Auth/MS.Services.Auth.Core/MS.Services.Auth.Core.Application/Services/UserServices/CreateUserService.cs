@@ -48,12 +48,12 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
 
         protected override async Task ValidateAsync(CreateUserModel param)
         {
-            if (_searchRepository.Queryable().Where(u => u.Username == param.Username).Any())
+            if (_searchRepository.AsQueriable().Where(u => u.Username == param.Username).Any())
             {
                 throw new BusinessException("There is already a registered user with the entered username.");
             }
 
-            if (_searchRepository.Queryable().Where(u => u.Email == param.Email).Any())
+            if (_searchRepository.AsQueriable().Where(u => u.Email == param.Email).Any())
             {
                 throw new BusinessException("There is already a registered user with the email provided");
             }

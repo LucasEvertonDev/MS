@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MS.Libs.Core.Domain.Services.Crud;
 using MS.Libs.WebApi.Controllers;
-using MS.Libs.WebApi.HttpContainers;
 using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;

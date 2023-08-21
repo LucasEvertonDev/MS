@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using MS.Libs.Core.Domain.Constants;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Plugins.JWT;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ public class TokenService : ITokenService
     public Task<string> GenerateToken(User user, List<Role> roles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("15e0e0beaaac6edb63dc815b5a732481ef2ff6fc7ee412ecbdd43d989f121069");
+        var key = Encoding.ASCII.GetBytes(JWTContants.Key);
 
         user.Password = "";
         user.PasswordHash = "";

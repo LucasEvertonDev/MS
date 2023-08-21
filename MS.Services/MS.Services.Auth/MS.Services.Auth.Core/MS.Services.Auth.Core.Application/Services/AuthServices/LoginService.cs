@@ -1,4 +1,5 @@
-﻿using MS.Libs.Core.Domain.DbContexts.Repositorys;
+﻿using MS.Libs.Core.Domain.Constants;
+using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
@@ -46,7 +47,7 @@ public class LoginService : BaseService<LoginModel>, ILoginService
             TokenRetorno = new TokenModel
             {
                 TokenJWT = tokem,
-                DataExpiracao = DateTime.Now.AddHours(2)
+                DataExpiracao = DateTime.Now.AddMinutes(JWTContants.ExpireInMinutes)
             };
         });
     }

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Infra.Data" Version="4.0.0" />
+    <PackageReference Include="LcsEverton.MS.Libs.Infra.Data" Version="5.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="4.0.0" />
+    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="5.1.1" />
   </ItemGroup>
 
 </Project>

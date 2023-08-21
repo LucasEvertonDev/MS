@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>MS.Libs.Core.Application</Title>
     <PackageId>LcsEverton.MS.Libs.Core.Application</PackageId>
-       <Version>5.0.0</Version>
+       <Version>5.1.1</Version>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
   </PropertyGroup>
 
