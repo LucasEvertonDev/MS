@@ -73,8 +73,6 @@ public class DependencyInjection : BaseDependencyInjection
         services.AddRepository<MapUserGroupRoles>();
 
         services.AddScoped<ISearchMapUserGroupRolesRepository, MapUserGroupRolesRepository>();
-        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
-        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
     }
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration) 
@@ -82,13 +80,14 @@ public class DependencyInjection : BaseDependencyInjection
         services.AddScoped<ICreateService<UserModel>, CreateUserService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHash, PasswordHash>();
-
-
+        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
+        services.AddScoped<ICreateService<UserModel>, CreateUserService>();
         services.AddScoped<IActionService<AuthModel, TokenModel>, LoginService>();
     }
 
     protected override void AddValidators(IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IValidatorModel<UserModel>, CreateUserValidator>();
+
     }
 }
