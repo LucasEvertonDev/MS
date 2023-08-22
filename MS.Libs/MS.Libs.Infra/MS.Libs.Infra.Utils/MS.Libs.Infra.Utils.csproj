@@ -11,4 +11,8 @@
        <Version>5.1.1</Version>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MS.Libs.Core\MS.Libs.Core.Domain\MS.Libs.Core.Domain.csproj" />
+  </ItemGroup>
 </Project>

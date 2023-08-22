@@ -30,7 +30,7 @@ public partial class ExceptionFilter : IExceptionFilter
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new ObjectResult
                 (
-                    new ErrorsModel(validationException.ErrorsMessages.ToArray())
+                    new ErrorsModel(validationException.ErrorsMessages.Select(a => a.ErrorMessage).ToArray())
                 );
         }
         else

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Utils.Exceptions;
 
@@ -13,7 +14,7 @@ public class BaseValidator<TModel> : AbstractValidator<TModel>, IValidatorModel<
 
         if (!validationResult.IsValid)
         {
-            throw new BusinessException(validationResult.Errors.Select(c => c.ErrorMessage).ToArray());
+            throw new BusinessException(validationResult.Errors.Select(c => new ErrorModel(c.ErrorMessage, c.ErrorCode)).ToArray());
         }
     }
 }
