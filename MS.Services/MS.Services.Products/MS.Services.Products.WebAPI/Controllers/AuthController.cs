@@ -8,7 +8,8 @@ using MS.Services.Products.Core.Domain.Services.UserServices;
 
 namespace MS.Services.Products.WebAPI.Controllers;
 
-[Route("api/v1/auth")]
+
+[Route("api/v1/products")]
 public class AuthController : BaseController
 {
     private readonly ILoginService _loginService;
@@ -21,25 +22,9 @@ public class AuthController : BaseController
         _createUserService = createUserService;
     }
 
-    [HttpPost("register")]
-    [ProducesResponseType(typeof(CreatedUserModel), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Register([FromBody] CreateUserModel createUserModel)
-    {
-        await _createUserService.ExecuteAsync(createUserModel);
-
-        return Ok(_createUserService.CreatedUser);
-    }
-
-    [HttpPost("login")]
-    [ProducesResponseType(typeof(LoginModel), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Login([FromBody] LoginModel loginModel)
-    {
-        await _loginService.ExecuteAsync(loginModel);
-
-        return Ok(_loginService.TokenRetorno);
-    }
 
     [HttpPut("{id}")]
+    [Authorize]
     [ProducesResponseType(typeof(UpdatedUserModel), StatusCodes.Status200OK)]
     public ActionResult Put(UpdateUserDto loginModel)
     {
