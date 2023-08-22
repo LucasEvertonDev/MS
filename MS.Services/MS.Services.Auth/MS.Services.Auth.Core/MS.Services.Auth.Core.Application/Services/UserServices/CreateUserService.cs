@@ -1,6 +1,7 @@
 ﻿using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Utils.Exceptions;
+using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
@@ -50,12 +51,12 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
         {
             if (_searchRepository.AsQueriable().Where(u => u.Username == param.Username).Any())
             {
-                throw new BusinessException("There is already a registered user with the entered username.");
+                throw new BusinessException(UserErrors.ALREADY_USERNAME);
             }
 
             if (_searchRepository.AsQueriable().Where(u => u.Email == param.Email).Any())
             {
-                throw new BusinessException("There is already a registered user with the email provided");
+                throw new BusinessException(UserErrors.ALREADY_EMAIL);
             }
 
             await _createUserValidatorModel.ValidateModelAsync(param);

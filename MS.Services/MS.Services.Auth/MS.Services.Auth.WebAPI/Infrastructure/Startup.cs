@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
+using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.Infrastructure.Extensions;
@@ -59,13 +60,15 @@ public class Startup
 
         services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
+        var configurations = new AppSettings(Configuration);
+
         // Register dependencys application
         App.Init<DependencyInjection>()
-            .AddInfraSctructure(services, Configuration);
+            .AddInfraSctructure(services, configurations);
 
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "CpontrolServices.API", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Auth.WebAPI", Version = "v1" });
 
             c.RegisterSwaggerDefaultConfig(true);
 

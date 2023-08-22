@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
+using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Data.Context.UnitOfWork;
-using MS.Libs.Infra.IoC;
 using MS.Libs.Infra.Plugins.AutoMapper;
 using MS.Services.Auth.Core.Application.Services.AuthServices;
 using MS.Services.Auth.Core.Application.Services.UserServices;
@@ -26,9 +26,9 @@ using MS.Services.Auth.Infra.Plugins.TokenJWT;
 
 namespace MS.Services.Auth.Infra.IoC;
 
-public class DependencyInjection : BaseDependencyInjection
+public class DependencyInjection
 {
-    public override void AddInfraSctructure(IServiceCollection services, IConfiguration configuration)
+    public void AddInfraSctructure(IServiceCollection services, AppSettings configuration)
     {
         AddDbContexts(services, configuration);
 
@@ -41,17 +41,17 @@ public class DependencyInjection : BaseDependencyInjection
         AddValidators(services, configuration); 
     }
 
-    protected override void AddDbContexts(IServiceCollection services, IConfiguration configuration)
+    protected void AddDbContexts(IServiceCollection services, AppSettings configuration)
     {
         //É obrigatório definir a versão do My Sql 
         services.AddDbContext<AuthDbContext>(options =>
-              options.UseSqlServer(configuration.GetConnectionString("SqlConnection"),
+              options.UseSqlServer(configuration.DbConnection,
               b => b.MigrationsAssembly(typeof(AuthDbContext).Assembly.FullName)));
 
         services.AddScoped<IUnitOfWork, UnitOfWork<AuthDbContext>>();
     }
 
-    protected override void AddMappers(IServiceCollection services, IConfiguration configuration) 
+    protected void AddMappers(IServiceCollection services, AppSettings configuration) 
     {
         services.AddScoped<IMapperPlugin, Mapper>();
 
@@ -61,7 +61,7 @@ public class DependencyInjection : BaseDependencyInjection
         }).CreateMapper());
     }
 
-    protected override void AddRepositorys(IServiceCollection services, IConfiguration configuration) 
+    protected void AddRepositorys(IServiceCollection services, AppSettings configuration) 
     {
         services.AddRepository<User>();
         services.AddRepository<Role>();
@@ -71,7 +71,7 @@ public class DependencyInjection : BaseDependencyInjection
         services.AddScoped<ISearchMapUserGroupRolesRepository, MapUserGroupRolesRepository>();
     }
 
-    protected override void AddServices(IServiceCollection services, IConfiguration configuration) 
+    protected void AddServices(IServiceCollection services, AppSettings configuration) 
     {
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHash, PasswordHash>();
@@ -79,7 +79,7 @@ public class DependencyInjection : BaseDependencyInjection
         services.AddScoped<ILoginService, LoginService>();
     }
 
-    protected override void AddValidators(IServiceCollection services, IConfiguration configuration)
+    protected void AddValidators(IServiceCollection services, AppSettings configuration)
     {
         services.AddScoped<IValidatorModel<CreateUserModel>, CreateUserValidator>();
     }

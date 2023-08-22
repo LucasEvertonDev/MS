@@ -1,6 +1,7 @@
 ﻿using MS.Libs.Core.Domain.Constants;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Infra.Utils.Exceptions;
+using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
 using MS.Services.Auth.Core.Domain.Models.Auth;
@@ -57,12 +58,12 @@ public class LoginService : BaseService<LoginModel>, ILoginService
         var user = await _userSearchRepository.FirstOrDefaultAsync(a => a.Username == param.Username);
         if (user == null || string.IsNullOrEmpty(user.Id.ToString()))
         {
-            throw new BusinessException("Login ou senha inválidos!");
+            throw new BusinessException(AuthErrors.LOGIN_INVALIDO);
         }
 
         if (!_passwordHash.PasswordIsEquals(param.Password, user?.PasswordHash, user?.Password))
         {
-            throw new BusinessException("Login ou senha inválidos!");
+            throw new BusinessException(AuthErrors.LOGIN_INVALIDO);
         }
     }
 }
