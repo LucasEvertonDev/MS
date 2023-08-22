@@ -13,6 +13,8 @@ services:
       - c:\dados\volumes\mssql:/var/opt/mssql3
     ports:
       - '11433:1433'
+    networks:
+      - sql_server_network
     # expose:
     #   - 1450
 
@@ -28,3 +30,16 @@ services:
     networks:
       - sql_server_network
       - backend
+
+  # ms.services.products.webapi:
+  #   container_name : msservicesproductswebapi
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - "DatabaseSettings:ConnectionString=Server=sqlserver;Database=ProductsDb;User Id=sa;Password=Numsey#2021"
+  #   depends_on:
+  #     - sqlserver
+  #   ports:
+  #     - "4100:80"
+  #   networks:
+  #     - sql_server_network
+  #     - backend

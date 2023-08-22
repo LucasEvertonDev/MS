@@ -13,4 +13,10 @@ services:
     build:
       context: .
       dockerfile: ../MS.Services/MS.Services.Auth/MS.Services.Auth.WebAPI/Dockerfile
+    
+  # ms.services.products.webapi:
+  #   image: ${DOCKER_REGISTRY-}msservicesproductswebapi
+  #   build:
+  #     context: .
+  #     dockerfile: ../MS.Services/MS.Services.Products/MS.Services.Products.WebAPI/Dockerfile
 

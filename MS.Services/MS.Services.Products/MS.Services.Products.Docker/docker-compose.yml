@@ -6,7 +6,8 @@ networks:
 
 services:
   MS.Services.Products.webapi:
-    image: ${DOCKER_REGISTRY-}msservicesauthwebapi
+    image: ${DOCKER_REGISTRY-}msservicesproductswebapi
     build:
       context: .
       dockerfile: ../MS.Services.Products.WebAPI/Dockerfile
+

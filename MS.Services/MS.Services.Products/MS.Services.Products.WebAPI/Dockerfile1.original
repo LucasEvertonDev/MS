@@ -8,11 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["MS.Services.Products.WebAPI/MS.Services.Products.WebAPI.csproj", "MS.Services.Products.WebAPI/"]
-COPY ["MS.Services.Products.Infra/MS.Services.Products.Infra.IoC/MS.Services.Products.Infra.IoC.csproj", "MS.Services.Products.Infra/MS.Services.Products.Infra.IoC/"]
-COPY ["MS.Services.Products.Core/MS.Services.Products.Core.Application/MS.Services.Products.Core.Application.csproj", "MS.Services.Products.Core/MS.Services.Products.Core.Application/"]
 COPY ["MS.Services.Products.Core/MS.Services.Products.Core.Domain/MS.Services.Products.Core.Domain.csproj", "MS.Services.Products.Core/MS.Services.Products.Core.Domain/"]
-COPY ["MS.Services.Products.Infra/MS.Services.Products.Infra.Data/MS.Services.Products.Infra.Data.csproj", "MS.Services.Products.Infra/MS.Services.Products.Infra.Data/"]
-COPY ["MS.Services.Products.Infra/MS.Services.Products.Infra.Plugins/MS.Services.Products.Infra.Plugins.csproj", "MS.Services.Products.Infra/MS.Services.Products.Infra.Plugins/"]
 RUN dotnet restore "MS.Services.Products.WebAPI/MS.Services.Products.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/MS.Services.Products.WebAPI"
