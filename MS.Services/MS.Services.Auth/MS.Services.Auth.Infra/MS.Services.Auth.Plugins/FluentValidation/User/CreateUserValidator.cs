@@ -3,9 +3,9 @@ using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Plugins.Validators;
 using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.Models.Users;
-using MS.Services.Auth.Infra.Plugins.FluentValidation.CustomValidators;
+using MS.Services.Auth.Plugins.FluentValidation.CustomValidators;
 
-namespace MS.Services.Auth.Infra.Plugins.FluentValidation.User;
+namespace MS.Services.Auth.Plugins.FluentValidation.User;
 
 public class CreateUserValidator : BaseValidator<CreateUserModel>, IValidatorModel<CreateUserModel>
 {

@@ -2,7 +2,7 @@
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Models.Users;
 
-namespace MS.Services.Auth.Infra.Plugins.AutoMapper.Profiles;
+namespace MS.Services.Auth.Plugins.AutoMapper.Profiles;
 
 public class AutoMapperProfile : Profile
 {

@@ -3,7 +3,7 @@ using FluentValidation.Results;
 using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.Models.Users;
 
-namespace MS.Services.Auth.Infra.Plugins.FluentValidation.CustomValidators;
+namespace MS.Services.Auth.Plugins.FluentValidation.CustomValidators;
 
 internal class UserNameValidator : AbstractValidator<string>
 {

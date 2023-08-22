@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MS.Services.Auth.Infra.Plugins.TokenJWT;
+namespace MS.Services.Auth.Plugins.TokenJWT;
 
 public class TokenService : ITokenService
 {

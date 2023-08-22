@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,6 +6,7 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  
   <ItemGroup>
     <PackageReference Include="LcsEverton.MS.Libs.Infra.Plugins" Version="8.0.0" />
     <PackageReference Include="FluentValidation" Version="11.7.1" />
@@ -14,8 +15,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  
   <ItemGroup>
     <ProjectReference Include="..\..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
   </ItemGroup>
-
+  
 </Project>

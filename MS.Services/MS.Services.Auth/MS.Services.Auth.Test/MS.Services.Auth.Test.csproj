@@ -28,7 +28,6 @@
     <ProjectReference Include="..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
     <ProjectReference Include="..\MS.Services.Auth.Infra\MS.Services.Auth.Infra.Data\MS.Services.Auth.Infra.Data.csproj" />
     <ProjectReference Include="..\MS.Services.Auth.Infra\MS.Services.Auth.Infra.IoC\MS.Services.Auth.Infra.IoC.csproj" />
-    <ProjectReference Include="..\MS.Services.Auth.Infra\MS.Services.Auth.Infra.Plugins\MS.Services.Auth.Infra.Plugins.csproj" />
   </ItemGroup>
 
 </Project>

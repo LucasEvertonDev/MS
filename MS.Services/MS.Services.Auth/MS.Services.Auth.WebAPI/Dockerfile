@@ -12,7 +12,6 @@ COPY ["MS.Services.Auth.Infra/MS.Services.Auth.Infra.IoC/MS.Services.Auth.Infra.
 COPY ["MS.Services.Auth.Core/MS.Services.Auth.Core.Application/MS.Services.Auth.Core.Application.csproj", "MS.Services.Auth.Core/MS.Services.Auth.Core.Application/"]
 COPY ["MS.Services.Auth.Core/MS.Services.Auth.Core.Domain/MS.Services.Auth.Core.Domain.csproj", "MS.Services.Auth.Core/MS.Services.Auth.Core.Domain/"]
 COPY ["MS.Services.Auth.Infra/MS.Services.Auth.Infra.Data/MS.Services.Auth.Infra.Data.csproj", "MS.Services.Auth.Infra/MS.Services.Auth.Infra.Data/"]
-COPY ["MS.Services.Auth.Infra/MS.Services.Auth.Infra.Plugins/MS.Services.Auth.Infra.Plugins.csproj", "MS.Services.Auth.Infra/MS.Services.Auth.Infra.Plugins/"]
 RUN dotnet restore "MS.Services.Auth.WebAPI/MS.Services.Auth.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/MS.Services.Auth.WebAPI"

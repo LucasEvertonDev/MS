@@ -20,10 +20,10 @@ using MS.Services.Auth.Core.Domain.Services.UserServices;
 using MS.Services.Auth.Infra.Data.Contexts;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys;
 using MS.Services.Auth.Infra.IoC.Extensions;
-using MS.Services.Auth.Infra.Plugins.AutoMapper.Profiles;
-using MS.Services.Auth.Infra.Plugins.FluentValidation.User;
-using MS.Services.Auth.Infra.Plugins.Hasher;
-using MS.Services.Auth.Infra.Plugins.TokenJWT;
+using MS.Services.Auth.Plugins.AutoMapper.Profiles;
+using MS.Services.Auth.Plugins.FluentValidation.User;
+using MS.Services.Auth.Plugins.Hasher;
+using MS.Services.Auth.Plugins.TokenJWT;
 
 namespace MS.Services.Auth.Infra.IoC;
 

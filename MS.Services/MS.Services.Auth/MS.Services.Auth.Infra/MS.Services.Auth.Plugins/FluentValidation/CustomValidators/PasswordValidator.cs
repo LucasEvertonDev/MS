@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MS.Services.Auth.Core.Domain.Contansts;
 
-namespace MS.Services.Auth.Infra.Plugins.FluentValidation.CustomValidators;
+namespace MS.Services.Auth.Plugins.FluentValidation.CustomValidators;
 
 public class PasswordValidator : AbstractValidator<string>
 {

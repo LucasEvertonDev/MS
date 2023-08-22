@@ -1,0 +1,15 @@
+version: '3.4'
+
+networks:
+    sql_server_network:
+    backend:
+
+services:
+  ms.services.auth.webapi:
+    image: ${DOCKER_REGISTRY-}msservicesauthwebapi
+    build:
+      context: .
+      dockerfile: MS.Services.Auth.WebAPI/Dockerfile
+    networks:
+      - sql_server_network
+      - backend

@@ -2,7 +2,7 @@
 using AutoMapper;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 
-namespace MS.Services.Auth.Infra.Plugins.AutoMapper;
+namespace MS.Services.Auth.Plugins.AutoMapper;
 
 public class Mapper : IMapperPlugin
 {

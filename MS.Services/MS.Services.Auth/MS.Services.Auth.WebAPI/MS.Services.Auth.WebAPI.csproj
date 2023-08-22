@@ -30,12 +30,4 @@
     <ProjectReference Include="..\MS.Services.Auth.Infra\MS.Services.Auth.Infra.IoC\MS.Services.Auth.Infra.IoC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
 </Project>

@@ -3,7 +3,7 @@ using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MS.Services.Auth.Infra.Plugins.Hasher;
+namespace MS.Services.Auth.Plugins.Hasher;
 
 public class PasswordHash : IPasswordHash
 {
