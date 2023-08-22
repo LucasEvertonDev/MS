@@ -4,7 +4,7 @@ namespace MS.Libs.Core.Domain.Infra.AppSettings;
 
 public class AppSettings
 {
-    AppSettings() { }   
+    public AppSettings() { }   
     public AppSettings(IConfiguration config)
     {
         DbConnection = config.GetConnectionString("SqlConnection");

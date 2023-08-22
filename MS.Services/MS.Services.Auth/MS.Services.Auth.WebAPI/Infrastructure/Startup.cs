@@ -62,6 +62,8 @@ public class Startup
 
         var configurations = new AppSettings(Configuration);
 
+        services.AddSingleton<AppSettings, AppSettings>();
+
         // Register dependencys application
         App.Init<DependencyInjection>()
             .AddInfraSctructure(services, configurations);
