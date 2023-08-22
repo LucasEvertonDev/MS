@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
   </ItemGroup>
-  
+
 </Project>

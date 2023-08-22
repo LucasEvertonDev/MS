@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  MS.Services.Products.webapi:
+    container_name : msservicesauthwebapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021"
+    ports:
+      - "4000:80"
+    networks:
+      - sql_server_network
+      - backend
