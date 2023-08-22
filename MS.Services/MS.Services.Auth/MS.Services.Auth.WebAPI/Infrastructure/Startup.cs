@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
@@ -55,6 +56,8 @@ public class Startup
                     ClockSkew = TimeSpan.Zero,
                 };
             });
+
+        services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
         // Register dependencys application
         App.Init<DependencyInjection>()

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MS.Libs.WebApi.Controllers;
 using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
@@ -36,5 +37,12 @@ public class AuthController : BaseController
         await _loginService.ExecuteAsync(loginModel);
 
         return Ok(_loginService.TokenRetorno);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(UpdatedUserModel), StatusCodes.Status200OK)]
+    public ActionResult Put(UpdateUserDto loginModel)
+    {
+        return Ok(new UpdatedUserModel());
     }
 }

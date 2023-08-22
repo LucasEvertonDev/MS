@@ -21,7 +21,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MS.Services.Auth.Docker", "
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "MS.Services.Auth.Docker\docker-compose.dcproj", "{C6DD8DF8-DFE3-46AF-BF19-67CD8B65DC4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS.Services.Auth.Infra.Plugins", "MS.Services.Auth.Infra.Plugins\MS.Services.Auth.Infra.Plugins.csproj", "{5B751D7D-550D-4D61-A6BA-0335B486BCD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MS.Services.Auth.Infra.Plugins", "MS.Services.Auth.Infra.Plugins\MS.Services.Auth.Infra.Plugins.csproj", "{5B751D7D-550D-4D61-A6BA-0335B486BCD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A60EBBF-8736-4FA5-9BEF-49A1F8DA00BE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
