@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Core.Application" Version="5.1.1" />
+    <PackageReference Include="LcsEverton.MS.Libs.Core.Application" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

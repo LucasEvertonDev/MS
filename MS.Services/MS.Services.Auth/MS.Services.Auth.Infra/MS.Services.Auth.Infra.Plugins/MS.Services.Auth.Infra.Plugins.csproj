@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Infra.Plugins" Version="5.1.1" />
+    <PackageReference Include="LcsEverton.MS.Libs.Infra.Plugins" Version="6.0.0" />
     <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
-    <PackageReference PrivateAssets="all" Include="AutoMapper" Version="12.0.1" />
+    <PackageReference PrivateAssets="none" Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
