@@ -11,7 +11,7 @@ namespace MS.Services.Auth.Plugins.TokenJWT;
 
 public class TokenService : ITokenService
 {
-    public Task<string> GenerateToken(User user, List<Role> roles)
+    public Task<(string, DateTime)> GenerateToken(User user, List<Role> roles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(JWTContants.Key);
@@ -27,7 +27,7 @@ public class TokenService : ITokenService
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user)),
             }),
-            Expires = DateTime.UtcNow.AddHours(2),
+            Expires = DateTime.UtcNow.AddMinutes(JWTContants.ExpireInMinutes),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 
@@ -38,6 +38,6 @@ public class TokenService : ITokenService
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
-        return Task.FromResult(tokenHandler.WriteToken(token));
+        return Task.FromResult((tokenHandler.WriteToken(token), DateTime.Now.AddMinutes(JWTContants.ExpireInMinutes)));
     }
 }

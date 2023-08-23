@@ -5,6 +5,7 @@ using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
 using MS.Services.Auth.Core.Domain.Services.UserServices;
+using System.Security.Claims;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
 
@@ -40,9 +41,24 @@ public class AuthController : BaseController
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     [ProducesResponseType(typeof(UpdatedUserModel), StatusCodes.Status200OK)]
     public ActionResult Put(UpdateUserDto loginModel)
     {
+        var claimsIdentity = User.Identity as ClaimsIdentity;
+
+        // alternatively
+        // claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+
+        // get some claim by type
+        var someClaim = claimsIdentity.FindFirst("some-claim");
+
+        // iterate all claims
+        foreach (var claim in claimsIdentity.Claims)
+        {
+            System.Console.WriteLine(claim.Type + ":" + claim.Value);
+        }
+
         return Ok(new UpdatedUserModel());
     }
 }

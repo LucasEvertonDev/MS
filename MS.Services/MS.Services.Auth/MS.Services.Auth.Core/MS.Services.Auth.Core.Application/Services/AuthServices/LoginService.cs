@@ -43,12 +43,12 @@ public class LoginService : BaseService<LoginModel>, ILoginService
 
             var roles = await _mapuserGroupSearchRepository.GetRolesByUserGroup(user.UserGroupId.ToString());
 
-            var tokem = await _tokenService.GenerateToken(user, roles);
+            var (tokem, data) = await _tokenService.GenerateToken(user, roles);
 
             TokenRetorno = new TokenModel
             {
                 TokenJWT = tokem,
-                DataExpiracao = DateTime.Now.AddMinutes(JWTContants.ExpireInMinutes)
+                DataExpiracao = data
             };
         });
     }

@@ -11,7 +11,7 @@ public class BaseEntityBasicConfiguration<TBase> : IEntityTypeConfiguration<TBas
     {
         builder.HasKey(u => u.Id);
         builder.HasQueryFilter(x => x.Situation != (int)Situation.Deleted);
-        builder.Property(u => u.Id).ValueGeneratedOnAdd().IsRequired();
+        builder.Property(u => u.Id).HasMaxLength(50).ValueGeneratedOnAdd().IsRequired();
         builder.Property(u => u.Situation).IsRequired().HasDefaultValue(Situation.Active);
     }
 }

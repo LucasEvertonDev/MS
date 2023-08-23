@@ -8,6 +8,10 @@ namespace MS.Services.Auth.Core.Domain.Models.Users;
 public class UpdateUserDto : BaseModel
 {
     [JsonIgnore]
+    [FromHeader(Name = "Teste")]
+    public virtual string Teste { get; set; }
+
+    [JsonIgnore]
     [FromRoute(Name = "id")]
     public virtual string Id { get; set; }
 

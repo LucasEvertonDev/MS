@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MS.Libs.Core\MS.Libs.Core.Domain\MS.Libs.Core.Domain.csproj" />
+    <ProjectReference Include="..\MS.Libs.Infra.Utils\MS.Libs.Infra.Utils.csproj" />
   </ItemGroup>
 
 </Project>

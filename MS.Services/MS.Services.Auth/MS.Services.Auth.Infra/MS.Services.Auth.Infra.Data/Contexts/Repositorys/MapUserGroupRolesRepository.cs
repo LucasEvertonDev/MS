@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys.Base;

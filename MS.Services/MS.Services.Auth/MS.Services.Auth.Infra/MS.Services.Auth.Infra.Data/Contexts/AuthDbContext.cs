@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MS.Libs.Infra.Data.Context;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
@@ -8,9 +9,10 @@ namespace MS.Services.Auth.Infra.Data.Contexts;
 
 public class AuthDbContext : BaseDbContext<AuthDbContext>
 {
-    public AuthDbContext(DbContextOptions<AuthDbContext> options)
+    public AuthDbContext(DbContextOptions<AuthDbContext> options, IHttpContextFactory httpContext)
        : base(options)
-    { }
+    {
+    }
 
     public DbSet<User> Users { get; set; }
 

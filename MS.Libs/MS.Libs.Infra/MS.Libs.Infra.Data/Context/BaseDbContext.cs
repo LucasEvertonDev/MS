@@ -1,13 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using MS.Libs.Core.Domain.Infra.Claims;
 using System.Data;
-
+using MS.Libs.Infra.Utils.Extensions;
 namespace MS.Libs.Infra.Data.Context;
 
 public class BaseDbContext<TContext> : DbContext where TContext : DbContext
 {
-    public BaseDbContext(DbContextOptions<TContext> options)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public BaseDbContext(DbContextOptions<TContext> options,
+        IHttpContextAccessor httpContextAccessor)
        : base(options)
-    { }
+    {
+        _httpContextAccessor = httpContextAccessor;
+    }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -23,6 +30,14 @@ public class BaseDbContext<TContext> : DbContext where TContext : DbContext
                 if (entry.Property("CreateDate").CurrentValue == null)
                     entry.Property("CreateDate").CurrentValue = DateTime.Now;
             }
+        }
+
+        foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("LastUpdateBy") != null))
+        {
+            var userid = _httpContextAccessor.HttpContext.User.Identity.GetUserClaim(JWTUserClaims.UserId);
+
+            if (entry.Property("LastUpdateBy").CurrentValue == null && !string.IsNullOrEmpty(userid))
+                entry.Property("LastUpdateBy").CurrentValue = userid;
         }
 
         return base.SaveChangesAsync(cancellationToken);

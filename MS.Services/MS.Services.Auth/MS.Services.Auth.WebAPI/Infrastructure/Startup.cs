@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
@@ -8,6 +9,7 @@ using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.Infrastructure.Extensions;
 using MS.Libs.WebApi.Infrastructure.Filters;
+using MS.Services.Auth.Infra.Data.Contexts;
 using MS.Services.Auth.Infra.IoC;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -82,7 +84,7 @@ public class Startup
         services.AddSwaggerExamples();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
         {
