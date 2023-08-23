@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MS.Libs.Core.Domain.DbContexts.Entities.Base;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 using MS.Libs.Core.Domain.Models.Base;
 using MS.Libs.Core.Domain.Plugins.IMappers;
@@ -21,6 +22,11 @@ public abstract class BaseService<TModel> where TModel : IModel
 
     public abstract Task ExecuteAsync(TModel param);
 
+    public virtual Task UpdateMemoryCache()
+    { 
+        return Task.CompletedTask;
+    }
+
     protected virtual Task ValidateAsync(TModel param)
     {
         return Task.CompletedTask;
@@ -38,6 +44,10 @@ public abstract class BaseService<TModel> where TModel : IModel
             await _unitOfWork.RollbackAsync();
             throw;
         }
+        finally
+        {
+            await UpdateMemoryCache();
+        }
     }
 
     public async Task<TRetorno> OnTransactionAsync<TRetorno>(Func<Task<TRetorno>> func)
@@ -52,6 +62,10 @@ public abstract class BaseService<TModel> where TModel : IModel
         {
             await _unitOfWork.RollbackAsync();
             throw;
+        }
+        finally
+        {
+            await UpdateMemoryCache();
         }
     }
 }
