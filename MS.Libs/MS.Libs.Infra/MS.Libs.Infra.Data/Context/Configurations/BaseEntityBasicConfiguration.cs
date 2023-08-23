@@ -9,8 +9,10 @@ public class BaseEntityBasicConfiguration<TBase> : IEntityTypeConfiguration<TBas
 {
     public virtual void Configure(EntityTypeBuilder<TBase> builder)
     {
-        builder.HasKey(u => u.Id);
         builder.HasQueryFilter(x => x.Situation != (int)Situation.Deleted);
+
+        builder.HasKey(u => u.Id);
+       
         builder.Property(u => u.Id).HasMaxLength(50).ValueGeneratedOnAdd().IsRequired();
         builder.Property(u => u.Situation).IsRequired().HasDefaultValue(Situation.Active);
     }

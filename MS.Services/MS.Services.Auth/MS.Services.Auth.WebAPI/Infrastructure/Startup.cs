@@ -67,6 +67,11 @@ public class Startup
 
         services.AddSingleton<AppSettings, AppSettings>();
 
+        services.AddMemoryCache((options) =>
+        {
+            options.SizeLimit = 1024 * 1024;
+        });
+
         // Register dependencys application
         App.Init<DependencyInjection>()
             .AddInfraSctructure(services, configurations);
@@ -84,7 +89,7 @@ public class Startup
         services.AddSwaggerExamples();
     }
 
-    public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
         {

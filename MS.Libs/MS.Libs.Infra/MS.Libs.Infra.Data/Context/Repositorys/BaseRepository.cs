@@ -24,17 +24,17 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
 
     public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(e => e.Situation != (int)Situation.Deleted).SingleOrDefaultAsync(predicate);
+        return await _applicationDbContext.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(predicate);
     }
 
     public virtual async Task<IEnumerable<TEntity>> ToListAsync()
     {
-        return await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(e => e.Situation != (int)Situation.Deleted).ToListAsync();
+        return await _applicationDbContext.Set<TEntity>().AsNoTracking().ToListAsync();
     }
 
     public virtual async Task<IEnumerable<TEntity>> ToListAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(e => e.Situation != (int)Situation.Deleted).Where(predicate).ToListAsync();
+        return await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(predicate).ToListAsync();
     }
 
     public virtual Task<TEntity> CreateAsync(TEntity domain)
@@ -57,6 +57,6 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
 
     public virtual IQueryable<TEntity> AsQueriable()
     {
-        return _applicationDbContext.Set<TEntity>().AsNoTracking().Where(e => e.Situation != (int)Situation.Deleted);
+        return _applicationDbContext.Set<TEntity>().AsNoTracking();
     }
 }
