@@ -38,3 +38,21 @@ services:
     networks:
       - sql_server_network
       - backend
+
+  ms.services.products.webapi:
+    image: msservicesproductswebapi
+    container_name: msservicesproductswebapi
+    build:
+      context: ./MS.Services/MS.Services.Products/
+      dockerfile: ./MS.Services.Products.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4001:80'
+    networks:
+      - sql_server_network
+      - backend
+
