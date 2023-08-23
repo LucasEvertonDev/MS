@@ -15,7 +15,7 @@ public class CreateUserValidator : BaseValidator<CreateUserModel>, IValidatorMod
     {
         RuleFor(c => c.Username).NotNull().WithMessage(UserErrors.USERNAME_REQUIRED.ErrorMessage).WithErrorCode(UserErrors.USERNAME_REQUIRED.ErrorCode);
         RuleFor(c => c.Email).NotEmpty().WithMessage(UserErrors.EMAIL_INVALID.ErrorMessage).WithErrorCode(UserErrors.EMAIL_INVALID.ErrorCode);
-        RuleFor(senha => senha).NotEmpty().WithMessage(UserErrors.PASSWORD_INVALID.ErrorMessage).WithErrorCode(UserErrors.PASSWORD_INVALID.ErrorCode);
+        RuleFor(c => c.Password).NotEmpty().WithMessage(UserErrors.PASSWORD_INVALID.ErrorMessage).WithErrorCode(UserErrors.PASSWORD_INVALID.ErrorCode);
 
         When(c => !string.IsNullOrWhiteSpace(c.Password), () =>
         {
