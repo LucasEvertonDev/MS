@@ -7,12 +7,11 @@ networks:
 services:
   sqlserver:
     image : mcr.microsoft.com/mssql/server:2022-latest
-  container_name : sqlserver
-  restart : always
-  hostname: 'sqlserver'
-  environment:
-    ACCEPT_EULA: 'Y'
-    SA_PASSWORD: "Numsey#2021"
+    container_name : sqlserver
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "Numsey#2021"
     volumes:
       - c:\dados\volumes\mssql:/var/opt/mssql3
     ports:
@@ -22,17 +21,17 @@ services:
 
   ms.services.auth.webapi:
     image: msservicesauthwebapi
-    build:
-      context: .
-      dockerfile: ./MS.Services.Auth.WebAPI/Dockerfile
     container_name : msservicesauthwebapi
+    build:
+      context: ./MS.Services/MS.Services.Auth/
+      dockerfile: ./MS.Services.Auth.WebAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:SqlConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021"
     depends_on:
       - sqlserver
     ports:
-      - "4001:80"
+      - '4000:80'
     networks:
       - sql_server_network
       - backend
