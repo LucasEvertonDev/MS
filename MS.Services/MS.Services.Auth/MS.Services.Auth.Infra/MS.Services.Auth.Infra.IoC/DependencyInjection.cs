@@ -82,6 +82,6 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
 
     protected override void AddValidators(IServiceCollection services, AppSettings configuration)
     {
-        services.AddScoped<IValidatorModel<CreateUserModel>, CreateUserValidator>();
+        services.AddTransient<IValidatorModel<CreateUserModel>, CreateUserValidator>();
     }
 }

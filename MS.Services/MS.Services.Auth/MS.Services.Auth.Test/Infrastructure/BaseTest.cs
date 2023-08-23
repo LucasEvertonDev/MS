@@ -14,7 +14,7 @@ public class BaseTest
         var serviceCollection = new ServiceCollection();
 
         App.Init<DependencyInjection>().AddInfraSctructure(serviceCollection,
-            new AppSettings() { DbConnection = "Server=FIVBR-APP002V\\QA;Database=AuthDb;User Id=user_sign;Password=sign;TrustServerCertificate=True;" });
+            new AppSettings() { DbConnection = "Server=localhost,11433;Database=AuthDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;" });
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }

@@ -9,7 +9,7 @@ internal class UserNameValidator : AbstractValidator<string>
 {
     public UserNameValidator()
     {
-        RuleFor(UserName => UserName).NotEmpty().WithMessage(UserErrors.USERNAME_REQUIRED.ErrorMessage).WithErrorCode(UserErrors.USERNAME_REQUIRED.ErrorCode);
+        RuleFor(UserName => UserName).NotNull().WithMessage(UserErrors.USERNAME_REQUIRED.ErrorMessage).WithErrorCode(UserErrors.USERNAME_REQUIRED.ErrorCode);
         When(UserName => !string.IsNullOrWhiteSpace(UserName), () =>
         {
             RuleFor(UserName => UserName).Custom((username, contexto) =>

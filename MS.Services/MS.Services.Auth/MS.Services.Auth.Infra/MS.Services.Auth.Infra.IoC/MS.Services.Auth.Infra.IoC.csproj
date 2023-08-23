@@ -15,7 +15,6 @@
     <ProjectReference Include="..\..\MS.Services.Auth.Core\MS.Services.Auth.Core.Domain\MS.Services.Auth.Core.Domain.csproj" />
     <ProjectReference Include="..\MS.Services.Auth.Infra.Data\MS.Services.Auth.Infra.Data.csproj" />
     <ProjectReference Include="..\MS.Services.Auth.Plugins\MS.Services.Auth.Plugins.csproj" />
-    <ProjectReference Include="..\MS.Services.Auth.Pluguins\MS.Services.Auth.Plugins.csproj" />
   </ItemGroup>
 
 
