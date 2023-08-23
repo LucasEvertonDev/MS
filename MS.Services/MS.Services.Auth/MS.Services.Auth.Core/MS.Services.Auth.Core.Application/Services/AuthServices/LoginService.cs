@@ -23,7 +23,6 @@ public class LoginService : BaseService<LoginModel>, ILoginService
     public LoginService(IServiceProvider serviceProvider,
         ISearchRepository<User> userSearchRepository,
         IPasswordHash passwordHash,
-        ISearchRepository<Role> rolesSearchRepository,
         ITokenService tokenService,
         ISearchMapUserGroupRolesRepository mapuserGroupSearchRepository) : base(serviceProvider)
     {
@@ -48,7 +47,7 @@ public class LoginService : BaseService<LoginModel>, ILoginService
             TokenRetorno = new TokenModel
             {
                 TokenJWT = tokem,
-                DataExpiracao = data
+                DataExpiracao = data.ToLocalTime()
             };
         });
     }

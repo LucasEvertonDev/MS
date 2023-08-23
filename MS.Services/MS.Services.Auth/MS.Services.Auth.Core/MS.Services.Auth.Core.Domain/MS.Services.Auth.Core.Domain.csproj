@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="8.0.0" />
+    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
 
