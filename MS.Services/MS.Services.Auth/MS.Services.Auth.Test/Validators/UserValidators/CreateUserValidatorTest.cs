@@ -31,7 +31,8 @@ public class CreateUserValidatorTest : BaseTest
             });
         };
 
-        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages.Equals(UserErrors.USERNAME_REQUIRED));
+        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages != null 
+            && ex.ErrorsMessages.Exists(a => a.ErrorCode == UserErrors.USERNAME_REQUIRED.ErrorCode));
     }
 
     [Fact]
@@ -49,6 +50,7 @@ public class CreateUserValidatorTest : BaseTest
             });
         };
 
-        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages.Equals(UserErrors.EMAIL_INVALID));
+        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages != null
+            && ex.ErrorsMessages.Exists(a => a.ErrorCode == UserErrors.EMAIL_INVALID.ErrorCode));
     }
 }

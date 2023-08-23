@@ -7,6 +7,7 @@ using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.Infrastructure.Extensions;
+using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Services.Auth.Infra.IoC;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -27,7 +28,7 @@ public class Startup
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            //options.Filters.Add(typeof(ExceptionFilter));
+            options.Filters.Add(typeof(ExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 500));
         });
 
@@ -98,7 +99,12 @@ public class Startup
             .AllowAnyHeader());
 
         app.UseSwagger();
-        app.UseSwaggerUI();
+        // subir no local host 
+        app.UseSwaggerUI(c =>
+        {
+            c.RoutePrefix = "";
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "MS.Services.Auth.WebAPI");
+        });
 
         app.UseAuthentication();
 
