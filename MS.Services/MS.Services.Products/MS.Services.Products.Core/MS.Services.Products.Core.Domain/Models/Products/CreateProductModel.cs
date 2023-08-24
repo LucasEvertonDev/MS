@@ -17,5 +17,5 @@ public class CreateProductModel : BaseModel
 public class CreatedProductModel : CreateProductModel
 {
     [DefaultValue("1281298291289djjjdjd23")]
-    public string Ide { get; set; }
+    public string Id { get; set; }
 }
