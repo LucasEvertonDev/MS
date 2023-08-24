@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using MS.Libs.Core.Domain.Constants;
+using MS.Libs.Core.Domain.Infra.Claims;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Plugins.JWT;
 using Newtonsoft.Json;
@@ -16,16 +17,13 @@ public class TokenService : ITokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(JWTContants.Key);
 
-        user.Password = "";
-        user.PasswordHash = "";
-
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user)),
+                new Claim(JWTUserClaims.Name, user.Name),
+                new Claim(JWTUserClaims.Email, user.Email),
+                new Claim(JWTUserClaims.UserId, user.Id.ToString()),
             }),
             Expires = DateTime.UtcNow.AddMinutes(JWTContants.ExpireInMinutes),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

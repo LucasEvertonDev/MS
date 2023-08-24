@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MS.Services.Products.Core.Domain.DbContexts.Entities;
-using MS.Services.Products.Core.Domain.Models.Users;
+using MS.Services.Products.Core.Domain.Models.Auth;
 
 namespace MS.Services.Products.Infra.Plugins.AutoMapper.Profiles;
 
@@ -15,11 +15,11 @@ public class AutoMapperProfile : Profile
 
     public void ConvertDomainToModel()
     {
-        CreateMap<User, CreatedUserModel>().ReverseMap();
+        CreateMap<Product, CreateProductModel>().ReverseMap();
     }
 
     public void ConvertModelToDomain()
     {
-        CreateMap<CreateUserModel, User>().ReverseMap();
+        CreateMap<Product, CreatedProductModel>().ReverseMap();
     }
 }

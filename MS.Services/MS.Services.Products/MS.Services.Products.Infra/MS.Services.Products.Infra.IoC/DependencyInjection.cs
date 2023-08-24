@@ -2,33 +2,26 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
+using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Data.Context.UnitOfWork;
 using MS.Libs.Infra.IoC;
 using MS.Libs.Infra.Plugins.AutoMapper;
-using MS.Services.Products.Core.Application.Services.AuthServices;
-using MS.Services.Products.Core.Application.Services.UserServices;
+using MS.Services.Products.Core.Application.Services.Products;
 using MS.Services.Products.Core.Domain.DbContexts.Entities;
-using MS.Services.Products.Core.Domain.DbContexts.Repositorys;
-using MS.Services.Products.Core.Domain.Models.Users;
-using MS.Services.Products.Core.Domain.Plugins.Cryptography;
-using MS.Services.Products.Core.Domain.Plugins.JWT;
-using MS.Services.Products.Core.Domain.Services.AuthServices;
-using MS.Services.Products.Core.Domain.Services.UserServices;
+using MS.Services.Products.Core.Domain.Models.Auth;
+using MS.Services.Products.Core.Domain.Services.ProductsService;
 using MS.Services.Products.Infra.Data.Contexts;
-using MS.Services.Products.Infra.Data.Contexts.Repositorys;
 using MS.Services.Products.Infra.IoC.Extensions;
 using MS.Services.Products.Infra.Plugins.AutoMapper.Profiles;
 using MS.Services.Products.Infra.Plugins.FluentValidation.User;
-using MS.Services.Products.Infra.Plugins.Hasher;
-using MS.Services.Products.Infra.Plugins.TokenJWT;
 
 namespace MS.Services.Products.Infra.IoC;
 
-public class DependencyInjection : BaseDependencyInjection
+public class DependencyInjection : BaseDependencyInjection<AppSettings>
 {
-    public override void AddInfraSctructure(IServiceCollection services, IConfiguration configuration)
+    public override void AddInfraSctructure(IServiceCollection services, AppSettings configuration)
     {
         AddDbContexts(services, configuration);
 
@@ -41,17 +34,17 @@ public class DependencyInjection : BaseDependencyInjection
         AddValidators(services, configuration); 
     }
 
-    protected override void AddDbContexts(IServiceCollection services, IConfiguration configuration)
+    protected override void AddDbContexts(IServiceCollection services, AppSettings configuration)
     {
         //É obrigatório definir a versão do My Sql 
-        services.AddDbContext<AuthDbContext>(options =>
-              options.UseSqlServer(configuration.GetConnectionString("SqlConnection"),
-              b => b.MigrationsAssembly(typeof(AuthDbContext).Assembly.FullName)));
+        services.AddDbContext<ProductsDbContext>(options =>
+              options.UseSqlServer(configuration.DbConnection,
+              b => b.MigrationsAssembly(typeof(ProductsDbContext).Assembly.FullName)));
 
-        services.AddScoped<IUnitOfWork, UnitOfWork<AuthDbContext>>();
+        services.AddScoped<IUnitOfWork, UnitOfWork<ProductsDbContext>>();
     }
 
-    protected override void AddMappers(IServiceCollection services, IConfiguration configuration) 
+    protected override void AddMappers(IServiceCollection services, AppSettings configuration) 
     {
         services.AddScoped<IMapperPlugin, Mapper>();
 
@@ -61,26 +54,18 @@ public class DependencyInjection : BaseDependencyInjection
         }).CreateMapper());
     }
 
-    protected override void AddRepositorys(IServiceCollection services, IConfiguration configuration) 
+    protected override void AddRepositorys(IServiceCollection services, AppSettings configuration) 
     {
-        services.AddRepository<User>();
-        services.AddRepository<Role>();
-        services.AddRepository<UserGroup>();
-        services.AddRepository<MapUserGroupRoles>();
-
-        services.AddScoped<ISearchMapUserGroupRolesRepository, MapUserGroupRolesRepository>();
+        services.AddRepository<Product>();
     }
 
-    protected override void AddServices(IServiceCollection services, IConfiguration configuration) 
+    protected override void AddServices(IServiceCollection services, AppSettings configuration) 
     {
-        services.AddScoped<ITokenService, TokenService>();
-        services.AddScoped<IPasswordHash, PasswordHash>();
-        services.AddScoped<ICreateUserService, CreateUserService>();
-        services.AddScoped<ILoginService, LoginService>();
+        services.AddScoped<ICreateProductSetvice, CreateProductsService>();
     }
 
-    protected override void AddValidators(IServiceCollection services, IConfiguration configuration)
+    protected override void AddValidators(IServiceCollection services, AppSettings configuration)
     {
-        services.AddScoped<IValidatorModel<CreateUserModel>, CreateUserValidator>();
+        services.AddScoped<IValidatorModel<CreateProductModel>, CreateProductsValidator>();
     }
 }
