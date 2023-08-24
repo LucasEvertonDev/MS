@@ -17,9 +17,9 @@ public class ProductController : BaseController
     }
 
     [Authorize]
-    [HttpPost()]
+    [HttpPost("create")]
     [ProducesResponseType(typeof(CreatedProductModel), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Post(CreateProductModel createProductModel)
+    public async Task<ActionResult> Create(CreateProductModel createProductModel)
     {
         await _createProductSetvice.ExecuteAsync(createProductModel);
 
@@ -27,11 +27,11 @@ public class ProductController : BaseController
     }
 
 
-    //[HttpPut("{id}")]
-    //[Authorize]
-    //[ProducesResponseType(typeof(UpdatedUserModel), StatusCodes.Status200OK)]
-    //public ActionResult Put(UpdateUserDto loginModel)
-    //{
-    //    return Ok(new UpdatedUserModel());
-    //}
+    [HttpPut("{id}")]
+    [Authorize]
+    [ProducesResponseType(typeof(CreatedProductModel), StatusCodes.Status200OK)]
+    public ActionResult Put([FromBody] CreatedProductModel loginModel)
+    {
+        return Ok(new CreatedProductModel());
+    }
 }

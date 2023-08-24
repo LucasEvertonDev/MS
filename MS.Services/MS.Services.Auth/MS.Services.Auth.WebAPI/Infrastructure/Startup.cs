@@ -78,7 +78,7 @@ public class Startup
 
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Auth.WebAPI", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Products.WebAPI", Version = "v1" });
 
             c.RegisterSwaggerDefaultConfig(true);
 

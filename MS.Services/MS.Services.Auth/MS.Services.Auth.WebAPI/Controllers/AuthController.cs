@@ -22,6 +22,11 @@ public class AuthController : BaseController
         _createUserService = createUserService;
     }
 
+    /// <summary>
+    /// Registra o usuário
+    /// </summary>
+    /// <param name="createUserModel"></param>
+    /// <returns></returns>
     [HttpPost("register")]
     [ProducesResponseType(typeof(CreatedUserModel), StatusCodes.Status200OK)]
     public async Task<ActionResult> Register([FromBody] CreateUserModel createUserModel)

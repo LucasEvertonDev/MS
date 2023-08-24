@@ -2,5 +2,5 @@
 
 public class BaseEntityLastUpdateBy : BaseEntity
 {
-    public Guid LastUpdateBy { get; set; }
+    public string LastUpdateBy { get; set; }
 }

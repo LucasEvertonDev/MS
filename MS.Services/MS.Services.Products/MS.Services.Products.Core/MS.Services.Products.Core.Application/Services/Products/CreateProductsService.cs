@@ -30,7 +30,7 @@ public class CreateProductsService : BaseService<CreateProductModel>, ICreatePro
             await ValidateAsync(param);
 
             var product = _imapper.Map<Product>(param);
-
+            product.Id = new Guid("95E48243-5328-4BFF-24F3-08DBA4C512F2");
             var productCreated = await _createProductRepository.CreateAsync(product);
 
             CreatedProduct = _imapper.Map<CreatedProductModel>(productCreated);
