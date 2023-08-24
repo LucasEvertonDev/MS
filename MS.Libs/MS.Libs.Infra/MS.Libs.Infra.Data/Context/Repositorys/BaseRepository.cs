@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MS.Libs.Core.Domain.DbContexts.Entities.Base;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using System.Linq.Expressions;
@@ -9,10 +10,12 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
     IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntityBasic where TContext : DbContext
 {
     protected TContext _applicationDbContext;
+    private readonly IServiceProvider _serviceProvider;
 
-    public BaseRepository(TContext applicationDbContext)
+    public BaseRepository(IServiceProvider serviceProvider)
     {
-        _applicationDbContext = applicationDbContext;
+        _serviceProvider = serviceProvider;
+        _applicationDbContext = serviceProvider.GetService<TContext>();
     }
 
     public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)

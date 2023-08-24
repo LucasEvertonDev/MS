@@ -1,7 +1,8 @@
 ﻿using MS.Libs.Core.Domain.DbContexts.Entities.Base;
+using MS.Libs.Core.Domain.Infra.Attributes;
 
 namespace MS.Services.Auth.Core.Domain.DbContexts.Entities;
-
+[Cache(Key ="MapUserGroupRoles")]
 public class MapUserGroupRoles : BaseEntityBasic
 {
     public Guid UserGroupId { get; set; }
