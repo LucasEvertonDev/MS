@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MS.Libs.Core.Domain.DbContexts.Entities.Base;
-using MS.Libs.Core.Domain.DbContexts.Enuns;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using System.Linq.Expressions;
 
 namespace MS.Libs.Infra.Data.Context.Repositorys;
 
-public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDeleteRepository<TEntity>, IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntityBasic where TContext : DbContext
+public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDeleteRepository<TEntity>,
+    IUpdateRepository<TEntity>, ISearchRepository<TEntity> where TEntity : BaseEntityBasic where TContext : DbContext
 {
     protected TContext _applicationDbContext;
 

@@ -68,4 +68,9 @@ public abstract class BaseService<TModel> where TModel : IModel
             await UpdateMemoryCache();
         }
     }
+
+    public virtual Task AddChangesInMemoryCache()
+    {
+        return Task.CompletedTask;
+    }
 }
