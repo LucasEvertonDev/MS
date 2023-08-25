@@ -42,6 +42,8 @@ public class AuthUnauthorizedMiddleware
                 break;
         }
 
+        httpContext.Response.ContentType = "application/json";
+
         await httpContext.Response
             .WriteAsync(JsonSerializer.Serialize(errormodel));
     }

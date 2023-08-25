@@ -62,6 +62,7 @@ public class DependencyInjection : BaseDependencyInjection<AppSettings>
     protected override void AddServices(IServiceCollection services, AppSettings configuration) 
     {
         services.AddScoped<ICreateProductSetvice, CreateProductsService>();
+        services.AddScoped<IUpdateProductService, UpdateProductService>();
     }
 
     protected override void AddValidators(IServiceCollection services, AppSettings configuration)

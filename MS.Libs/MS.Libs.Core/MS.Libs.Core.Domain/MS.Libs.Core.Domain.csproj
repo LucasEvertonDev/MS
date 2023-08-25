@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>MS.Libs.Core.Domain</Title>
     <PackageId>LcsEverton.MS.Libs.Core.Domain</PackageId>
-	<Version>12.0.0</Version>
+	<Version>13.0.0</Version>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
   </PropertyGroup>
 

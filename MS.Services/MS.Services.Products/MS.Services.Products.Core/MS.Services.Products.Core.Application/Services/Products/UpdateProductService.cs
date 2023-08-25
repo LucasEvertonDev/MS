@@ -7,7 +7,7 @@ using MS.Services.Products.Core.Domain.Services.ProductsService;
 
 namespace MS.Services.Products.Core.Application.Services.Products;
 
-public class UpdateProductService : BaseService<BaseModel>
+public class UpdateProductService : BaseService<BaseModel>, IUpdateProductService
 {
     private readonly IUpdateRepository<Product> _updateRepository;
     private readonly IValidatorModel<CreateProductModel> _validatorModel;
@@ -29,7 +29,7 @@ public class UpdateProductService : BaseService<BaseModel>
     {
         await OnTransactionAsync(async () =>
         {
-            var result = await _search.FirstOrDefaultAsync(a => a.CreateDate > DateTime.MinValue);
+            var result = await _search.FirstOrDefaultAsync(a => !a.UpdateDate.HasValue);
             var productCreated = await _updateRepository.UpdateAsync(result);
 
             CreatedProduct = _imapper.Map<CreatedProductModel>(productCreated);

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
@@ -9,7 +8,7 @@ using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.Infrastructure.Extensions;
 using MS.Libs.WebApi.Infrastructure.Filters;
-using MS.Services.Auth.Infra.Data.Contexts;
+using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.Infra.IoC;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -31,6 +30,8 @@ public class Startup
         services.AddMvc(options =>
         {
             options.Filters.Add(typeof(ExceptionFilter));
+            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 401));
+            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 403));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 500));
         });
 
@@ -93,6 +94,8 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
+        app.UseMiddleware<AuthUnauthorizedMiddleware>();
 
         app.UseHttpsRedirection();
 
