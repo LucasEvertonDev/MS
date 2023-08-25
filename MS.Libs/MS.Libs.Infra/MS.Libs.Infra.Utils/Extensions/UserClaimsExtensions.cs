@@ -12,6 +12,6 @@ public static class UserClaimsExtensions
             return "";
         }
         var claimsIdentity = Identity as ClaimsIdentity;
-        return claimsIdentity.FindFirst(claim).ToString();
+        return claimsIdentity.FindFirst(claim)?.Value;
     }
 }
