@@ -5,7 +5,7 @@ namespace MS.Services.Auth.Infra.Data.Contexts.Repositorys.Base;
 
 public class Repository<TEntity> : BaseRepository<AuthDbContext, TEntity> where TEntity : BaseEntityBasic
 {
-    public Repository(AuthDbContext applicationDbContext) : base(applicationDbContext)
+    public Repository(IServiceProvider serviceProvider) : base(serviceProvider)
     {
     }
 }
