@@ -5,6 +5,7 @@ using MS.Libs.Core.Domain.DbContexts.Entities.Base;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Infra.Attributes;
+using MS.Libs.Core.Domain.Models.Base;
 using System.Data;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -72,9 +73,10 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
 
     public virtual async Task<List<TEntity>> GetListFromCacheAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        var (cache, AbsoluteExpirationInMinutes, SlidingExpirationInMinutes) = GetCustomAttributes();
         try
         {
+            var (cache, AbsoluteExpirationInMinutes, SlidingExpirationInMinutes) = GetCustomAttributes();
+
             return await _memoryCache.GetOrCreateAsync(cache,
                 async (cacheEntry) =>
                 {
@@ -88,6 +90,18 @@ public class BaseRepository<TContext, TEntity> : ICreateRepository<TEntity>, IDe
         {
             return null;
         }
+    }
+
+    public async Task<PagedResult<TEntity>> ToListAsync(int pageSize, int pageNumber, Expression<Func<TEntity, bool>> predicate)
+    {
+        var count = await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(predicate).CountAsync();
+
+        var itens =  await _applicationDbContext.Set<TEntity>().AsNoTracking().Where(predicate)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PagedResult<TEntity>(itens, pageSize, pageNumber, count);
     }
 
     private (string, long, long) GetCustomAttributes()

@@ -13,4 +13,5 @@ public interface ISearchRepository<TEntity> where TEntity : IEntity
 
     Task<IEnumerable<TEntity>> ToListAsync(Expression<Func<TEntity, bool>> predicate);
     Task<List<TEntity>> GetListFromCacheAsync(Expression<Func<TEntity, bool>> predicate);
+    Task<Models.Base.PagedResult<TEntity>> ToListAsync(int pageSize, int pageNumber, Expression<Func<TEntity, bool>> predicate);
 }
