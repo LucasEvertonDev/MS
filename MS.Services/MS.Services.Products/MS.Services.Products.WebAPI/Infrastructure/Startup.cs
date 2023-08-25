@@ -99,7 +99,7 @@ public class Startup
 
         app.UseHttpsRedirection();
 
-        app.UseMiddleware<Teste>();
+        app.UseMiddleware<AuthUnauthorizedMiddleware>();
 
         app.UseRouting();
 
