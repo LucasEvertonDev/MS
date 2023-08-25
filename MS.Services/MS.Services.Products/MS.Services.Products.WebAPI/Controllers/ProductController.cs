@@ -19,7 +19,7 @@ public class ProductController : BaseController
     [Authorize]
     [HttpPost("create")]
     [ProducesResponseType(typeof(CreatedProductModel), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Post(CreateProductModel createProductModel)
+    public async Task<ActionResult> Post([FromBody] CreateProductModel createProductModel)
     {
         await _createProductSetvice.ExecuteAsync(createProductModel);
 
@@ -29,7 +29,7 @@ public class ProductController : BaseController
     [HttpPut("{id}")]
     [Authorize]
     [ProducesResponseType(typeof(CreatedProductModel), StatusCodes.Status200OK)]
-    public ActionResult Put([FromBody] CreatedProductModel loginModel)
+    public ActionResult Put()
     {
         return Ok(new CreatedProductModel());
     }

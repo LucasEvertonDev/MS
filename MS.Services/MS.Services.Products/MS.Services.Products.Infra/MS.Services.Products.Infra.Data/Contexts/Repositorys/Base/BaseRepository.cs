@@ -5,7 +5,7 @@ namespace MS.Services.Products.Infra.Data.Contexts.Repositorys.Base;
 
 public class Repository<TEntity> : BaseRepository<ProductsDbContext, TEntity> where TEntity : BaseEntityBasic
 {
-    public Repository(ProductsDbContext applicationDbContext) : base(applicationDbContext)
+    public Repository(IServiceProvider serviceProvider) : base(serviceProvider)
     {
     }
 }
