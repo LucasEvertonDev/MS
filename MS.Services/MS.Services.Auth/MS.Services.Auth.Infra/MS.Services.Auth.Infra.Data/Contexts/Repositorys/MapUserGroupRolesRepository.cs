@@ -11,7 +11,6 @@ public class MapUserGroupRolesRepository : Repository<MapUserGroupRoles>, ISearc
     private readonly IMemoryCache _memoryCache;
 
     public MapUserGroupRolesRepository(IServiceProvider serviceProvider,
-        AuthDbContext applicationDbContext,
         IMemoryCache memoryCache) : base(serviceProvider)
     {
         _memoryCache = memoryCache;
