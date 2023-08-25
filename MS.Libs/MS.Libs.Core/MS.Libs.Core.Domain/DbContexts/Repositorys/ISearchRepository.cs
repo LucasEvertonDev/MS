@@ -12,4 +12,5 @@ public interface ISearchRepository<TEntity> where TEntity : IEntity
     Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
     Task<IEnumerable<TEntity>> ToListAsync(Expression<Func<TEntity, bool>> predicate);
+    Task<List<TEntity>> GetListFromCacheAsync(Expression<Func<TEntity, bool>> predicate);
 }

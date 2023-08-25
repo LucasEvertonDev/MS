@@ -22,11 +22,6 @@ public abstract class BaseService<TModel> where TModel : IModel
 
     public abstract Task ExecuteAsync(TModel param);
 
-    public virtual Task UpdateMemoryCache()
-    { 
-        return Task.CompletedTask;
-    }
-
     protected virtual Task ValidateAsync(TModel param)
     {
         return Task.CompletedTask;
@@ -46,7 +41,7 @@ public abstract class BaseService<TModel> where TModel : IModel
         }
         finally
         {
-            await UpdateMemoryCache();
+            await AddChangesInMemoryCache();
         }
     }
 
@@ -65,7 +60,7 @@ public abstract class BaseService<TModel> where TModel : IModel
         }
         finally
         {
-            await UpdateMemoryCache();
+            await AddChangesInMemoryCache();
         }
     }
 

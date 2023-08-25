@@ -61,16 +61,14 @@ public class Startup
                 };
             });
 
+        // Binding model 
         services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
         var configurations = new AppSettings(Configuration);
 
         services.AddSingleton<AppSettings, AppSettings>();
 
-        services.AddMemoryCache((options) =>
-        {
-            options.SizeLimit = 1024 * 1024;
-        });
+        services.AddMemoryCache((options) =>{});
 
         // Register dependencys application
         App.Init<DependencyInjection>()

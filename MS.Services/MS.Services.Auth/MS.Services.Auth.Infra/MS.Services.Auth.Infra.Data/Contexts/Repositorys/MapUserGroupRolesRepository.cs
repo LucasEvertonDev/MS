@@ -23,25 +23,43 @@ public class MapUserGroupRolesRepository : Repository<MapUserGroupRoles>, ISearc
     {
         var (cache, AbsoluteExpirationInMinutes, SlidingExpiration) = GetCustomAttributes();
 
-        return await _memoryCache.GetOrCreateAsync(
-            cache,
-            async cacheEntry => 
-            {
-                cacheEntry.SlidingExpiration = TimeSpan.FromMinutes(SlidingExpiration);
+        var role = await this.AsQueriable().Include(c => c.Role)
+                       .Where(p => p.UserGroupId.ToString() == userGroupId)
+                       .Select(a => a.Role)
+                       .ToListAsync();
 
-                cacheEntry.AbsoluteExpiration = DateTime.Now.AddMinutes(AbsoluteExpirationInMinutes);
+        role.AddRange(role);
 
-                return await this.AsQueriable().Include(c => c.Role)
-                    .Where(p => p.UserGroupId.ToString() == userGroupId)
-                    .Select(a => a.Role)
-                    .ToListAsync();
-            });
+        role.AddRange(role);
+        role.AddRange(role);
+
+
+
+        try
+        {
+            return await _memoryCache.GetOrCreateAsync(
+                cache,
+                async cacheEntry =>
+                {
+                    cacheEntry.SlidingExpiration = TimeSpan.FromMinutes(SlidingExpiration);
+
+                    cacheEntry.AbsoluteExpiration = DateTime.Now.AddMinutes(AbsoluteExpirationInMinutes);
+
+                    var options = new MemoryCacheOptions();
+
+                    return role;
+                });
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     public (string, long, long) GetCustomAttributes()
     {
         var cache = typeof(MapUserGroupRoles).GetCustomAttributes<CacheAttribute>().FirstOrDefault();
 
-        return (cache.Key, cache.AbsoluteExpirationInMinutes ?? 2, cache.SlidingExpirationInMinutes ?? 3);
+        return (cache.Key, cache.AbsoluteExpirationInMinutes ?? 1, cache.SlidingExpirationInMinutes ?? 1);
     }
 }
