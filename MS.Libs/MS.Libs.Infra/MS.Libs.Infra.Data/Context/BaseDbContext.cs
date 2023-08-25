@@ -34,10 +34,14 @@ public class BaseDbContext<TContext> : DbContext where TContext : DbContext
 
         foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("LastUpdateBy") != null))
         {
-            var userid = _httpContextAccessor.HttpContext.User.Identity.GetUserClaim(JWTUserClaims.UserId);
+            if (entry.State == EntityState.Modified)
+            {
+                var userid = _httpContextAccessor.HttpContext?.User?.Identity?.GetUserClaim(JWTUserClaims.UserId);
 
-            if (entry.Property("LastUpdateBy").CurrentValue == null && !string.IsNullOrEmpty(userid))
-                entry.Property("LastUpdateBy").CurrentValue = userid;
+                if (entry.Property("LastUpdateBy").CurrentValue == null && !string.IsNullOrEmpty(userid))
+                    entry.Property("LastUpdateBy").CurrentValue = userid;
+            }
+           
         }
 
         return base.SaveChangesAsync(cancellationToken);
