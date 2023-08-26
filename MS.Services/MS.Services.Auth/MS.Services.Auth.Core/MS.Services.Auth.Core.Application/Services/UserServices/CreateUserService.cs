@@ -1,4 +1,5 @@
-﻿using MS.Libs.Core.Domain.DbContexts.Repositorys;
+﻿using MS.Libs.Core.Application.Services;
+using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Services.Auth.Core.Domain.Contansts;
@@ -34,9 +35,9 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
         {
             await OnTransactionAsync(async () =>
             {
-                var user = _imapper.Map<User>(param);
-
                 await ValidateAsync(param);
+
+                var user = _imapper.Map<User>(param);
 
                 user.PasswordHash = _passwordHash.GeneratePasswordHash();
                 user.Password = _passwordHash.EncryptPassword(user.Password, user.PasswordHash);
@@ -51,12 +52,12 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
         {
             if (_searchRepository.AsQueriable().Where(u => u.Username == param.Username).Any())
             {
-                throw new BusinessException(UserErrors.ALREADY_USERNAME);
+                BusinessException(UserErrors.Business.ALREADY_USERNAME);
             }
 
             if (_searchRepository.AsQueriable().Where(u => u.Email == param.Email).Any())
             {
-                throw new BusinessException(UserErrors.ALREADY_EMAIL);
+                BusinessException(UserErrors.Business.ALREADY_EMAIL);
             }
 
             await _createUserValidatorModel.ValidateModelAsync(param);

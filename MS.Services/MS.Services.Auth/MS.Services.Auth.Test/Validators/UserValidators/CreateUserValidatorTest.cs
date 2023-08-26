@@ -27,12 +27,12 @@ public class CreateUserValidatorTest : BaseTest
                 Email = "lcseverton@gmail.com" + new Random().Next(0, 10000),
                 Password = "123456",
                 Name = "Lucas Everton Santos de Oliveira",
-                UserGroupId = new Guid("F97E565D-08AF-4281-BC11-C0206EAE06FA"),
+                UserGroupId = "F97E565D-08AF-4281-BC11-C0206EAE06FA",
             });
         };
 
         await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages != null 
-            && ex.ErrorsMessages.Exists(a => a.ErrorCode == UserErrors.USERNAME_REQUIRED.ErrorCode));
+            && ex.ErrorsMessages.Exists(a => a.ErrorCode == UserErrors.Validators.USERNAME_REQUIRED.ErrorCode));
     }
 
     [Fact]
@@ -46,11 +46,11 @@ public class CreateUserValidatorTest : BaseTest
                 Email = "teste",
                 Password = "123456",
                 Name = "Lucas Everton Santos de Oliveira",
-                UserGroupId = new Guid("F97E565D-08AF-4281-BC11-C0206EAE06FA"),
+                UserGroupId = "F97E565D-08AF-4281-BC11-C0206EAE06FA",
             });
         };
 
         await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages != null
-            && ex.ErrorsMessages.Exists(a => a.ErrorCode == UserErrors.EMAIL_INVALID.ErrorCode));
+            && ex.ErrorsMessages.Exists(a => a.ErrorCode == UserErrors.Validators.EMAIL_INVALID.ErrorCode));
     }
 }

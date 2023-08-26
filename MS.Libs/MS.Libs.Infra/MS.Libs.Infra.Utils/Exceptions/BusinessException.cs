@@ -9,7 +9,7 @@ public class BusinessException : MSException
 {
     public List<ErrorModel> ErrorsMessages { get; set; }
 
-    public BusinessException(params ErrorModel[] error) : base(string.Empty)
+    public BusinessException(params ErrorModel[] error) : base(string.Join(", ", error.Select(a => a.ErrorMessage)))
     {
         ErrorsMessages = error.ToList();
     }

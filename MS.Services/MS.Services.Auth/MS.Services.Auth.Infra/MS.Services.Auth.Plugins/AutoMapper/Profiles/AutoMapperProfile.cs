@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MS.Libs.Core.Domain.Models.Base;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Models.Users;
 
@@ -16,10 +17,14 @@ public class AutoMapperProfile : Profile
     public void ConvertDomainToModel()
     {
         CreateMap<User, CreatedUserModel>().ReverseMap();
+        CreateMap<User, UpdatedUserModel>().ReverseMap();
+        CreateMap<User, SearchedUserModel>().ReverseMap();
+        CreateMap<PagedResult<User>, PagedResult<SearchedUserModel>>().ReverseMap();
     }
 
     public void ConvertModelToDomain()
     {
         CreateMap<CreateUserModel, User>().ReverseMap();
+        CreateMap<UpdateUserModel, User>().ReverseMap();
     }
 }

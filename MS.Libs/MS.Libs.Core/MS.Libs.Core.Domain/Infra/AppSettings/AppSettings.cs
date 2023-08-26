@@ -8,10 +8,12 @@ public class AppSettings
     {
         MemoryCache = new MemoryCacheConfig(5, 10);
         Messages = new Messages();
+        Log = new Log("Warning");
+        SqlConnections = new SqlConnections("", "");
     }   
     public AppSettings(IConfiguration config)
     {
-        DbConnection = config.GetConnectionString("SqlConnection");
+        SqlConnections = new SqlConnections(config.GetConnectionString("SqlConnection"), config.GetConnectionString("SerilogSqlConnection") ?? config.GetConnectionString("SqlConnection"));
 
         MemoryCache = new MemoryCacheConfig(
             slidingExpirationInMinutes: int.Parse(config["MemoryCache:SlidingExpirationInMinutes"] ?? "1"),
@@ -19,12 +21,28 @@ public class AppSettings
         );
 
         Messages = new Messages();
+
+        Log = new Log(config["Logging:LogLevel:Serilog"] ?? "Warning");
     }
-    public string DbConnection { get; set; }
+    public SqlConnections SqlConnections { get; set; }
 
     public MemoryCacheConfig MemoryCache { get; set; }
 
     public Messages Messages { get; set; } 
+
+    public Log Log { get; set; }
+}
+
+public class SqlConnections 
+{
+    public SqlConnections(string dbconnection, string serilogConection)
+    {
+        DbConnection = dbconnection;
+        SerilogConnection = serilogConection;
+    }
+
+    public string DbConnection { get; set; }
+    public string SerilogConnection { get; set; }
 }
 
 public class MemoryCacheConfig
@@ -44,5 +62,16 @@ public class Messages
 {
     public string Forbidden { get; set; } = "Não autorizado. Credenciais fornecidas ausentes, inválidas ou expiradas";
 
-    public string Unauthorized { get; set; } = "Acesso negado.Você não tem permissões suficientes para acessar esta API";
+    public string Unauthorized { get; set; } = "Acesso negado. Você não tem permissões suficientes para acessar esta API";
+}
+
+
+public class Log
+{
+    public Log(string logLevel)
+    {
+        LogLevel = logLevel;
+    }
+
+    public string LogLevel { get; set; }
 }

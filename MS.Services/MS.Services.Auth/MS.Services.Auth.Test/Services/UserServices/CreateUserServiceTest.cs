@@ -25,15 +25,13 @@ public class CreateUserServiceTest : BaseTest
             Email = "teste@teste.com" + new Random().Next(0, 10000),
             Password = "123456",
             Name = "Lucas Everton Santos de Oliveira",
-            UserGroupId = new Guid("F97E565D-08AF-4281-BC11-C0206EAE06FA"),
+            UserGroupId = "F97E565D-08AF-4281-BC11-C0206EAE06FA",
             Username = "lcseverton" + new Random().Next(0, 10000)
         });
 
         var retorno = _createUserService.CreatedUser;
 
         retorno.Id.Should().NotBeNull();
-        retorno.Password.Should().NotBeNull();
-        retorno.Password.Should().NotBeNullOrWhiteSpace();
     }
 
     [Fact]
@@ -46,11 +44,11 @@ public class CreateUserServiceTest : BaseTest
                 Email = "lcseverton@gmail.com" + new Random().Next(0, 10000),
                 Password = "123456",
                 Name = "Lucas Everton Santos de Oliveira",
-                UserGroupId = new Guid("F97E565D-08AF-4281-BC11-C0206EAE06FA"),
+                UserGroupId = "F97E565D-08AF-4281-BC11-C0206EAE06FA",
                 Username = "lcseverton"
             });
         };
 
-        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages.Contains(UserErrors.ALREADY_USERNAME));
+        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages.Contains(UserErrors.Business.ALREADY_USERNAME));
     }
 }

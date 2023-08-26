@@ -6,6 +6,6 @@ namespace MS.Services.Auth.Core.Domain.Services.AuthServices
     {
         TokenModel TokenRetorno { get; set; }
 
-        Task ExecuteAsync(LoginModel param);
+        Task ExecuteAsync(LoginDto param);
     }
 }

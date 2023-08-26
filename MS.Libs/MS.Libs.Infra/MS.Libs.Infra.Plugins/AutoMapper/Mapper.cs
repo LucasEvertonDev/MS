@@ -17,4 +17,9 @@ public class Mapper : IMapperPlugin
     {
         return _mapper.Map<TDestination>(source);
     }
+
+    public TDestination Map<TSource, TDestination>(TSource source, TDestination destination) where TDestination : class
+    {
+        return _mapper.Map(source, destination);
+    }
 }

@@ -7,7 +7,6 @@ using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.WebApi.Infrastructure.Extensions;
-using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.Infra.IoC;
 using Swashbuckle.AspNetCore.Filters;
@@ -17,6 +16,8 @@ using System.Text;
 namespace MS.Services.Auth.WebAPI.Infrastructure;
 public class Startup
 {
+    protected AppSettings appSettings { get; set; }
+
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -29,10 +30,8 @@ public class Startup
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            options.Filters.Add(typeof(ExceptionFilter));
+            //options.Filters.Add(typeof(ExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 401));
-            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 403));
-            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 500));
         });
 
         // pra usar o middleware que não é attributee
@@ -65,7 +64,7 @@ public class Startup
         // Binding model 
         services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
-        var configurations = new AppSettings(Configuration);
+        appSettings = new AppSettings(Configuration);
 
         services.AddSingleton<AppSettings, AppSettings>();
 
@@ -73,11 +72,11 @@ public class Startup
 
         // Register dependencys application
         App.Init<DependencyInjection>()
-            .AddInfraSctructure(services, configurations);
+            .AddInfraSctructure(services, appSettings);
 
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Products.WebAPI", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Auth.WebAPI", Version = "v1" });
 
             c.RegisterSwaggerDefaultConfig(true);
 

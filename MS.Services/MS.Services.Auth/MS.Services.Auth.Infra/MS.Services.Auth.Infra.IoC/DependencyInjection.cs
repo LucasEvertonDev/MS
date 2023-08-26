@@ -24,6 +24,7 @@ using MS.Services.Auth.Plugins.AutoMapper.Profiles;
 using MS.Services.Auth.Plugins.FluentValidation.User;
 using MS.Services.Auth.Plugins.Hasher;
 using MS.Services.Auth.Plugins.TokenJWT;
+using Serilog;
 
 namespace MS.Services.Auth.Infra.IoC;
 
@@ -39,14 +40,14 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
 
         AddServices(services, configuration);
 
-        AddValidators(services, configuration); 
+        AddValidators(services, configuration);
     }
 
     protected override void AddDbContexts(IServiceCollection services, AppSettings configuration)
     {
         //É obrigatório definir a versão do My Sql 
         services.AddDbContext<AuthDbContext>(options =>
-              options.UseSqlServer(configuration.DbConnection,
+              options.UseSqlServer(configuration.SqlConnections.DbConnection,
               b => b.MigrationsAssembly(typeof(AuthDbContext).Assembly.FullName)));
 
         services.AddScoped<IUnitOfWork, UnitOfWork<AuthDbContext>>();
@@ -68,6 +69,7 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
         services.AddRepository<Role>();
         services.AddRepository<UserGroup>();
         services.AddRepository<MapUserGroupRoles>();
+        services.AddRepository<ClientCredentials>();
 
         services.AddScoped<ISearchMapUserGroupRolesRepository, MapUserGroupRolesRepository>();
     }
@@ -76,12 +78,20 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
     {
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHash, PasswordHash>();
-        services.AddScoped<ICreateUserService, CreateUserService>();
         services.AddScoped<ILoginService, LoginService>();
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
+        services.AddScoped<ICreateUserService, CreateUserService>();
+        services.AddScoped<IUpdateUserService, UpdateUserService>();
+        services.AddScoped<IDeleteUserService, DeleteUserService>();
+        services.AddScoped<ISearchUserService, SearchUserService>();
+        services.AddScoped<IUpdatePasswordService, UpdatePasswordService>();
     }
 
     protected override void AddValidators(IServiceCollection services, AppSettings configuration)
     {
         services.AddTransient<IValidatorModel<CreateUserModel>, CreateUserValidator>();
+        services.AddTransient<IValidatorModel<UpdateUserModel>, UpdateUserValidator>();
+        services.AddTransient<IValidatorModel<UpdatePasswordUserModel>, UpdatePasswordUserValidator>();
     }
 }

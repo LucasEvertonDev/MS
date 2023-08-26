@@ -15,6 +15,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\NovaPasta\**" />
+    <Content Remove="Infrastructure\NovaPasta\**" />
+    <EmbeddedResource Remove="Infrastructure\NovaPasta\**" />
+    <None Remove="Infrastructure\NovaPasta\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -28,10 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MS.Services.Auth.Infra\MS.Services.Auth.Infra.IoC\MS.Services.Auth.Infra.IoC.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\NovaPasta\" />
   </ItemGroup>
 
 </Project>

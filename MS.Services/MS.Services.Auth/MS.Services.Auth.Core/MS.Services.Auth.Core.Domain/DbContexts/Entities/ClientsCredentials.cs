@@ -1,8 +1,10 @@
 ﻿using MS.Libs.Core.Domain.DbContexts.Entities.Base;
+using MS.Libs.Core.Domain.Infra.Attributes;
 
 namespace MS.Services.Auth.Core.Domain.DbContexts.Entities;
 
-public class ClientsCredentials : BaseEntity
+[Cache(Key: "ClientCredentials", SlidingExpirationInMinutes:10, AbsoluteExpirationInMinutes: 15)]
+public class ClientCredentials : BaseEntity
 {
     public string ClientId { get; set; }
 
