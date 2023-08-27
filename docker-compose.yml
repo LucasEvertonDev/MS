@@ -39,15 +39,17 @@ services:
       - sql_server_network
       - backend
 
-  ms.services.products.webapi:
-    image: msservicesproductswebapi
-    container_name: msservicesproductswebapi
+  ms.services.courses.webapi:
+    image: msservicescourseswebapi
+    container_name: msservicescourseswebapi
     build:
-      context: ./MS.Services/MS.Services.Products/
-      dockerfile: ./MS.Services.Products.WebAPI/Dockerfile
+      context: ./MS.Services/MS.Services.Courses/
+      dockerfile: ./MS.Services.Courses.WebAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "SerilogSqlConnection:Server=localhost,11433;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog:Information"
     depends_on:
       - sqlserver
     ports:
@@ -56,3 +58,42 @@ services:
       - sql_server_network
       - backend
 
+  ms.services.students.webapi:
+    image: msservicesstudentswebapi
+    container_name: msservicesstudentswebapi
+    build:
+      context: ./MS.Services/MS.Services.Students/
+      dockerfile: ./MS.Services.Students.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "SerilogSqlConnection:Server=localhost,11433;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog:Information"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4002:80'
+    networks:
+      - sql_server_network
+      - backend
+
+  ms.services.gateway.webapi:
+    image: msservicesgatewaywebapi
+    container_name: msservicesgatewaywebapi
+    build:
+      context: ./MS.Services/MS.Services.Gateway/
+      dockerfile: ./MS.Services.Gateway.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "SerilogSqlConnection:Server=localhost,11433;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog:Information"
+      - "GatewayUrls:WebApiCourse:https://localhost:4001"
+      - "GatewayUrls:WebApiStudents:https://localhost:4002"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4003:80'
+    networks:
+      - sql_server_network
+      - backend
