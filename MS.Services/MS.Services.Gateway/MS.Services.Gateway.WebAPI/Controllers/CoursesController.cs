@@ -18,46 +18,57 @@ public class CoursesController : BaseController
         _coursesApi = coursesApi;
     }
 
-    [HttpGetParams<SeacrhCourseDto>, Authorize]
+    [HttpGetParams<SearchCourseDto>, Authorize]
     [ProducesResponseType(typeof(PagedResult<SearchedCourseModel>), StatusCodes.Status200OK)]
-    public async Task<ActionResult> Get(SeacrhCourseDto seacrhCourseDto)
+    public async Task<ActionResult> Get(SearchCourseDto seacrhCourseDto)
     {
-        return Ok(await _coursesApi.Get(seacrhCourseDto.Token, seacrhCourseDto.PageNumber, seacrhCourseDto.PageSize, new Plugins.Redit.ApiDtos.Courses.ApiSearchCoursesDto 
+        var retorno = await _coursesApi.Get(seacrhCourseDto.Token, seacrhCourseDto.PageNumber, seacrhCourseDto.PageSize, new Plugins.Redit.ApiDtos.Courses.ApiSearchCoursesDto
         {
             Name = seacrhCourseDto.Name,
-        }));
+        });
+        return Ok(retorno);
     }
 
-    //[HttpPost()]
-    //[Authorize()]
-    //[ProducesResponseType(typeof(CreatedCourseModel), StatusCodes.Status200OK)]
-    //public async Task<ActionResult> Post([FromBody] CreateCourseModel createCourseModel)
-    //{
-    //    await _createCourseservice.ExecuteAsync(createCourseModel);
+    [HttpPost()]
+    [Authorize()]
+    [ProducesResponseType(typeof(CreatedCourseModel), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Post(CreateCourseDto createCourseModel)
+    {
+        var retorno = await _coursesApi.Post(createCourseModel.Token, new Plugins.Redit.ApiDtos.Courses.ApiCreateCoursesDto 
+        {
+            Name = createCourseModel.Body.Name,
+            EndDate = createCourseModel.Body.EndDate,
+            StartDate = createCourseModel.Body.StartDate,
+        });
 
-    //    return Ok(_createCourseservice.CreatedCourse);
-    //}
+        return Ok(retorno);
+    }
 
-    //[Authorize()]
-    //[HttpPut("{id}"), Authorize]
-    //[ProducesResponseType(typeof(UpdatedCourseModel), StatusCodes.Status200OK)]
-    //public async Task<ActionResult> Put(UpdateCourseDto updateCourseModel)
-    //{
-    //    await _updateCourseservice.ExecuteAsync(updateCourseModel);
+    [Authorize()]
+    [HttpPut("{id}"), Authorize]
+    [ProducesResponseType(typeof(UpdatedCourseModel), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Put(UpdateCourseDto updateCourseModel)
+    {
+        var retorno = await _coursesApi.Put(updateCourseModel.Token, updateCourseModel.Id, new Plugins.Redit.ApiDtos.Courses.ApiUpdateCoursesDto
+        {
+            Name = updateCourseModel.Body.Name,
+            StartDate = updateCourseModel.Body.StartDate,
+            EndDate = updateCourseModel.Body.EndDate,
+        });
 
-    //    return Ok(_updateCourseservice.UpdatedCourse);
-    //}
+        return Ok(retorno);
+    }
 
-    //[Authorize()]
-    //[HttpDelete("{id}")]
-    //[ProducesResponseType(typeof(DeletedCourseModel), StatusCodes.Status200OK)]
-    //public async Task<ActionResult> Delete(DeleteCourseDto deleteCourseDto)
-    //{
-    //    await _deleteCourseservice.ExecuteAsync(deleteCourseDto);
+    [Authorize()]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(DeletedCourseModel), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Delete(DeleteCourseDto deleteCourseDto)
+    {
+        await _coursesApi.Delete(deleteCourseDto.Token, deleteCourseDto.Id);
 
-    //    return Ok(new DeletedCourseModel
-    //    {
-    //        Sucess = true
-    //    });
-    //}
+        return Ok(new DeletedCourseModel
+        {
+            Sucess = true
+        });
+    }
 }

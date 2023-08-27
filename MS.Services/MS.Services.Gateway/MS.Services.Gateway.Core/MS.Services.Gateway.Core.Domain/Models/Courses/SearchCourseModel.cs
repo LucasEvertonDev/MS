@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace MS.Services.Gateway.Core.Domain.Models.Courses;
 
-public class SeacrhCourseDto
+public class SearchCourseDto
 {
-    public SeacrhCourseDto() { }
+    public SearchCourseDto() { }
 
     [FromHeader(Name = "Authorization")]
     public string Token { get; set; }

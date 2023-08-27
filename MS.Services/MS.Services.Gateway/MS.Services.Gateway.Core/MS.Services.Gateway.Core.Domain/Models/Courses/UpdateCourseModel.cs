@@ -7,6 +7,9 @@ namespace MS.Services.Gateway.Core.Domain.Models.Courses;
 
 public class UpdateCourseDto : BaseModel
 {
+    [FromHeader(Name = "Authorization")]
+    public string Token { get; set; }
+
     [JsonIgnore]
     [FromRoute(Name = "id")]
     public virtual string Id { get; set; }

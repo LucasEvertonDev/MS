@@ -1,7 +1,16 @@
-﻿using MS.Libs.Core.Domain.Models.Base;
+﻿using Microsoft.AspNetCore.Mvc;
+using MS.Libs.Core.Domain.Models.Base;
 using System.ComponentModel;
 
 namespace MS.Services.Gateway.Core.Domain.Models.Courses;
+
+public class CreateCourseDto : BaseModel
+{
+    [FromHeader(Name = "Authorization")]
+    public string Token { get; set; }
+    [FromBody] 
+    public CreateCourseModel Body { get; set; }
+}
 
 public class CreateCourseModel : BaseModel
 {
