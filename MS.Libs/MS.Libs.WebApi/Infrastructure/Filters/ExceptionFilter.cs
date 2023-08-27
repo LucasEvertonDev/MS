@@ -9,15 +9,24 @@ namespace MS.Libs.WebApi.Infrastructure.Filters;
 
 public partial class ExceptionFilter : IExceptionFilter
 {
+    private readonly ILogger<ExceptionFilter> _logger;
+
+    public ExceptionFilter(ILogger<ExceptionFilter> logger)
+    {
+        _logger = logger;
+    }
+
     public void OnException(ExceptionContext context)
     {
         if (context.Exception is MSException)
         {
             HandleCustomExceptions(context);
+            _logger.LogWarning(context.Exception, "Exception esperada controlando numero de recorrências -> " + context.Exception.Message );
         }
         else
         {
             HandleUnknownError(context);
+            _logger.LogCritical(context.Exception, "Exception não esperada. Erro servero urgente internção. -> " + context.Exception.Message);
         }
     }
 

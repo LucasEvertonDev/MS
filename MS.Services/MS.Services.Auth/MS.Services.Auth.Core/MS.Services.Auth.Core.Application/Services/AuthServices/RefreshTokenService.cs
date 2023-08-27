@@ -1,4 +1,5 @@
-﻿using MS.Libs.Core.Application.Services;
+﻿using Microsoft.Extensions.Logging;
+using MS.Libs.Core.Application.Services;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
 using MS.Libs.Core.Domain.Infra.Claims;
 using MS.Libs.Infra.Utils.Exceptions;

@@ -1,7 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Extensions.Logging;
 using MS.Libs.Core.Application.Services;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
+using MS.Libs.Core.Domain.Infra.Claims;
 using MS.Libs.Core.Domain.Plugins.Serilog;
+using MS.Libs.Infra.Utils.Extensions;
 using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
@@ -9,6 +13,8 @@ using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
 using MS.Services.Auth.Core.Domain.Plugins.JWT;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
+using System.Security.Principal;
+using System.Text.Json;
 
 namespace MS.Services.Auth.Core.Application.Services.AuthServices;
 
@@ -29,8 +35,7 @@ public class LoginService : BaseService<LoginDto>, ILoginService
         IPasswordHash passwordHash,
         ITokenService tokenService,
         ISearchRepository<ClientCredentials> searchClientCredentials,
-        ISearchMapUserGroupRolesRepository mapuserGroupSearchRepository,
-        ILogger<LoginService> login) : base(serviceProvider)
+        ISearchMapUserGroupRolesRepository mapuserGroupSearchRepository)  : base(serviceProvider)
     {
         _userSearchRepository = userSearchRepository;
         _passwordHash = passwordHash;
@@ -38,17 +43,6 @@ public class LoginService : BaseService<LoginDto>, ILoginService
         _mapuserGroupSearchRepository = mapuserGroupSearchRepository;
         _updateUserRepository = updateUserRepository;
         _searchClientCredentials = searchClientCredentials;
-
-        using (login.BeginScope("{ClientId}", "a"))
-        {
-            using (login.BeginScope("{UserId}", "b"))
-            {
-                using (login.BeginScope("{Request}", "c"))
-                {
-                    login.LogInformation("TEste de warning");
-                }
-            }
-        }
     }
 
     public async override Task ExecuteAsync(LoginDto param)
@@ -94,3 +88,4 @@ public class LoginService : BaseService<LoginDto>, ILoginService
         }
     }
 }
+

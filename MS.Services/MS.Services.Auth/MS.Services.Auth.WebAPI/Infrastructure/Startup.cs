@@ -1,17 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
 using MS.Libs.Core.Domain.Infra.AppSettings;
+using MS.Libs.Core.Domain.Infra.Claims;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
+using MS.Libs.Infra.Utils.Extensions;
 using MS.Libs.WebApi.Infrastructure.Extensions;
+using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.Infra.IoC;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
 using Swashbuckle.AspNetCore.Filters;
+using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
+using Log = Serilog.Log;
 
 namespace MS.Services.Auth.WebAPI.Infrastructure;
 public class Startup
@@ -27,10 +39,12 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddSingleton<ExceptionFilter>();
+
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            //options.Filters.Add(typeof(ExceptionFilter));
+            options.Filters.Add(typeof(ExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 401));
         });
 
@@ -94,6 +108,8 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
         app.UseMiddleware<AuthUnauthorizedMiddleware>();
 
         app.UseHttpsRedirection();
@@ -122,4 +138,30 @@ public class Startup
             endpoints.MapControllers();
         });
     }
+}
+
+
+public static class Teste
+{
+    public static async Task<string> GetRawBodyAsync(
+       this HttpRequest request,
+       Encoding encoding = null)
+    {
+        if (!request.Body.CanSeek)
+        {
+            // We only do this if the stream isn't *already* seekable,
+            // as EnableBuffering will create a new stream instance
+            // each time it's called
+            request.EnableBuffering();
+        }
+
+        var reader = new StreamReader(request.Body, encoding ?? Encoding.UTF8);
+
+        var body = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+        request.Body.Position = 0;
+
+        return body;
+    }
+
 }
