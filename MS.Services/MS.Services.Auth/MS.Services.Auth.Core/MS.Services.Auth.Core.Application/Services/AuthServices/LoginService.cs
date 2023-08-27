@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.Extensions.Logging;
-using MS.Libs.Core.Application.Services;
+﻿using MS.Libs.Core.Application.Services;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
-using MS.Libs.Core.Domain.Infra.Claims;
-using MS.Libs.Core.Domain.Plugins.Serilog;
-using MS.Libs.Infra.Utils.Extensions;
 using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
@@ -13,8 +7,6 @@ using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Plugins.Cryptography;
 using MS.Services.Auth.Core.Domain.Plugins.JWT;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
-using System.Security.Principal;
-using System.Text.Json;
 
 namespace MS.Services.Auth.Core.Application.Services.AuthServices;
 

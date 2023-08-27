@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Plugins.IMappers;
-using MS.Libs.Core.Domain.Plugins.Serilog;
 using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Data.Context.UnitOfWork;
 using MS.Libs.Infra.IoC;
@@ -26,8 +23,6 @@ using MS.Services.Auth.Plugins.AutoMapper.Profiles;
 using MS.Services.Auth.Plugins.FluentValidation.User;
 using MS.Services.Auth.Plugins.Hasher;
 using MS.Services.Auth.Plugins.TokenJWT;
-using Serilog;
-using Serilog.Core;
 
 namespace MS.Services.Auth.Infra.IoC;
 

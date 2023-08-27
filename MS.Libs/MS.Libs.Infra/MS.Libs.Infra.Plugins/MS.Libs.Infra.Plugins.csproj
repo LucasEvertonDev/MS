@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>MS.Libs.Infra.Plugins</Title>
     <PackageId>LcsEverton.MS.Libs.Infra.Plugins</PackageId>
-	<Version>14.0.0</Version>
+	<Version>15.0.0</Version>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
     <BaseOutputPath>C:\Users\lcsev\.nuget\packages\lcseverton.ms.libs.infra.plugins\14.0.0\lib</BaseOutputPath>
   </PropertyGroup>
