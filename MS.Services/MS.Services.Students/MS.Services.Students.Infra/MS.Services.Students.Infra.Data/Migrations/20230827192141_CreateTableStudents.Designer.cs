@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MS.Services.Students.Infra.Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20230827182828_CreateTableUser")]
-    partial class CreateTableUser
+    [Migration("20230827192141_CreateTableStudents")]
+    partial class CreateTableStudents
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

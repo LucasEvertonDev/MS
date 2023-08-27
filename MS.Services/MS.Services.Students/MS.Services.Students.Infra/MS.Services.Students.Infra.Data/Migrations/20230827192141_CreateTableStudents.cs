@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MS.Services.Students.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTableUser : Migration
+    public partial class CreateTableStudents : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
