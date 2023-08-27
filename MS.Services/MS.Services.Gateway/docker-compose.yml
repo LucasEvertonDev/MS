@@ -1,0 +1,40 @@
+version: '3.4'
+
+networks:
+    backend:
+    sql_server_network:
+
+services:
+  sqlserver:
+    restart: always
+    image : mcr.microsoft.com/mssql/server:2022-latest
+    container_name : sqlserver
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "Numsey#2021"
+    volumes:
+      - c:\dados\volumes\mssql:/var/opt/mssql/data
+    ports:
+      - 11433:1433
+    networks:
+      - sql_server_network
+    expose:
+      - 1433
+
+  MS.Services.Gateway.webapi:
+    image: msservicesauthwebapi
+    container_name: msservicesauthwebapi
+    build:
+      context: ./MS.Services/MS.Services.Gateway/
+      dockerfile: ./MS.Services.Gateway.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4000:80'
+    networks:
+      - sql_server_network
+      - backend
