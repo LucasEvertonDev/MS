@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MS.Libs.Core.Application.Services;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
-using MS.Libs.Infra.Utils.Exceptions;
+using MS.Libs.Core.Domain.Plugins.Serilog;
 using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.DbContexts.Repositorys;
@@ -38,7 +38,17 @@ public class LoginService : BaseService<LoginDto>, ILoginService
         _mapuserGroupSearchRepository = mapuserGroupSearchRepository;
         _updateUserRepository = updateUserRepository;
         _searchClientCredentials = searchClientCredentials;
-        login.LogWarning("TEste de warning");
+
+        using (login.BeginScope("{ClientId}", "a"))
+        {
+            using (login.BeginScope("{UserId}", "b"))
+            {
+                using (login.BeginScope("{Request}", "c"))
+                {
+                    login.LogInformation("TEste de warning");
+                }
+            }
+        }
     }
 
     public async override Task ExecuteAsync(LoginDto param)

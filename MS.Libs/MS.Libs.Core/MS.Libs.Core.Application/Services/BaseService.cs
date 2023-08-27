@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 using MS.Libs.Core.Domain.Models.Base;
 using MS.Libs.Core.Domain.Models.Error;
@@ -15,6 +16,7 @@ public abstract class BaseService<TParam>
     private readonly IUnitOfWork _unitOfWork;
     protected readonly IMapperPlugin _imapper;
     protected readonly IIdentity? _identity;
+
     public BaseService(IServiceProvider serviceProvider)
     {
         _unitOfWork = serviceProvider.GetService<IUnitOfWork>();
@@ -86,11 +88,14 @@ public abstract class BaseService
     private readonly IUnitOfWork _unitOfWork;
     protected readonly IMapperPlugin _imapper;
     protected readonly IIdentity? _identity;
+    private readonly ILogger<BaseService> _logger;
+
     public BaseService(IServiceProvider serviceProvider)
     {
         _unitOfWork = serviceProvider.GetService<IUnitOfWork>();
         _imapper = serviceProvider.GetService<IMapperPlugin>();
         _identity = serviceProvider.GetService<IHttpContextAccessor>().HttpContext.User?.Identity;
+        _logger = serviceProvider.GetService<ILogger<BaseService>>();
     }
 
     public abstract Task ExecuteAsync();

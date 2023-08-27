@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 using MS.Libs.Core.Domain.Infra.AppSettings;
@@ -8,6 +7,7 @@ using MS.Libs.Core.Domain.Plugins.Validators;
 using MS.Libs.Infra.Data.Context.UnitOfWork;
 using MS.Libs.Infra.IoC;
 using MS.Libs.Infra.Plugins.AutoMapper;
+using MS.Libs.Infra.Plugins.Serilog;
 using MS.Services.Auth.Core.Application.Services.AuthServices;
 using MS.Services.Auth.Core.Application.Services.UserServices;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
@@ -25,6 +25,7 @@ using MS.Services.Auth.Plugins.FluentValidation.User;
 using MS.Services.Auth.Plugins.Hasher;
 using MS.Services.Auth.Plugins.TokenJWT;
 using Serilog;
+using Serilog.Core;
 
 namespace MS.Services.Auth.Infra.IoC;
 
@@ -86,6 +87,8 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
         services.AddScoped<IDeleteUserService, DeleteUserService>();
         services.AddScoped<ISearchUserService, SearchUserService>();
         services.AddScoped<IUpdatePasswordService, UpdatePasswordService>();
+
+        services.AddScoped<ISerilog, MS.Libs.Infra.Plugins.Serilog.Serilog>();
     }
 
     protected override void AddValidators(IServiceCollection services, AppSettings configuration)

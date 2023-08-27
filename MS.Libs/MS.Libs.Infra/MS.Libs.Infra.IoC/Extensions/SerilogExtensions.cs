@@ -9,12 +9,14 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using Log = Serilog.Log;
 
-namespace MS.Services.Auth.Infra.IoC.Extensions;
+namespace MS.Libs.Infra.IoC.Extensions;
 
 public static class SerilogExtensions
 {
     public static void RegisterSerilog(this HostBuilderContext app, IConfigurationBuilder configurationBuilder)
     {
+        // app.HostingEnvironment.IsDevelopment()
+
         var settings = configurationBuilder.Build();
 
         var appSettings = new AppSettings(settings);
@@ -24,15 +26,17 @@ public static class SerilogExtensions
             MinimumLevel = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), appSettings.Log.LogLevel),
         };
 
-        // Em "AdditionalColumns, adicione colunas extras que deseje, como IP, nome de usuário, id de trace da chamada, etc.
         var options = new ColumnOptions
         {
-            AdditionalColumns = new Collection<SqlColumn> {
-                        new SqlColumn { ColumnName = "Action", DataLength=  50, DataType = System.Data.SqlDbType.NVarChar }
-                    }
+            AdditionalColumns = new Collection<SqlColumn>
+            {
+                new SqlColumn { ColumnName = "ClientId", DataLength=  50, DataType = System.Data.SqlDbType.NVarChar },
+                new SqlColumn { ColumnName = "UserId", DataLength=  50, DataType = System.Data.SqlDbType.NVarChar },
+                new SqlColumn { ColumnName = "Request", DataLength=  -1, DataType = System.Data.SqlDbType.NVarChar },
+            }
         };
 
-        Log.Logger = new LoggerConfiguration().WriteTo
+        Log.Logger = new LoggerConfiguration().Enrich.FromLogContext().MinimumLevel.Override("Microsoft", LogEventLevel.Fatal).MinimumLevel.Override("System", LogEventLevel.Fatal).WriteTo
            .MSSqlServer(
                connectionString: appSettings.SqlConnections.SerilogConnection,
                sinkOptions: new MSSqlServerSinkOptions
@@ -40,7 +44,7 @@ public static class SerilogExtensions
                    TableName = "AppLogs",
                    AutoCreateSqlTable = true,
                    AutoCreateSqlDatabase = true,
-                   LevelSwitch = levelSwitch
+                   LevelSwitch = levelSwitch,
                },
                restrictedToMinimumLevel: (LogEventLevel)Enum.Parse(typeof(LogEventLevel), appSettings.Log.LogLevel),
                formatProvider: null,

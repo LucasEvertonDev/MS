@@ -1,6 +1,7 @@
-using MS.Services.Auth.Infra.IoC.Extensions;
+using MS.Libs.Infra.IoC.Extensions;
 using MS.Services.Auth.WebAPI.Infrastructure;
 using Serilog;
+using Serilog.Events;
 
 public class Program
 {
