@@ -46,8 +46,8 @@ public static class SerilogExtensions
         Log.Logger = new LoggerConfiguration()
           .Enrich.FromLogContext()
           .Enrich.With<UserEnricher>()
-          .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
-          .MinimumLevel.Override("System", LogEventLevel.Fatal)
+          //.MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
+          //.MinimumLevel.Override("System", LogEventLevel.Fatal)
           .WriteTo
              .MSSqlServer(
                  connectionString: appSettings.SqlConnections.SerilogConnection,
@@ -63,6 +63,7 @@ public static class SerilogExtensions
                  columnOptions: options,
                  logEventFormatter: null
                  )
+            .WriteTo.Console()
          .CreateLogger();
     }
 }
