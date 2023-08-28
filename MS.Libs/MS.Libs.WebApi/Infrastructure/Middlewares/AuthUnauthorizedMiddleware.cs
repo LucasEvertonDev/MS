@@ -1,4 +1,5 @@
 ﻿using MS.Libs.Core.Domain.Infra.AppSettings;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.Core.Domain.Models.Error;
 using System.Text.Json;
 
@@ -30,15 +31,37 @@ public class AuthUnauthorizedMiddleware
             return;
 
         var statusCode = httpContext.Response.StatusCode;
-        var errormodel = new ErrorsModel();
+        var errormodel = new ResponseError<ErrorsModel>();
 
         switch (statusCode)
         {
             case StatusCodes.Status401Unauthorized:
-                errormodel = new ErrorsModel(_appSettings.Messages.Unauthorized);
+                errormodel = new ResponseError<ErrorsModel>
+                {
+                    HttpCode = StatusCodes.Status401Unauthorized,
+                    Errors = new List<ErrorModel>
+                    {
+                        new ErrorModel
+                        {
+                            Message = _appSettings.Messages.Unauthorized,
+                            Context = "Authorization"
+                        }
+                    }
+                };
                 break;
             case StatusCodes.Status403Forbidden:
-                errormodel = new ErrorsModel(_appSettings.Messages.Forbidden);
+                errormodel = new ResponseError<ErrorsModel>
+                {
+                    HttpCode = StatusCodes.Status403Forbidden,
+                    Errors = new List<ErrorModel>
+                    {
+                        new ErrorModel
+                        {
+                            Message = _appSettings.Messages.Forbidden,
+                            Context = "Authorization"
+                        }
+                    }
+                };
                 break;
         }
 

@@ -41,7 +41,7 @@ public abstract class BaseService<TParam>
         throw exception;
     }
 
-    protected virtual void BusinessException(ErrorModel errorModel)
+    protected virtual void BusinessException(BusinessErrorModel errorModel)
     {
         throw new BusinessException(errorModel);
     }

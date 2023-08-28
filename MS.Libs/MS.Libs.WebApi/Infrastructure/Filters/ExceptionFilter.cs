@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Libs.Infra.Utils.Exceptions.Base;
+using System;
 using System.Net;
 
 namespace MS.Libs.WebApi.Infrastructure.Filters;
@@ -21,7 +23,15 @@ public partial class ExceptionFilter : IExceptionFilter
         if (context.Exception is MSException)
         {
             HandleCustomExceptions(context);
-            _logger.LogWarning(context.Exception, "Exception esperada controlando numero de recorrências -> " + context.Exception.Message );
+
+            if (context.Exception is ValidatorException)
+            {
+                _logger.LogInformation(context.Exception, "Exception esperada controlando numero de recorrências -> " + context.Exception.Message);
+            }
+            else
+            {
+                _logger.LogWarning(context.Exception, "Exception esperada controlando numero de recorrências -> " + context.Exception.Message);
+            }
         }
         else
         {
@@ -39,7 +49,27 @@ public partial class ExceptionFilter : IExceptionFilter
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new ObjectResult
                 (
-                    new ErrorsModel(validationException.ErrorsMessages.Select(a => a.ErrorMessage).ToArray())
+                    new ResponseError<ErrorModel>()
+                    { 
+                        HttpCode = (int)HttpStatusCode.BadRequest,
+                        Success = false,
+                        Errors = new List<ErrorModel>() { new ErrorModel() { Context = "Business", Message = validationException.Error.ErrorMessage  }  }
+                    }
+                );
+        }
+        else if (context.Exception is ValidatorException)
+        {
+            var exception = context.Exception as ValidatorException;
+
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Result = new ObjectResult
+                (
+                    new ResponseError<ErrorModel>()
+                    {
+                        HttpCode = (int)HttpStatusCode.BadRequest,
+                        Success = false,
+                        Errors = exception.ErrorsMessages.Select(a => new ErrorModel () { Context = a.Property, Message = a.ErrorMessage }).ToList()
+                    }
                 );
         }
         else
@@ -49,7 +79,12 @@ public partial class ExceptionFilter : IExceptionFilter
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new ObjectResult
                 (
-                    new ErrorsModel(exception.Message)
+                    new ResponseError<ErrorModel>()
+                    {
+                        HttpCode = (int)HttpStatusCode.BadRequest,
+                        Success = false,
+                        Errors = new List<ErrorModel>() { new ErrorModel() { Context = "Business", Message = exception.Message } }
+                    }
                 );
         }
     }
@@ -59,7 +94,12 @@ public partial class ExceptionFilter : IExceptionFilter
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         context.Result = new ObjectResult
            (
-                new ErrorsModel("Erro desconhecido")
+                 new ResponseError<ErrorModel>()
+                 {
+                     HttpCode = (int)HttpStatusCode.InternalServerError,
+                     Success = false,
+                     Errors = new List<ErrorModel>() { new ErrorModel() { Context = "InternalServerError", Message = "Não foi possível processar sua solicitação! Por favor contate o administrador do sistema!" } }
+                 }
            );
     }
 }

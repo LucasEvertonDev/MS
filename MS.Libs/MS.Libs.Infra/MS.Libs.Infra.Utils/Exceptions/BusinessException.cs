@@ -7,11 +7,11 @@ namespace MS.Libs.Infra.Utils.Exceptions;
 [Serializable]
 public class BusinessException : MSException
 {
-    public List<ErrorModel> ErrorsMessages { get; set; }
+    public BusinessErrorModel Error { get; set; }
 
-    public BusinessException(params ErrorModel[] error) : base(string.Join(", ", error.Select(a => a.ErrorMessage)))
+    public BusinessException(BusinessErrorModel error) : base(error.ErrorMessage)
     {
-        ErrorsMessages = error.ToList();
+        Error = error;
     }
 
     protected BusinessException(SerializationInfo info, StreamingContext context) : base(info, context)

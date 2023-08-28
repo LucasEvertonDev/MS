@@ -14,7 +14,7 @@ public class BaseValidator<TModel> : AbstractValidator<TModel>, IValidatorModel<
 
         if (!validationResult.IsValid)
         {
-            throw new BusinessException(validationResult.Errors.Select(c => new ErrorModel(c.PropertyName + ": " + c.ErrorMessage, c.ErrorCode)).ToArray());
+            throw new ValidatorException(validationResult.Errors.Select(c => new ValidatorErrorModel(c.PropertyName, c.ErrorMessage, c.ErrorCode)).ToArray());
         }
     }
 }

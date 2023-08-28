@@ -1,16 +1,7 @@
-﻿using MS.Libs.Core.Domain.Models.Base;
+﻿namespace MS.Libs.Core.Domain.Models.Error;
 
-namespace MS.Libs.Core.Domain.Models.Error;
-
-public class ErrorModel : BaseModel
+public class ErrorModel
 {
-    public ErrorModel(string message, string code)
-    {
-        this.ErrorCode = code;
-        this.ErrorMessage = message;
-    }
-
-    public string ErrorMessage { get; set; }
-
-    public string ErrorCode { get; set; }
+    public string Message { get; set; }
+    public string Context { get; set; }
 }

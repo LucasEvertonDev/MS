@@ -5,11 +5,9 @@ public class ErrorsModel : BaseModel
 {
     public ErrorsModel() { }
 
-    public bool Sucess { get; set; } = false;
+    public ErrorModel[] Messages { get; set; }
 
-    public string[] Messages { get; set; }
-
-    public ErrorsModel(params string[] message)
+    public ErrorsModel(params ErrorModel[] message)
     {
         Messages = message;
     }
