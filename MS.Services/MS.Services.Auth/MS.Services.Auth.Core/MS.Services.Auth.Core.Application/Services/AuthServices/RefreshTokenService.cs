@@ -65,7 +65,7 @@ public class RefreshTokenService : BaseService<RefreshTokenDto>, IRefreshTokenSe
 
     protected override async Task ValidateAsync(RefreshTokenDto refreshTokenDto)
     {
-        if ((await _searchClientCredentials.GetListFromCacheAsync(a => a.ClientId == refreshTokenDto.ClientId && a.ClientSecret == refreshTokenDto.ClientSecret)) == null)
+        if (!(await _searchClientCredentials.GetListFromCacheAsync(a => a.ClientId == refreshTokenDto.ClientId && a.ClientSecret == refreshTokenDto.ClientSecret)).Any())
         {
             BusinessException(AuthErrors.Business.CLIENT_CREDENTIALS_INVALID);
         }

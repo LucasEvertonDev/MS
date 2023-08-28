@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MS.Services.Auth.Infra.Data.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230826171619_LimpandoDefaults")]
-    partial class LimpandoDefaults
+    [Migration("20230828104749_Clear")]
+    partial class Clear
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
