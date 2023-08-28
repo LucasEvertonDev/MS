@@ -1,9 +1,9 @@
 version: '3.4'
 
 networks:
-    backend:
-    sql_server_network:
-
+  backend:
+    name: backend
+  
 services:
   sqlserver:
     restart: always
@@ -18,13 +18,13 @@ services:
     ports:
       - 11433:1433
     networks:
-      - sql_server_network
-    expose:
-      - 1433
+      - 'backend'
+    # expose:
+    #   - 1433
 
   ms.services.auth.webapi:
-    image: msservicesauthwebapi
-    container_name: msservicesauthwebapi
+    image: ms.services.auth.webapi
+    container_name: ms.services.auth.webapi
     build:
       context: ./MS.Services/MS.Services.Auth/
       dockerfile: ./MS.Services.Auth.WebAPI/Dockerfile
@@ -36,64 +36,60 @@ services:
     ports:
       - '4000:80'
     networks:
-      - sql_server_network
-      - backend
+      - 'backend'
 
   ms.services.courses.webapi:
-    image: msservicescourseswebapi
-    container_name: msservicescourseswebapi
+    image: ms.services.courses.webapi
+    container_name: ms.services.courses.webapi
     build:
       context: ./MS.Services/MS.Services.Courses/
       dockerfile: ./MS.Services.Courses.WebAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
-      - "SerilogSqlConnection:Server=localhost,11433;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
-      - "Logging:LogLevel:Serilog:Information"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Information"
     depends_on:
       - sqlserver
     ports:
       - '4001:80'
     networks:
-      - sql_server_network
-      - backend
+      - 'backend'
 
   ms.services.students.webapi:
-    image: msservicesstudentswebapi
-    container_name: msservicesstudentswebapi
+    image: ms.services.students.webapi
+    container_name: ms.services.students.webapi
     build:
       context: ./MS.Services/MS.Services.Students/
       dockerfile: ./MS.Services.Students.WebAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
-      - "SerilogSqlConnection:Server=localhost,11433;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
-      - "Logging:LogLevel:Serilog:Information"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Information"
     depends_on:
       - sqlserver
     ports:
       - '4002:80'
     networks:
-      - sql_server_network
-      - backend
+      - 'backend'
 
   ms.services.gateway.webapi:
-    image: msservicesgatewaywebapi
-    container_name: msservicesgatewaywebapi
+    image: ms.services.gateway.webapi
+    container_name: ms.services.gateway.webapi
     build:
       context: ./MS.Services/MS.Services.Gateway/
       dockerfile: ./MS.Services.Gateway.WebAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
-      - "SerilogSqlConnection:Server=localhost,11433;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
-      - "Logging:LogLevel:Serilog:Information"
-      - "GatewayUrls:WebApiCourse:https://localhost:4001"
-      - "GatewayUrls:WebApiStudents:https://localhost:4002"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Information"
+      - "GatewayUrls:WebApiCourse=http://ms.services.courses.webapi"
+      - "GatewayUrls:WebApiStudents=http://ms.services.students.webapi"
     depends_on:
       - sqlserver
     ports:
       - '4003:80'
     networks:
-      - sql_server_network
-      - backend
+      - 'backend'
