@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
 using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
@@ -25,21 +26,27 @@ public class AuthController : BaseController
     }
 
     [HttpPost("login")]
-    [ProducesResponseType(typeof(LoginModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<TokenModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Login(LoginDto loginModel)
     {
         await _loginService.ExecuteAsync(loginModel);
 
-        return Ok(_loginService.TokenRetorno);
+        return Ok(new ResponseDto<TokenModel>()
+        { 
+            Content = _loginService.TokenRetorno
+        });
     }
     
     [HttpPost("refreshtoken"), Authorize]
-    [ProducesResponseType(typeof(TokenModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<TokenModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> RefreshToken(RefreshTokenDto refreshTokenDto)
     {
         await _refreshTokenService.ExecuteAsync(refreshTokenDto);
 
-        return Ok(_refreshTokenService.TokenRetorno);
+        return Ok(new ResponseDto<TokenModel>()
+        {
+            Content = _refreshTokenService.TokenRetorno
+        });
     }
 }
 

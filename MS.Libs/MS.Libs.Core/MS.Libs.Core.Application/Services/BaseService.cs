@@ -21,7 +21,7 @@ public abstract class BaseService<TParam>
     {
         _unitOfWork = serviceProvider.GetService<IUnitOfWork>();
         _imapper = serviceProvider.GetService<IMapperPlugin>();
-        _identity = serviceProvider.GetService<IHttpContextAccessor>().HttpContext.User?.Identity;
+        _identity = serviceProvider.GetService<IHttpContextAccessor>()?.HttpContext?.User?.Identity;
     }
 
     public abstract Task ExecuteAsync(TParam param);
@@ -41,7 +41,7 @@ public abstract class BaseService<TParam>
         throw exception;
     }
 
-    protected virtual void BusinessException(BusinessErrorModel errorModel)
+    protected virtual void BusinessException(ErrorModel errorModel)
     {
         throw new BusinessException(errorModel);
     }

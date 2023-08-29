@@ -49,6 +49,6 @@ public class CreateUserServiceTest : BaseTest
             });
         };
 
-        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.ErrorsMessages.Contains(UserErrors.Business.ALREADY_USERNAME));
+        await action.Should().ThrowAsync<BusinessException>().Where(ex => ex.Error == UserErrors.Business.ALREADY_USERNAME);
     }
 }

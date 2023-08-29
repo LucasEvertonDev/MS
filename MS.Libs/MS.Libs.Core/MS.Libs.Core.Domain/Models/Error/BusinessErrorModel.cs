@@ -4,13 +4,11 @@ namespace MS.Libs.Core.Domain.Models.Error;
 
 public class BusinessErrorModel : BaseModel
 {
-    public BusinessErrorModel(string message, string code, string context = "")
+    public BusinessErrorModel(string message, string code)
     {
         this.ErrorCode = code;
         this.ErrorMessage = message;
-        this.Context = context;
     }
     public string ErrorMessage { get; set; }
-    public string Context { get; set; }
     public string ErrorCode { get; set; }
 }

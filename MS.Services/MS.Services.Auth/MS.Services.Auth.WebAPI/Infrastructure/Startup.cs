@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
 using MS.Libs.Core.Domain.Infra.AppSettings;
 using MS.Libs.Core.Domain.Infra.Claims;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
 using MS.Libs.Infra.Utils.Extensions;
@@ -45,11 +46,10 @@ public class Startup
         services.AddMvc(options =>
         {
             options.Filters.Add(typeof(ExceptionFilter));
-            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 401));
+            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseError<ErrorsModel>), 401));
         });
 
-        // pra usar o middleware que não é attributee
-        services.AddHttpContextAccessor();
+  
         // Add services to the container.
         services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

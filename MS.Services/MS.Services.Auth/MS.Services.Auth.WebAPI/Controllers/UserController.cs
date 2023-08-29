@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.Infrastructure.Attributes;
 using MS.Services.Auth.Core.Domain.Models.Users;
@@ -31,53 +32,62 @@ public class UsersController : BaseController
     }
 
     [HttpGetParams<SeacrhUserDto>, Authorize]
-    [ProducesResponseType(typeof(PagedResult<SearchedUserModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<PagedResult<SearchedUserModel>>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get(SeacrhUserDto seacrhUserDto)
     {
         await _searchServices.ExecuteAsync(seacrhUserDto);
 
-        return Ok(_searchServices.SearchedUsers);
+        return Ok(new ResponseDto<PagedResult<SearchedUserModel>>()
+        {
+            Content = _searchServices.SearchedUsers
+        });
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(CreatedUserModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<CreatedUserModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Post([FromBody] CreateUserModel createUserModel)
     {
         await _createUserService.ExecuteAsync(createUserModel);
 
-        return Ok(_createUserService.CreatedUser);
+        return Ok(new ResponseDto<CreatedUserModel>()
+        {
+            Content = _createUserService.CreatedUser
+        });
     }
 
     [HttpPut("{id}"), Authorize]
-    [ProducesResponseType(typeof(UpdatedUserModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<UpdatedUserModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Put(UpdateUserDto updateUserModel)
     {
         await _updateUserService.ExecuteAsync(updateUserModel);
 
-        return Ok(_updateUserService.UpdatedUser);
+        return Ok(new ResponseDto<UpdatedUserModel>()
+        {
+            Content= _updateUserService.UpdatedUser
+        });
     }
 
     [HttpPut("updatepassword/{id}"), Authorize]
-    [ProducesResponseType(typeof(UpdatedPasswordUserModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<string>), StatusCodes.Status200OK)]
     public async Task<ActionResult> UpdatePassword(UpdatePasswordUserDto passwordDto)
     {
         await _updatePasswodService.ExecuteAsync(passwordDto);
 
-        return Ok(new UpdatedPasswordUserModel
+        return Ok(new ResponseDto<string>()
         {
-            Sucess = true
+            Content = "Senha atualizada"
         });
     }
 
     [HttpDelete("{id}"), Authorize]
-    [ProducesResponseType(typeof(DeletedUserModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<string>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Delete(DeleteUserDto deleteUserDto)
     {
         await _deleteUserService.ExecuteAsync(deleteUserDto);
 
-        return Ok(new DeletedUserModel
+        return Ok(new ResponseDto<string>()
         {
-            Sucess = true
+            Content = "Delete efetuado"
         });
     }
 }

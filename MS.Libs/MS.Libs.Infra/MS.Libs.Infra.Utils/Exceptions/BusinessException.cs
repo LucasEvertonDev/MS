@@ -7,9 +7,9 @@ namespace MS.Libs.Infra.Utils.Exceptions;
 [Serializable]
 public class BusinessException : MSException
 {
-    public BusinessErrorModel Error { get; set; }
+    public ErrorModel Error { get; set; }
 
-    public BusinessException(BusinessErrorModel error) : base(error.ErrorMessage)
+    public BusinessException(ErrorModel error) : base(error.Message)
     {
         Error = error;
     }

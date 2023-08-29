@@ -8,7 +8,7 @@ public static class FluentExtensions
 {
     public static IRuleBuilderOptions<T, TProperty> WithError<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, ErrorModel errorModel)
     {
-        return rule.WithMessage(errorModel.ErrorMessage).WithErrorCode(errorModel.ErrorCode);
+        return rule.WithMessage(errorModel.Message).WithErrorCode(errorModel.Context);
     }
 
 	public static IRuleBuilderOptions<T, TProperty> NotNullOrEmpty<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder)

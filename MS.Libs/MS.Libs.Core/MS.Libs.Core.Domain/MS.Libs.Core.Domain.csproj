@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>MS.Libs.Core.Domain</Title>
     <PackageId>LcsEverton.MS.Libs.Core.Domain</PackageId>
-	  <Version>17.0.0</Version>
+	  <Version>18.0.0</Version>
     <BaseOutputPath>C:\Users\lcsev\.nuget\packages\lcseverton.ms.libs.core.domain\15.0.0\lib</BaseOutputPath>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
   </PropertyGroup>

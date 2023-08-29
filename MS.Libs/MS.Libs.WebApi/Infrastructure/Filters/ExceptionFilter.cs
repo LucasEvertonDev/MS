@@ -53,7 +53,7 @@ public partial class ExceptionFilter : IExceptionFilter
                     { 
                         HttpCode = (int)HttpStatusCode.BadRequest,
                         Success = false,
-                        Errors = new List<ErrorModel>() { new ErrorModel() { Context = "Business", Message = validationException.Error.ErrorMessage  }  }
+                        Errors = new List<ErrorModel>() { new ErrorModel() { Context = "Business", Message = validationException.Error.Message  }  }
                     }
                 );
         }

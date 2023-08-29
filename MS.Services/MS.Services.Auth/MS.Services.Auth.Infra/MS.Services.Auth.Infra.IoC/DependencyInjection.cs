@@ -30,6 +30,9 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
 {
     public override void AddInfraSctructure(IServiceCollection services, AppSettings configuration)
     {
+        // pra usar o middleware que não é attributee
+        services.AddHttpContextAccessor();
+
         AddDbContexts(services, configuration);
 
         AddRepositorys(services, configuration);
