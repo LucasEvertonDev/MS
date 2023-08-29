@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.Infrastructure.Attributes;
 using MS.Services.Gateway.Core.Domain.Models.Courses;
@@ -19,7 +20,7 @@ public class CoursesController : BaseController
     }
 
     [HttpGetParams<SearchCourseDto>, Authorize]
-    [ProducesResponseType(typeof(PagedResult<SearchedCourseModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<PagedResult<SearchedCourseModel>>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get(SearchCourseDto seacrhCourseDto)
     {
         var retorno = await _coursesApi.Get(seacrhCourseDto.Token, seacrhCourseDto.PageNumber, seacrhCourseDto.PageSize, new Plugins.Redit.ApiDtos.Courses.ApiSearchCoursesDto
@@ -31,7 +32,7 @@ public class CoursesController : BaseController
 
     [HttpPost()]
     [Authorize()]
-    [ProducesResponseType(typeof(CreatedCourseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<CreatedCourseModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Post(CreateCourseDto createCourseModel)
     {
         var retorno = await _coursesApi.Post(createCourseModel.Token, new Plugins.Redit.ApiDtos.Courses.ApiCreateCoursesDto 
@@ -46,7 +47,7 @@ public class CoursesController : BaseController
 
     [Authorize()]
     [HttpPut("{id}"), Authorize]
-    [ProducesResponseType(typeof(UpdatedCourseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<UpdatedCourseModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Put(UpdateCourseDto updateCourseModel)
     {
         var retorno = await _coursesApi.Put(updateCourseModel.Token, updateCourseModel.Id, new Plugins.Redit.ApiDtos.Courses.ApiUpdateCoursesDto
@@ -61,14 +62,11 @@ public class CoursesController : BaseController
 
     [Authorize()]
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(DeletedCourseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Delete(DeleteCourseDto deleteCourseDto)
     {
-        await _coursesApi.Delete(deleteCourseDto.Token, deleteCourseDto.Id);
+        var retorno = await _coursesApi.Delete(deleteCourseDto.Token, deleteCourseDto.Id);
 
-        return Ok(new DeletedCourseModel
-        {
-            Sucess = true
-        });
+        return Ok(retorno);
     }
 }

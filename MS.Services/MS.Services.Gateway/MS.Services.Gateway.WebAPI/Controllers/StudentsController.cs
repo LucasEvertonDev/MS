@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.Infrastructure.Attributes;
 using MS.Services.Gateway.Core.Domain.Models.Courses;
@@ -20,7 +21,7 @@ public class StudentsController : BaseController
     }
 
     [HttpGetParams<SeacrhStudentDto>, Authorize]
-    [ProducesResponseType(typeof(PagedResult<SearchedStudentModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<PagedResult<SearchedStudentModel>>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get(SeacrhStudentDto seacrhStudentDto)
     {
         var retorno = await _studentsApi.Get(seacrhStudentDto.Token, seacrhStudentDto.PageNumber, seacrhStudentDto.PageSize, new Plugins.Redit.ApiDtos.Courses.ApiSearchStudentsDto
@@ -32,7 +33,7 @@ public class StudentsController : BaseController
 
     [HttpPost()]
     [Authorize(Roles = "CHANGE_STUDENTS")]
-    [ProducesResponseType(typeof(CreatedStudentModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<CreatedStudentModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Post(CreateStudentsDto createStudentsModel)
     {
         var retorno = await _studentsApi.Post(createStudentsModel.Token, new Plugins.Redit.ApiDtos.Courses.ApiCreateStudentsDto
@@ -47,7 +48,7 @@ public class StudentsController : BaseController
     }
 
     [HttpPut("{id}"), Authorize(Roles = "CHANGE_STUDENTS")]
-    [ProducesResponseType(typeof(UpdatedStudentModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<UpdatedStudentModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Put(UpdateStudentDto updateStudentDto)
     {
         var retorno = await _studentsApi.Put(updateStudentDto.Token, updateStudentDto.Id, new Plugins.Redit.ApiDtos.Courses.ApiUpdateStudentsDto
@@ -63,14 +64,11 @@ public class StudentsController : BaseController
 
     [Authorize(Roles = "CHANGE_STUDENTS")]
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(DeletedStudentModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Delete(DeleteStudentDto deleteStudentDto)
     {
-        await _studentsApi.Delete(deleteStudentDto.Token, deleteStudentDto.Id);
+        var retorno = await _studentsApi.Delete(deleteStudentDto.Token, deleteStudentDto.Id);
 
-        return Ok(new DeletedCourseModel
-        {
-            Sucess = true
-        });
+        return Ok(retorno);
     }
 }

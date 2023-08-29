@@ -68,26 +68,26 @@ public class UsersController : BaseController
     }
 
     [HttpPut("updatepassword/{id}"), Authorize]
-    [ProducesResponseType(typeof(ResponseDto<string>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> UpdatePassword(UpdatePasswordUserDto passwordDto)
     {
         await _updatePasswodService.ExecuteAsync(passwordDto);
 
-        return Ok(new ResponseDto<string>()
+        return Ok(new ResponseDto()
         {
-            Content = "Senha atualizada"
+            Success = true
         });
     }
 
     [HttpDelete("{id}"), Authorize]
-    [ProducesResponseType(typeof(ResponseDto<string>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Delete(DeleteUserDto deleteUserDto)
     {
         await _deleteUserService.ExecuteAsync(deleteUserDto);
 
-        return Ok(new ResponseDto<string>()
+        return Ok(new ResponseDto()
         {
-            Content = "Delete efetuado"
+            Success = true
         });
     }
 }

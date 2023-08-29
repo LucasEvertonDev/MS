@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.Infrastructure.Attributes;
 using MS.Services.Students.Core.Domain.Models.Students;
@@ -28,44 +29,53 @@ public class StudentsController : BaseController
     }
 
     [HttpGetParams<SeacrhStudentDto>, Authorize]
-    [ProducesResponseType(typeof(PagedResult<SearchedStudentModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<PagedResult<SearchedStudentModel>>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get(SeacrhStudentDto seacrhStudentDto)
     {
         await _searchServices.ExecuteAsync(seacrhStudentDto);
 
-        return Ok(_searchServices.SearchedStudents);
+        return Ok(new ResponseDto<PagedResult<SearchedStudentModel>>()
+        { 
+            Content = _searchServices.SearchedStudents
+        });
     }
 
     [HttpPost()]
     [Authorize(Roles = "CHANGE_STUDENTS")]
-    [ProducesResponseType(typeof(CreatedStudentModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<CreatedStudentModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Post([FromBody] CreateStudentModel createStudentModel)
     {
         await _createStudentService.ExecuteAsync(createStudentModel);
 
-        return Ok(_createStudentService.CreatedStudent);
+        return Ok(new ResponseDto<CreatedStudentModel>
+        { 
+            Content = _createStudentService.CreatedStudent
+        });
     }
 
     [Authorize(Roles = "CHANGE_STUDENTS")]
     [HttpPut("{id}"), Authorize]
-    [ProducesResponseType(typeof(UpdatedStudentModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<UpdatedStudentModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Put(UpdateStudentDto updateStudentModel)
     {
         await _updateStudentService.ExecuteAsync(updateStudentModel);
 
-        return Ok(_updateStudentService.UpdatedStudent);
+        return Ok(new ResponseDto<UpdatedStudentModel>()
+        {
+            Content = _updateStudentService.UpdatedStudent
+        });
     }
 
     [Authorize(Roles = "CHANGE_STUDENTS")]
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(DeletedStudentModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Delete(DeleteStudentDto deleteStudentDto)
     {
         await _deleteStudentService.ExecuteAsync(deleteStudentDto);
 
-        return Ok(new DeletedStudentModel
+        return Ok(new ResponseDto
         {
-            Sucess = true
+            Success = true,
         });
     }
 }

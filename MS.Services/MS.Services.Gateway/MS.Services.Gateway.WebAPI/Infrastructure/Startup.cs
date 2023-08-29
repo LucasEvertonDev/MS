@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
 using MS.Libs.Core.Domain.Infra.AppSettings;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Infra.Plugins.AutoMapper;
@@ -37,8 +38,8 @@ public class Startup
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            ////options.Filters.Add(typeof(ExceptionFilter));
-            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ErrorsModel), 401));
+            options.Filters.Add(typeof(ExceptionFilter));
+            options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseError<ErrorsModel>), 401));
         });
 
         // pra usar o middleware que não é attributee

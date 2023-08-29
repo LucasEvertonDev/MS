@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS.Libs.Core.Domain.Models.Base;
+using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.Infrastructure.Attributes;
 using MS.Services.Courses.Core.Domain.Models.Courses;
@@ -28,44 +29,53 @@ public class CoursesController : BaseController
     }
 
     [HttpGetParams<SeacrhCourseDto>, Authorize]
-    [ProducesResponseType(typeof(PagedResult<SearchedCourseModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<PagedResult<SearchedCourseModel>>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get(SeacrhCourseDto seacrhCourseDto)
     {
         await _searchServices.ExecuteAsync(seacrhCourseDto);
 
-        return Ok(_searchServices.SearchedCourses);
+        return Ok(new ResponseDto<PagedResult<SearchedCourseModel>>()
+        { 
+            Content = _searchServices.SearchedCourses
+        });
     }
 
     [HttpPost()]
     [Authorize()]
-    [ProducesResponseType(typeof(CreatedCourseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<CreatedCourseModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Post([FromBody] CreateCourseModel createCourseModel)
     {
         await _createCourseservice.ExecuteAsync(createCourseModel);
 
-        return Ok(_createCourseservice.CreatedCourse);
+        return Ok(new ResponseDto<CreatedCourseModel>()
+        { 
+            Content = _createCourseservice.CreatedCourse
+        });
     }
 
     [Authorize()]
     [HttpPut("{id}"), Authorize]
-    [ProducesResponseType(typeof(UpdatedCourseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto<UpdatedCourseModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Put(UpdateCourseDto updateCourseModel)
     {
         await _updateCourseservice.ExecuteAsync(updateCourseModel);
 
-        return Ok(_updateCourseservice.UpdatedCourse);
+        return Ok(new ResponseDto<UpdatedCourseModel>()
+        {
+            Content = _updateCourseservice.UpdatedCourse
+        });
     }
 
     [Authorize()]
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(DeletedCourseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Delete(DeleteCourseDto deleteCourseDto)
     {
         await _deleteCourseservice.ExecuteAsync(deleteCourseDto);
 
-        return Ok(new DeletedCourseModel
+        return Ok(new ResponseDto
         {
-            Sucess = true
+            Success = true
         });
     }
 }
