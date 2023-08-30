@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MS.Services.Auth.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Clear : Migration
+    public partial class migrationinitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
