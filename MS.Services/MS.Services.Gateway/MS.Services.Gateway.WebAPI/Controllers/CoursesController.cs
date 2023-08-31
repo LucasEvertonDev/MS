@@ -35,12 +35,20 @@ public class CoursesController : BaseController
     [ProducesResponseType(typeof(ResponseDto<CreatedCourseModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Post(CreateCourseDto createCourseModel)
     {
-        var retorno = await _coursesApi.Post(createCourseModel.Token, new Plugins.Redit.ApiDtos.Courses.ApiCreateCoursesDto 
-        {
-            Name = createCourseModel.Body.Name,
-            EndDate = createCourseModel.Body.EndDate,
-            StartDate = createCourseModel.Body.StartDate,
-        });
+        dynamic retorno = null;
+        ////try 
+        ////{ 
+            retorno = await _coursesApi.Post(createCourseModel.Token, new Plugins.Redit.ApiDtos.Courses.ApiCreateCoursesDto 
+            {
+                Name = createCourseModel.Body.Name,
+                EndDate = createCourseModel.Body.EndDate,
+                StartDate = createCourseModel.Body.StartDate,
+            });
+        ////}
+        ////catch (Exception ex) 
+        ////{
+        
+        ////}
 
         return Ok(retorno);
     }

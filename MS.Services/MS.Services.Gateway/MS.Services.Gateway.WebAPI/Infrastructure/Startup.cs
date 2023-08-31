@@ -38,7 +38,7 @@ public class Startup
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            options.Filters.Add(typeof(ExceptionFilter));
+            //options.Filters.Add(typeof(ExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseError<ErrorsModel>), 401));
         });
 
