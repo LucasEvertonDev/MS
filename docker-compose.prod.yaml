@@ -23,7 +23,7 @@ services:
     #   - 1433
 
   ms.services.auth.webapi:
-    image: lcseverton/ms.services.auth.webapi:1.0
+    image: lcseverton/ms.services.auth.webapi:1.1
     restart: always
     container_name: ms.services.auth.webapi
     environment:
@@ -87,3 +87,5 @@ services:
       - '4003:80'
     networks:
       - 'backend'
+      
+# docker compose -f 'docker-compose.prod.yaml' up
