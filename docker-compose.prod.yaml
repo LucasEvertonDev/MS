@@ -71,7 +71,7 @@ services:
       - 'backend'
 
   ms.services.gateway.webapi:
-    image: lcseverton/ms.services.gateway.webapi:1.0
+    image: lcseverton/ms.services.gateway.webapi:1.1
     restart: always
     container_name: ms.services.gateway.webapi
     environment:
