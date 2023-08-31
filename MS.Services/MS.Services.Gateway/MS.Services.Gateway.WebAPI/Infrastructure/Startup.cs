@@ -9,10 +9,10 @@ using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Core.Domain.Plugins.IMappers;
 using MS.Libs.Infra.Plugins.AutoMapper;
 using MS.Libs.WebApi.Infrastructure.Extensions;
-using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.WebAPI.Infrastructure;
 using MS.Services.Gateway.Plugins.AutoMapper.Profiles;
+using MS.Services.Gateway.WebAPI.Infrastructure.Filters;
 using MS.Services.Gateway.WebAPI.Infrastructure.RefitApis;
 using MS.Services.Gateway.WebAPI.Infrastructure.SwaggerFilters;
 using Swashbuckle.AspNetCore.Filters;
@@ -33,12 +33,12 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<ExceptionFilter>();
+        services.AddSingleton<GatewayExceptionFilter>();
 
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            //options.Filters.Add(typeof(ExceptionFilter));
+            options.Filters.Add(typeof(GatewayExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseError<ErrorsModel>), 401));
         });
 
