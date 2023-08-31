@@ -1,0 +1,89 @@
+version: '3.4'
+
+networks:
+  backend:
+    name: backend
+  
+services:
+  sqlserver:
+    restart: always
+    image : mcr.microsoft.com/mssql/server:2022-latest
+    container_name : sqlserver
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "Numsey#2021"
+    volumes:
+      - c:\dados\volumes\mssql:/var/opt/mssql/data
+    ports:
+      - 11433:1433
+    networks:
+      - 'backend'
+    # expose:
+    #   - 1433
+
+  ms.services.auth.webapi:
+    image: lcseverton/ms.services.auth.webapi:1.0
+    restart: always
+    container_name: ms.services.auth.webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Warning"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4000:80'
+    networks:
+      - 'backend'
+
+  ms.services.courses.webapi:
+    image: lcseverton/ms.services.courses.webapi:1.0
+    restart: always
+    container_name: ms.services.courses.webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Warning"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4001:80'
+    networks:
+      - 'backend'
+
+  ms.services.students.webapi:
+    image: lcseverton/ms.services.students.webapi:1.0
+    restart: always
+    container_name: ms.services.students.webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Warning"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4002:80'
+    networks:
+      - 'backend'
+
+  ms.services.gateway.webapi:
+    image: lcseverton/ms.services.gateway.webapi:1.0
+    restart: always
+    container_name: ms.services.gateway.webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
+      - "Logging:LogLevel:Serilog=Warning"
+      - "GatewayUrls:WebApiCourse=http://ms.services.courses.webapi"
+      - "GatewayUrls:WebApiStudents=http://ms.services.students.webapi"
+    depends_on:
+      - sqlserver
+    ports:
+      - '4003:80'
+    networks:
+      - 'backend'
