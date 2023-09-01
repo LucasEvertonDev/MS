@@ -31,10 +31,7 @@ public class AuthController : BaseController
     {
         await _loginService.ExecuteAsync(loginModel);
 
-        return Ok(new ResponseDto<TokenModel>()
-        { 
-            Content = _loginService.TokenRetorno
-        });
+        return Ok(_loginService.TokenRetorno.TokenJWT);
     }
     
     [HttpPost("refreshtoken"), Authorize]
