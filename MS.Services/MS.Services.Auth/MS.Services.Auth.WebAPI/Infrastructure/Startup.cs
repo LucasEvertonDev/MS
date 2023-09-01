@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
@@ -99,10 +100,39 @@ public class Startup
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Auth.WebAPI", Version = "v1" });
 
 
-            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            //c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            //{
+            //    Type = SecuritySchemeType.OAuth2,
+
+            //    Flows = new OpenApiOAuthFlows
+            //    {
+            //        //https://localhost:7046/
+            //        Password = new OpenApiOAuthFlow
+            //        {
+            //            TokenUrl = new Uri("https://localhost:7046/api/v1/auth/login"),
+            //            Extensions = new Dictionary<string, IOpenApiExtension>
+            //                    {
+            //                        { "returnSecureToken", new OpenApiBoolean(true) },
+            //                    },
+            //        }
+
+            //    }
+            //}); 
+            //c.OperationFilter<AuthorizeCheckOperationFilter>();
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                { SecuritySchemes.OAuthScheme, new List<string>() }
+            });
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.OAuth2,
-
+                BearerFormat = "JWT",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Scheme = "bearer",
+                Description = "Please insert JWT token into field",
                 Flows = new OpenApiOAuthFlows
                 {
                     //https://localhost:7046/
@@ -111,14 +141,12 @@ public class Startup
                         TokenUrl = new Uri("https://localhost:7046/api/v1/auth/login"),
                         Extensions = new Dictionary<string, IOpenApiExtension>
                                 {
-                                    { "returnSecureToken", new OpenApiBoolean(true) },
+                                    { "TokenJWT", new OpenApiBoolean(true) },
                                 },
                     }
 
                 }
-            }); 
-            c.OperationFilter<AuthorizeCheckOperationFilter>();
-
+            });
 
 
             //c.RegisterSwaggerDefaultConfig(true);
@@ -173,6 +201,44 @@ public class Startup
             endpoints.MapControllers();
         });
     }
+}
+
+
+internal static class SecuritySchemes
+{
+    public static OpenApiSecurityScheme BearerScheme(IConfiguration config) => new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Description = "Standard authorisation using the Bearer scheme. Example: \"bearer {token}\"",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        Flows = new OpenApiOAuthFlows
+        {
+            Password = new OpenApiOAuthFlow
+            {
+                Scopes = new Dictionary<string, string>
+                    {
+                        { "Auth", "My Api" }
+                    },
+                TokenUrl = new System.Uri($"{config["TokenServerUrl"]}connect/token")
+            }
+        }
+    };
+
+    public static OpenApiSecurityScheme OAuthScheme => new OpenApiSecurityScheme
+    {
+        Reference = new OpenApiReference
+        {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+        },
+        Scheme = "oauth2",
+        Name = "Bearer",
+        In = ParameterLocation.Header,
+
+    };
 }
 
 

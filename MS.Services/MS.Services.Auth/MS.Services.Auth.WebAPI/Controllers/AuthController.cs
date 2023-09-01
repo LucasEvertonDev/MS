@@ -6,6 +6,7 @@ using MS.Services.Auth.Core.Domain.Models.Auth;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
 using MS.Services.Auth.Core.Domain.Services.UserServices;
+using Newtonsoft.Json.Linq;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
 
@@ -31,7 +32,11 @@ public class AuthController : BaseController
     {
         await _loginService.ExecuteAsync(loginModel);
 
-        return Ok(_loginService.TokenRetorno.TokenJWT);
+        return Ok(new 
+        {
+            token_type = "bearer",
+            access_token = _loginService.TokenRetorno.TokenJWT 
+        });
     }
     
     [HttpPost("refreshtoken"), Authorize]
