@@ -56,13 +56,12 @@ public class AuthController : BaseController
     public async Task<ActionResult> FlowLogin(LoginInfo loginInfo)
     {
         var authorization = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(loginInfo.Authorization.Split("Basic ")[1].ToString())).Split(":");
-        ;
         await _loginService.ExecuteAsync(new LoginDto
         {
             Body = new LoginModel
             {
-                Username = loginInfo.Username,
-                Password = loginInfo.Password,
+                Username = loginInfo.username,
+                Password = loginInfo.password,
             },
             ClientId = authorization[0],
             ClientSecret = authorization[1]

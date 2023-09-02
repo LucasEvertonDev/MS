@@ -1,38 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 using MS.Libs.Core.Domain.Constants;
 using MS.Libs.Core.Domain.Infra.AppSettings;
-using MS.Libs.Core.Domain.Infra.Claims;
 using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Activator;
-using MS.Libs.Infra.Utils.Extensions;
 using MS.Libs.WebApi.Infrastructure.Extensions;
 using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.Infra.IoC;
-using Serilog;
-using Serilog.Core;
-using Serilog.Events;
-using Serilog.Sinks.MSSqlServer;
 using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.ObjectModel;
 using System.Reflection;
-using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
-using static System.Net.WebRequestMethods;
-using Log = Serilog.Log;
 
 namespace MS.Services.Auth.WebAPI.Infrastructure;
 public class Startup
@@ -100,7 +81,7 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Auth.WebAPI", Version = "v1" });
 
-            c.RegisterSwaggerDefaultConfig(true, "https://localhost:7046/api/v1/auth/flowlogin");
+            c.RegisterSwaggerDefaultConfig(true, Configuration["Swagger:FlowLogin"]);
 
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), includeControllerXmlComments: false);
