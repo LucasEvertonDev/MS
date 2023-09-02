@@ -117,6 +117,11 @@ public class Startup
         app.UseSwaggerUI(c =>
         {
             c.RoutePrefix = "";
+
+            c.OAuthClientId("7064bbbf-5d11-4782-9009-95e5a6fd6822");
+            c.OAuthClientSecret("dff0bcb8dad7ea803e8d28bf566bcd354b5ec4e96ff4576a1b71ec4a21d56910");
+            c.OAuthUsername("lcseverton");
+
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "MS.Services.Students.WebAPI");
         });
 

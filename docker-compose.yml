@@ -33,7 +33,7 @@ services:
       - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
       - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
       - "Logging:LogLevel:Serilog=Warning"
-      - "Swagger:FlowLogin=https://ms.services.auth.webapi/api/v1/auth/flowlogin"
+      - "Swagger:FlowLogin=http://localhost:4000/api/v1/auth/flowlogin"
     depends_on:
       - sqlserver
     ports:
@@ -52,7 +52,7 @@ services:
       - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
       - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
       - "Logging:LogLevel:Serilog=Warning"
-      - "Swagger:FlowLogin=https://ms.services.auth.webapi/api/v1/auth/flowlogin"
+      - "Swagger:FlowLogin=http://localhost:4000/api/v1/auth/flowlogin"
     depends_on:
       - sqlserver
     ports:
@@ -71,7 +71,7 @@ services:
       - "ConnectionStrings:SqlConnection=Server=sqlserver;Database=SchoolDb;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
       - "ConnectionStrings:SerilogSqlConnection=Server=sqlserver;Database=AppLogs;User Id=sa;Password=Numsey#2021;TrustServerCertificate=True;"
       - "Logging:LogLevel:Serilog=Warning"
-      - "Swagger:FlowLogin=https://ms.services.auth.webapi/api/v1/auth/flowlogin"
+      - "Swagger:FlowLogin=http://localhost:4000/api/v1/auth/flowlogin"
     depends_on:
       - sqlserver
     ports:
@@ -92,7 +92,7 @@ services:
       - "Logging:LogLevel:Serilog=Warning"
       - "GatewayUrls:WebApiCourse=http://ms.services.courses.webapi"
       - "GatewayUrls:WebApiStudents=http://ms.services.students.webapi"
-      - "Swagger:FlowLogin=https://ms.services.auth.webapi/api/v1/auth/flowlogin"
+      - "Swagger:FlowLogin=http://localhost:4000/api/v1/auth/flowlogin"
     depends_on:
       - sqlserver
     ports:

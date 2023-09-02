@@ -23,7 +23,7 @@ public class LoginDto : BaseModel
 
 public class LoginInfo
 {
-    [FromHeader]
+    [FromHeader(Name = "Authorization")]
     public string Authorization { get;set; }
     public string username { get; set; }
     public string password { get; set; }
