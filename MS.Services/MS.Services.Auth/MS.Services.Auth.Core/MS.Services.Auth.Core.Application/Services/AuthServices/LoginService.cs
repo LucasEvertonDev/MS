@@ -43,7 +43,7 @@ public class LoginService : BaseService<LoginDto>, ILoginService
         {
             await ValidateAsync(param);
 
-            var user = await _userSearchRepository.FirstOrDefaultAsync(a => a.Username == param.Username);
+            var user = await _userSearchRepository.FirstOrDefaultAsync(a => a.Username == param.Body.Username);
 
             user.LastAuthentication = DateTime.Now;
 
@@ -63,18 +63,18 @@ public class LoginService : BaseService<LoginDto>, ILoginService
 
     protected override async Task ValidateAsync(LoginDto param)
     {
-        //if (!(await _searchClientCredentials.GetListFromCacheAsync(a => a.ClientId == param.ClientId && a.ClientSecret == param.ClientSecret)).Any())
-        //{
-        //    BusinessException(AuthErrors.Business.CLIENT_CREDENTIALS_INVALID);
-        //}
+        if (!(await _searchClientCredentials.GetListFromCacheAsync(a => a.ClientId == param.ClientId && a.ClientSecret == param.ClientSecret)).Any())
+        {
+            BusinessException(AuthErrors.Business.CLIENT_CREDENTIALS_INVALID);
+        }
 
-        var user = await _userSearchRepository.FirstOrDefaultAsync(a => a.Username == param.Username);
+        var user = await _userSearchRepository.FirstOrDefaultAsync(a => a.Username == param.Body.Username);
         if (user == null || string.IsNullOrEmpty(user.Id.ToString()))
         {
             BusinessException(AuthErrors.Business.INVALID_LOGIN);
         }
 
-        if (!_passwordHash.PasswordIsEquals(param.Password, user?.PasswordHash, user?.Password))
+        if (!_passwordHash.PasswordIsEquals(param.Body.Password, user?.PasswordHash, user?.Password))
         {
             BusinessException(AuthErrors.Business.INVALID_LOGIN);
         }

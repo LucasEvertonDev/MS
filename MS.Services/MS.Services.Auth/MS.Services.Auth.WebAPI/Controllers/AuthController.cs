@@ -7,6 +7,7 @@ using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
 using MS.Services.Auth.Core.Domain.Services.UserServices;
 using Newtonsoft.Json.Linq;
+using System.Buffers.Text;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
 
@@ -32,10 +33,9 @@ public class AuthController : BaseController
     {
         await _loginService.ExecuteAsync(loginModel);
 
-        return Ok(new 
+        return Ok(new ResponseDto<TokenModel>()
         {
-            token_type = "bearer",
-            access_token = _loginService.TokenRetorno.TokenJWT 
+            Content = _loginService.TokenRetorno
         });
     }
     
@@ -48,6 +48,30 @@ public class AuthController : BaseController
         return Ok(new ResponseDto<TokenModel>()
         {
             Content = _refreshTokenService.TokenRetorno
+        });
+    }
+
+    [HttpPost("flowlogin")]
+    [ProducesResponseType(typeof(ResponseDto<TokenModel>), StatusCodes.Status200OK)]
+    public async Task<ActionResult> FlowLogin(LoginInfo loginInfo)
+    {
+        var authorization = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(loginInfo.Authorization.Split("Basic ")[1].ToString())).Split(":");
+        ;
+        await _loginService.ExecuteAsync(new LoginDto
+        {
+            Body = new LoginModel
+            {
+                Username = loginInfo.Username,
+                Password = loginInfo.Password,
+            },
+            ClientId = authorization[0],
+            ClientSecret = authorization[1]
+        });
+
+        return Ok(new
+        {
+            token_type = "bearer",
+            access_token = _loginService.TokenRetorno.TokenJWT
         });
     }
 }

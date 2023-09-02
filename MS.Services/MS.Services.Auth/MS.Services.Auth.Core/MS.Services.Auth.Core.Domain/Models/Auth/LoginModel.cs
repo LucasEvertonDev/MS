@@ -17,17 +17,14 @@ public class LoginDto : BaseModel
     [DefaultValue("dff0bcb8dad7ea803e8d28bf566bcd354b5ec4e96ff4576a1b71ec4a21d56910")]
     public virtual string ClientSecret { get; set; }
 
-    [FromForm]
-    public string grant_type { get; set; }
-    [FromForm]
-    public string Username { get; set; }
-    [FromForm]
-    public string Password { get; set; }
+    [FromBody]
+    public LoginModel Body { get; set; }
 }
 
 public class LoginInfo
 {
-    public string grant_type { get;set; }
+    [FromHeader]
+    public string Authorization { get;set; }
     public string Username { get; set; }
     public string Password { get; set; }
 }
