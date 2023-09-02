@@ -91,7 +91,7 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Gateway.WebAPI", Version = "v1" });
 
-            c.RegisterSwaggerDefaultConfig(true);
+            c.RegisterSwaggerDefaultConfig(true, Configuration["Swagger:FlowLogin"]);
 
             c.OperationFilter<RemoveAuthotizationHeader>();
 

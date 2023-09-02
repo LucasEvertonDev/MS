@@ -82,7 +82,7 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS.Services.Courses.WebAPI", Version = "v1" });
 
-            c.RegisterSwaggerDefaultConfig(true);
+            c.RegisterSwaggerDefaultConfig(true, Configuration["Swagger:FlowLogin"]);
 
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), includeControllerXmlComments: false);
