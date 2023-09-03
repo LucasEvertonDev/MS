@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormLogin } from '../../models/form-login.model';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, Subscription, take } from 'rxjs';
 import { LoginRequest } from 'src/app/core/api';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
