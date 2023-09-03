@@ -9,11 +9,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
+import { FocusDirective } from 'src/app/core/directives/focus.directive';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FocusDirective
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
     MaterialModule
   ],
   providers: [
+    
   ]
 })
 export class AuthModule { }

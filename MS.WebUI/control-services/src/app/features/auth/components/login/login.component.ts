@@ -1,5 +1,5 @@
 import { LoginService } from './../../services/auth.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormLogin } from '../../models/form-login.model';
 import { Router } from '@angular/router';
@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   private readonly ngUnsubscribe$: Subject<void> = new Subject<void>();
   public formLogin!: FormGroup<FormLogin>;
   public authLogin!: LoginRequest;
-  // public subscription$$!: Subscription;
-
+  @ViewChild("inputLogin") inputlogin!: ElementRef;
+  
   public constructor(private loginService: LoginService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.criarFormulario();
+    this.inputlogin?.nativeElement?.focus();
   }
 
   public login(): void {
@@ -51,8 +52,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     // Serve para validar em conjunto ao mesmo tempo o compose
     //Validators.compose([Validators.required, Validators.email]);
     this.formLogin = this.formBuilder.group<FormLogin>({
-      username: new FormControl<string>('', { nonNullable: true, validators: [ Validators.required ]}),
-      password: new FormControl<string>('', { nonNullable: true, validators: Validators.compose([ Validators.required, Validators.minLength(4) ]) })
+      username: new FormControl<string>({value: '', disabled: true}, { nonNullable: true, validators: [ Validators.required ],},),
+      password: new FormControl<string>('', {  nonNullable: true, validators: Validators.compose([ Validators.required, Validators.minLength(4) ])}, )
     });
   }
 
