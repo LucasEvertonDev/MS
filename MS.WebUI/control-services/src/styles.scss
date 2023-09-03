@@ -1,0 +1,24 @@
+.snack-background-red{ 
+    div.mdc-snackbar__surface  {
+        background-color: rgb(178, 25, 25, 1) !important;
+        color: white !important;
+    }
+    div  {
+        color: white !important;
+    }
+    span {
+        color: white !important;
+    }
+}
+.snack-background-green{
+    div.mdc-snackbar__surface  {
+        background: rgb(29, 102, 29) !important;
+        color: white !important;
+    }
+    div {
+        color: white !important;
+    }
+    span {
+        color: white !important;
+    }
+}
