@@ -1,7 +1,7 @@
-import { LoginService } from './../../services/auth.service';
+import { LoginService } from '../../services/login/login.service';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormLogin } from '../../models/form-login.model';
+import { FormLogin } from '../../models/login/form-login.model';
 import { Router } from '@angular/router';
 import { Subject, Subscription, take } from 'rxjs';
 import { LoginRequest } from 'src/app/core/api';
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     // Serve para validar em conjunto ao mesmo tempo o compose
     //Validators.compose([Validators.required, Validators.email]);
     this.formLogin = this.formBuilder.group<FormLogin>({
-      username: new FormControl<string>({value: '', disabled: true}, { nonNullable: true, validators: [ Validators.required ],},),
+      username: new FormControl<string>({value: '', disabled: false}, { nonNullable: true, validators: [ Validators.required ],},),
       password: new FormControl<string>('', {  nonNullable: true, validators: Validators.compose([ Validators.required, Validators.minLength(4) ])}, )
     });
   }
