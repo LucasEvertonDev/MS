@@ -16,14 +16,23 @@ export class SnackBarService {
     }
 
     public ShowErrors(messages: error[], durationInSeconds?: number) {
-        messages.forEach(error => {
-            this.snackBar.open(error.message, 'Atenção!', {
+        if (messages) {
+            messages.forEach(error => {
+                this.snackBar.open(error.message, 'Atenção!', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'top',
+                    duration: (durationInSeconds ?? 5) * 1000,
+                    panelClass: ['snack-background-red'],
+                });
+            });
+        } else {
+            this.snackBar.open("Não foi possível se comunicar ao servidor!", "", {
                 horizontalPosition: 'right',
                 verticalPosition: 'top',
                 duration: (durationInSeconds ?? 5) * 1000,
-                panelClass: ['snack-background-red'],
+                panelClass: ['snack-background-red']
             });
-        });
+        }
     }
 
     public ShowSucess(message: string, durationInSeconds?: number) {
