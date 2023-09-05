@@ -5,6 +5,7 @@ import { LayoutFooterComponent } from '../views/layout-footer/layout-footer.comp
 import { LayoutAccountComponent } from '../views/layout-account/layout-account.component';
 import { LayoutMenuComponent } from '../views/layout-menu/layout-menu.component';
 import { LayoutNavBarComponent } from '../views/layout-nav-bar/layout-nav-bar.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -25,6 +26,7 @@ import { LayoutNavBarComponent } from '../views/layout-nav-bar/layout-nav-bar.co
   ],
   imports: [
     CommonModule,
+    RouterModule
   ]
 })
 export class LayoutModule { }

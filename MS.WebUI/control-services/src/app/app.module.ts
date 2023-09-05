@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/authorization-token/auth.interceptor';
+import { LayoutModule } from './shared/theme/module/layout.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AuthInterceptor } from './core/interceptors/authorization-token/auth.in
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    LayoutModule,
     HttpClientModule,
   ],
   providers: [
