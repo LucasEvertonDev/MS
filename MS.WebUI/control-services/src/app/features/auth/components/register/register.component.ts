@@ -40,6 +40,8 @@ export class RegisterComponent implements OnInit {
   }
 
   public register(): void {
+    console.log(this.formRegister.value);
+
     // assign faz um mapper do objeto
     this.createuser = Object.assign('', this.createuser, this.formRegister.value);
     this.createuser.username = this.createuser.username.toLowerCase();
