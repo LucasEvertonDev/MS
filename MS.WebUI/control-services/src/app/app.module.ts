@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/authorization-token/auth.interceptor';
 import { LayoutModule } from './shared/theme/module/layout.module';
+import { LayoutComponent } from './shared/theme/views/layout/layout.component';
+import { LayoutAccountComponent } from './shared/theme/views/layout-account/layout-account.component';
 
 @NgModule({
   declarations: [

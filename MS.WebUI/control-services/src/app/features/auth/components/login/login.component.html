@@ -1,43 +1,41 @@
-<app-layout-account>
-  <div class="card">
-    <div class="card-body">
-      <!-- Logo -->
-      <div class="app-brand justify-content-center">
-          <h2>Micro School</h2>
-      </div>
-      <!-- /Logo -->
-      <h4 class="mb-2">Bem vindo ao Micro School! 👋</h4>
-      <p class="mb-4">Por favor informe suas credencias para começar a aventura!</p>
-
-      <form class="form" [formGroup]="formLogin">
-        <div class="mb-3">
-          <mat-form-field>
-            <mat-label>Login</mat-label>
-            <input #inputLogin matInput placeholder="Login" [formControl]="formLogin.controls.username" [appFocus]="true">
-            <mat-error *ngIf="formLogin.controls.username.hasError('required')">Login é obirgatório</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="mb-3">
-            <mat-form-field>
-              <mat-label>Senha*</mat-label>
-              <input type="password" matInput [formControl]="formLogin.controls.password" autocomplete="off" > 
-              <mat-error *ngIf="formLogin.controls.password.hasError('required')">Senha é obrigatório</mat-error>
-              <mat-error *ngIf="formLogin.controls.password.hasError('minlength')">Senha deve ter no mínimo 4 caracteres</mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="mb-3">
-          <button style="width: 100%;height: 56px;" class mat-raised-button color="primary" [disabled]="!formLogin.valid" (click)="login()">Sign in</button>
-        </div>
-      </form>
-
-      <p class="text-center">
-        <span>Novo na plataforma? </span>
-        <a routerLink="/auth/register" >
-          <span>Crie sua conta.</span>
-        </a>
-      </p>
+<div class="card">
+  <div class="card-body">
+    <!-- Logo -->
+    <div class="app-brand justify-content-center">
+        <h2>Micro School</h2>
     </div>
+    <!-- /Logo -->
+    <h4 class="mb-2">Bem vindo ao Micro School! 👋</h4>
+    <p class="mb-4">Por favor informe suas credencias para começar a aventura!</p>
+
+    <form class="form" [formGroup]="formLogin">
+      <div class="mb-3">
+        <mat-form-field>
+          <mat-label>Login</mat-label>
+          <input #inputLogin matInput placeholder="Login" [formControl]="formLogin.controls.username" [appFocus]="true">
+          <mat-error *ngIf="formLogin.controls.username.hasError('required')">Login é obirgatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mb-3">
+          <mat-form-field>
+            <mat-label>Senha*</mat-label>
+            <input type="password" matInput [formControl]="formLogin.controls.password" autocomplete="off" > 
+            <mat-error *ngIf="formLogin.controls.password.hasError('required')">Senha é obrigatório</mat-error>
+            <mat-error *ngIf="formLogin.controls.password.hasError('minlength')">Senha deve ter no mínimo 4 caracteres</mat-error>
+          </mat-form-field>
+      </div>
+
+      <div class="mb-3">
+        <button style="width: 100%;height: 56px;" class mat-raised-button color="primary" [disabled]="!formLogin.valid" (click)="login()">Sign in</button>
+      </div>
+    </form>
+
+    <p class="text-center">
+      <span>Novo na plataforma? </span>
+      <a routerLink="/auth/register" >
+        <span>Crie sua conta.</span>
+      </a>
+    </p>
   </div>
-</app-layout-account>
+</div>

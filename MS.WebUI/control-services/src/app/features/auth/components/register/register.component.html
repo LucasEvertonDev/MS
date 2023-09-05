@@ -1,74 +1,72 @@
-<app-layout-account>
-    <div class="card">
-        <div class="card-body">
-            <div class="app-brand justify-content-center">
-                <h2 style="margin: 0px;">Seja muito bem vindo!</h2>
-            </div>
-            <form class="form" [formGroup]="formRegister">
-                <div class="mb-3">
-                    <mat-form-field>
-                        <mat-label>Nome*</mat-label>
-                        <input type="text" matInput [formControl]="formRegister.controls.name" autocomplete="off">
-                        <mat-error *ngIf="formRegister.controls.name.hasError('required')">Nome é
-                            obrigatório</mat-error>
-                    </mat-form-field>
-                </div>
-
-                <mat-form-field class="mb-3" style="display: none;">
-                    <mat-label>Grupo de Usuário</mat-label>
-                    <mat-select [formControl]="formRegister.controls.userGroupId">
-                        <mat-option value="F97E565D-08AF-4281-BC11-C0206EAE06FA">Adminsitrador</mat-option>
-                        <mat-option value="2C2AB8A3-3665-42EF-B4EF-BBEC05AC02A5">Usuário</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formRegister.controls.userGroupId.hasError('required')">Grupo de usuário é
+<div class="card">
+    <div class="card-body">
+        <div class="app-brand justify-content-center">
+            <h2 style="margin: 0px;">Seja muito bem vindo!</h2>
+        </div>
+        <form class="form" [formGroup]="formRegister">
+            <div class="mb-3">
+                <mat-form-field>
+                    <mat-label>Nome*</mat-label>
+                    <input type="text" matInput [formControl]="formRegister.controls.name" autocomplete="off">
+                    <mat-error *ngIf="formRegister.controls.name.hasError('required')">Nome é
                         obrigatório</mat-error>
                 </mat-form-field>
+            </div>
 
-                <div class="mb-3">
-                    <mat-form-field>
-                        <mat-label>Email*</mat-label>
-                        <input type="email" matInput [formControl]="formRegister.controls.email" autocomplete="off">
-                        <mat-error *ngIf="formRegister.controls.email.hasError('required')">Email é
-                            obrigatório</mat-error>
-                        <mat-error *ngIf="formRegister.controls.email.hasError('email')">Email inválido</mat-error>
-                    </mat-form-field>
-                </div>
+            <mat-form-field class="mb-3" style="display: none;">
+                <mat-label>Grupo de Usuário</mat-label>
+                <mat-select [formControl]="formRegister.controls.userGroupId">
+                    <mat-option value="F97E565D-08AF-4281-BC11-C0206EAE06FA">Adminsitrador</mat-option>
+                    <mat-option value="2C2AB8A3-3665-42EF-B4EF-BBEC05AC02A5">Usuário</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formRegister.controls.userGroupId.hasError('required')">Grupo de usuário é
+                    obrigatório</mat-error>
+            </mat-form-field>
 
-                <div class="mb-3">
-                    <mat-form-field>
-                        <mat-label>Login</mat-label>
-                        <input #inputLogin matInput placeholder="Login" [formControl]="formRegister.controls.username">
-                        <mat-error *ngIf="formRegister.controls.username.hasError('required')">Login é
-                            obirgatório</mat-error>
-                    </mat-form-field>
-                </div>
+            <div class="mb-3">
+                <mat-form-field>
+                    <mat-label>Email*</mat-label>
+                    <input type="email" matInput [formControl]="formRegister.controls.email" autocomplete="off">
+                    <mat-error *ngIf="formRegister.controls.email.hasError('required')">Email é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="formRegister.controls.email.hasError('email')">Email inválido</mat-error>
+                </mat-form-field>
+            </div>
 
-                <div class="mb-3">
-                    <mat-form-field>
-                        <mat-label>Senha*</mat-label>
-                        <input type="password" matInput [formControl]="formRegister.controls.password"
-                            autocomplete="off">
-                        <mat-error *ngIf="formRegister.controls.password.hasError('required')">Senha é
-                            obrigatório</mat-error>
-                        <mat-error *ngIf="formRegister.controls.password.hasError('minlength')">Senha deve ter no mínimo
-                            6 caracteres</mat-error>
-                    </mat-form-field>
-                </div>
+            <div class="mb-3">
+                <mat-form-field>
+                    <mat-label>Login</mat-label>
+                    <input #inputLogin matInput placeholder="Login" [formControl]="formRegister.controls.username">
+                    <mat-error *ngIf="formRegister.controls.username.hasError('required')">Login é
+                        obirgatório</mat-error>
+                </mat-form-field>
+            </div>
 
-                <div class="mb-3">
-                    <mat-form-field>
-                        <mat-label>Comfirme sua senha*</mat-label>
-                        <input type="password" matInput [formControl]="formRegister.controls.comfirmpassword"
-                            autocomplete="off">
-                        <mat-error *ngIf="formRegister.controls.comfirmpassword.hasError('notEquivalent')">As senhas não conferem</mat-error>
-                    </mat-form-field>
-                </div>
+            <div class="mb-3">
+                <mat-form-field>
+                    <mat-label>Senha*</mat-label>
+                    <input type="password" matInput [formControl]="formRegister.controls.password"
+                        autocomplete="off">
+                    <mat-error *ngIf="formRegister.controls.password.hasError('required')">Senha é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="formRegister.controls.password.hasError('minlength')">Senha deve ter no mínimo
+                        6 caracteres</mat-error>
+                </mat-form-field>
+            </div>
 
-                <div class="mb-3">
-                    <button style="width: 100%;height: 56px;" class mat-raised-button color="primary"
-                        [disabled]="!formRegister.valid" (click)="register()">Registre-se</button>
-                </div>
-            </form>
-        </div>
+            <div class="mb-3">
+                <mat-form-field>
+                    <mat-label>Comfirme sua senha*</mat-label>
+                    <input type="password" matInput [formControl]="formRegister.controls.comfirmpassword"
+                        autocomplete="off">
+                    <mat-error *ngIf="formRegister.controls.comfirmpassword.hasError('notEquivalent')">As senhas não conferem</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mb-3">
+                <button style="width: 100%;height: 56px;" class mat-raised-button color="primary"
+                    [disabled]="!formRegister.valid" (click)="register()">Registre-se</button>
+            </div>
+        </form>
     </div>
-</app-layout-account>
+</div>

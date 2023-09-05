@@ -8,7 +8,7 @@ import { tap } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  private authorization: boolean = false;
+  public authorization: boolean = false;
   constructor(private authorizationService: AuthorizationService) {
 
   }
@@ -19,6 +19,6 @@ export class AppComponent implements OnInit{
       tap((estaLogado) => {
         this.authorization = estaLogado;
       })
-    );
+    ).subscribe();
   }
 }
