@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.inputlogin?.nativeElement?.focus();
   }
 
+  //https://blog.bitsrc.io/6-ways-to-unsubscribe-from-observables-in-angular-ab912819a78f
   public login(): void {
     // assign faz um mapper do objeto
     this.authLogin = Object.assign('', this.authLogin, this.formLogin.value);
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     //Validators.compose([Validators.required, Validators.email]);
     this.formLogin = this.formBuilder.group<FormLogin>({
       username: new FormControl<string>({value: '', disabled: false}, { nonNullable: true, validators: [ Validators.required ],},),
-      password: new FormControl<string>('', {  nonNullable: true, validators: Validators.compose([ Validators.required, Validators.minLength(4) ])}, )
+      password: new FormControl<string>('', {  nonNullable: true, validators: Validators.compose([ Validators.required, Validators.minLength(6) ])}, )
     });
   }
 

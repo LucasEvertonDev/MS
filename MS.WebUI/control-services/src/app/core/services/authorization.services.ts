@@ -20,7 +20,7 @@ export class AuthorizationService {
         }).pipe(
             map(response => {
                 if (response.success) {
-                    sessionStorage.setItem('token', response.content.tokenJWT);
+                    sessionStorage.setItem('token', response.content.tokenJWT ?? "");
                     this.subjectLogin.next(true);
                 }
                 return response;

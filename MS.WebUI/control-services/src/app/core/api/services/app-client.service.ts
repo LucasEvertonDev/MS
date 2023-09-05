@@ -43,6 +43,15 @@ export class AppClient {
     }
 
     private handleError<T>(error: HttpErrorResponse): ResponseDto<T> {
-        return error.error as ResponseDto<T>
+        if (error.error) {
+            return error.error as ResponseDto<T>
+        }
+
+        return { 
+            errors: [ { context: "Business", message: "Operação não foi realizada com sucesso. Por favor contate o administrador do sistema!" }],
+            httpCode: 500,
+            success: false,
+            content: {} as T
+        }
     };
 }
