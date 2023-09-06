@@ -1,5 +1,7 @@
 version: '3.4'
 
+volumes:
+  mssql:
 networks:
     backend:
     sql_server_network:
@@ -14,7 +16,7 @@ services:
       ACCEPT_EULA: 'Y'
       SA_PASSWORD: "Numsey#2021"
     volumes:
-      - c:\dados\volumes\mssql:/var/opt/mssql/data
+      - mssql:/var/opt/mssql/data
     ports:
       - 11433:1433
     networks:
