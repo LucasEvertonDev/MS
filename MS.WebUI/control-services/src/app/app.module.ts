@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/authorization-token/auth.interceptor';
 import { LayoutModule } from './shared/theme/module/layout.module';
-import { LayoutComponent } from './shared/theme/views/layout/layout.component';
-import { LayoutAccountComponent } from './shared/theme/views/layout-account/layout-account.component';
-import { FormComponent } from './features/custom/components/form/form.component';
+import { LoadingService } from './shared/services/loading.service';
+import { LoadingInterceptor } from './core/interceptors/loading-interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,12 @@ import { FormComponent } from './features/custom/components/form/form.component'
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
+    MatProgressSpinnerModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true  }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true  },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true  },
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

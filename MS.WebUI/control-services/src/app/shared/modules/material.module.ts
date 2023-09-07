@@ -13,7 +13,10 @@ import {FormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
 import { SnackBarService } from '../services/snackbar.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LoadingService } from '../services/loading.service';
 
 @NgModule({
   declarations: [],
@@ -31,7 +34,10 @@ import { SnackBarService } from '../services/snackbar.service';
     FormsModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ], // como é um módulo de compartilhamento acredito que é por isso que tenha que exportar pois nada acessa ele diretamente apenas indiretamente pela sua associação no app module
   exports: [
     MatCardModule,
@@ -46,10 +52,13 @@ import { SnackBarService } from '../services/snackbar.service';
     FormsModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [
-    SnackBarService
+    SnackBarService,
   ]
 })
 export class MaterialModule { }

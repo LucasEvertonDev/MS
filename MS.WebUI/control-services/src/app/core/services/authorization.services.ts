@@ -9,7 +9,9 @@ export class AuthorizationService {
     private subjectUsuario: BehaviorSubject<any> = new BehaviorSubject(null);
     private subjectLogin: BehaviorSubject<any> = new BehaviorSubject(false);
 
-    constructor(protected httpClient: AppClient) { }
+    constructor(protected httpClient: AppClient) { 
+        httpClient.SetBaseUrl(httpClient.AUTH_API_BASE_URL);
+    }
 
     public login(login: LoginRequest): Observable<ResponseDto<LoginResponse>> {
         return this.httpClient.HttpPost<LoginResponse>("auth/login", login, {

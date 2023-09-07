@@ -1,3 +1,6 @@
+<div *ngIf="!loading" id="overlay" >
+    <span class="loader content"></span>
+</div>
 <div *ngIf="authorization">
     <app-layout>
         <router-outlet></router-outlet>

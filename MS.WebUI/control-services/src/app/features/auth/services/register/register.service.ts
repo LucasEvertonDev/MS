@@ -9,7 +9,9 @@ import { CreateUserResponse } from 'src/app/core/api/responses/auth/register/cre
 })
 export class RegisterService {
 
-  constructor(protected httpClient: AppClient) { }
+  constructor(protected httpClient: AppClient) {
+    httpClient.SetBaseUrl(httpClient.AUTH_API_BASE_URL);
+  }
 
   public registerUser(login: CreateUserRequest): Observable<ResponseDto<CreateUserResponse>> {
     return this.httpClient.HttpPost<CreateUserResponse>("users", login)
