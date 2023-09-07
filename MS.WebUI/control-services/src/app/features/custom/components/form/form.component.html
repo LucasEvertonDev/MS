@@ -1,33 +1,38 @@
-<div class="card">
-    <div class="card-body">
-        <div class="app-brand justify-content-center">
-            <h2 style="margin: 0px;">Seja muito bem vindo!</h2>
+<div class="row">
+    <form class="form" [formGroup]="formRegister">
+        <div class="col-12">
+            <mat-form-field>
+                <mat-label>teste</mat-label>
+                <input type="text" matInput [formControl]="formRegister.controls.teste" autocomplete="off">
+                <mat-error *ngIf="formRegister.controls.teste.hasError('required')">Teste é
+                    obrigatório</mat-error>
+            </mat-form-field>
         </div>
-        <form class="form" [formGroup]="formRegister">
-            <div class="mb-3">
-                <mat-form-field>
-                    <mat-label>teste*</mat-label>
-                    <input type="text" matInput [formControl]="formRegister.controls.teste" autocomplete="off">
-                    <mat-error *ngIf="formRegister.controls.teste.hasError('required')">Teste é
-                        obrigatório</mat-error>
-                </mat-form-field>
-            </div>
 
-            <div formArrayName="items" *ngFor="let control of formRegister.controls.items.controls;let i=index">>
-                <div class="mb-3" [formGroupName]="i">
+        <div class="col-12" formArrayName="items" *ngFor="let item of formRegister.controls.items.controls;let i=index">
+            <div class="row mb-3" [formGroupName]="i">
+                <div class="col-6">
                     <mat-form-field>
-                        <mat-label>teste*</mat-label>
-                        <input type="text" matInput [formControl]="control.preco" autocomplete="off">
-                        <mat-error *ngIf="formRegister.controls.teste.hasError('required')">Teste é
+                        <mat-label>Preco</mat-label>
+                        <input type="text" matInput [formControl]="item.controls.preco" autocomplete="off">
+                        <mat-error *ngIf="item.controls.preco.hasError('required')">Preco é
                             obrigatório</mat-error>
                     </mat-form-field>
-                </div>   
-            </div>
+                </div>
+                <div class="col-6">
+                    <mat-form-field>
+                        <mat-label>nome</mat-label>
+                        <input type="text" matInput [formControl]="item.controls.nome" autocomplete="off">
+                        <mat-error *ngIf="item.controls.nome.hasError('required')">nome é
+                            obrigatório</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>   
+        </div>
 
-            <div class="mb-3">
-                <button style="width: 100%;height: 56px;" class mat-raised-button color="primary"
-                    [disabled]="!formRegister.valid" >Registre-se</button>
-            </div>
-        </form>
-    </div>
+        <div class="mb-3">
+            <button style="width: 100%;height: 56px;" class mat-raised-button color="primary"
+               >Registre-se</button>
+        </div>
+    </form>
 </div>
