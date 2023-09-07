@@ -1,4 +1,5 @@
 import { FormControl } from "@angular/forms";
+import { FormControlDec } from "src/app/core/decorators/form-control.decotator";
 
 export interface FormRegister {
     username: FormControl<string>;

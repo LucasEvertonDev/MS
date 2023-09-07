@@ -9,6 +9,7 @@ import { AuthInterceptor } from './core/interceptors/authorization-token/auth.in
 import { LayoutModule } from './shared/theme/module/layout.module';
 import { LayoutComponent } from './shared/theme/views/layout/layout.component';
 import { LayoutAccountComponent } from './shared/theme/views/layout-account/layout-account.component';
+import { FormComponent } from './features/custom/components/form/form.component';
 
 @NgModule({
   declarations: [

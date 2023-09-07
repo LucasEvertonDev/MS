@@ -1,7 +1,7 @@
 import { Injectable, Injector } from "@angular/core";
 import { BehaviorSubject, Observable, map } from "rxjs";
 import { AppClient, LoginRequest, LoginResponse, ResponseDto } from "../api";
-import { environment } from "src/environments/environment.development";
+import { environment } from "src/environments/environment";
 @Injectable({
     providedIn: 'root'
 })

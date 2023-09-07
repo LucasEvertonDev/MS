@@ -52,6 +52,7 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe(response => {
         if (response.success) {
+          this.snackBar.ShowSucess("Usuário cadastrado com sucesso!");
           this.router.navigateByUrl('auth')
         }
         else {

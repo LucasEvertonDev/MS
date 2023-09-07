@@ -18,6 +18,6 @@ export class LayoutNavBarComponent implements OnInit {
 
   public signOut(): void {
     this.authorizationService.logOut();
-    this.router.navigate(['auth']);
+    this.router.navigateByUrl('/auth');
   }
 }

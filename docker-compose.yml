@@ -5,6 +5,8 @@ volumes:
 networks:
   backend:
     name: backend
+  frontend:
+    name: frontend
   
 services:
   sqlserver:
@@ -16,7 +18,7 @@ services:
       ACCEPT_EULA: 'Y'
       SA_PASSWORD: "Numsey#2021"
     volumes:
-      - mssql:/var/opt/mssql/data
+      - c:\dados\volumes\mssql:/var/opt/mssql/data
     ports:
       - 11433:1433
     networks:
@@ -42,6 +44,7 @@ services:
       - '4000:80'
     networks:
       - 'backend'
+      - 'frontend' 
 
   ms.services.courses.webapi:
     image: ms.services.courses.webapi
@@ -99,5 +102,17 @@ services:
       - sqlserver
     ports:
       - '4003:80'
+    networks:
+      - 'backend'
+      - 'frontend' 
+
+  frontendms:
+    image: frontendms
+    container_name: frontendms
+    build:
+      context: ./MS.WebUI/control-services/
+      dockerfile: ./Dockerfile
+    ports:
+      - '8080:80'
     networks:
       - 'backend'

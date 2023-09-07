@@ -7,7 +7,7 @@ export class SnackBarService {
     constructor(protected snackBar: MatSnackBar) { }
 
     public ShowError(message: string, durationInSeconds?: number) {
-        this.snackBar.open(message, 'Atenção', {
+        this.snackBar.open(message, '', {
             horizontalPosition: 'right',
             verticalPosition: 'top',
             duration: (durationInSeconds ?? 1000) * 1000,
@@ -18,7 +18,7 @@ export class SnackBarService {
     public ShowErrors(messages: error[], durationInSeconds?: number) {
         if (messages) {
             messages.forEach(error => {
-                this.snackBar.open(error.message, 'Atenção!', {
+                this.snackBar.open(error.message, '', {
                     horizontalPosition: 'right',
                     verticalPosition: 'top',
                     duration: (durationInSeconds ?? 5) * 1000,

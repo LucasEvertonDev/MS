@@ -3,7 +3,7 @@ import { Injectable, Injector } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
 import { optionsHttp } from "../http-models/options.model";
 import { ResponseDto } from "../responses/base/response.model";
-import { environment } from "src/environments/environment.development";
+import { environment } from "src/environments/environment";
 
 @Injectable({
     providedIn: 'root'
