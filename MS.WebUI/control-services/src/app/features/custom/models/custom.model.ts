@@ -8,7 +8,13 @@ export class FormCustom {
 
     public teste: FormControl<string>;
     public items: FormArray<FormGroup<items>> = new FormArray<FormGroup<items>>([new FormGroup<items>(new items())]);
+
+    public static AddItem(): FormGroup<items> {
+        return new FormGroup<items>(new items());
+    }
 }
+
+
 
 class items {
     public preco: FormControl<string> = new FormControl<string>({ value: '', disabled: false }, { nonNullable: true, validators: [Validators.required] });

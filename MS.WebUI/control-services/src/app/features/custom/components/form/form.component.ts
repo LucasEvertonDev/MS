@@ -15,4 +15,18 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.formRegister = this.formBuilder.group<FormCustom>(new FormCustom());
   }
+
+
+  public addItem(): void {
+    this.formRegister.controls.items.push(FormCustom.AddItem());
+  }
+
+  public removeItem(i: number): void {
+    if(i !== 0)
+      this.formRegister.controls.items.removeAt(i);
+  }
+
+  public save(): void {
+    alert(JSON.stringify(this.formRegister.value));
+  }
 }

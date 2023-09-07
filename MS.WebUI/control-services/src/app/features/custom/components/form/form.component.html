@@ -11,7 +11,7 @@
 
         <div class="col-12" formArrayName="items" *ngFor="let item of formRegister.controls.items.controls;let i=index">
             <div class="row mb-3" [formGroupName]="i">
-                <div class="col-6">
+                <div class="col-4">
                     <mat-form-field>
                         <mat-label>Preco</mat-label>
                         <input type="text" matInput [formControl]="item.controls.preco" autocomplete="off">
@@ -27,12 +27,20 @@
                             obrigatório</mat-error>
                     </mat-form-field>
                 </div>
+                <div class="col-2">
+                    <a style="width: 100%;height: 56px;" (click)="removeItem(i)" class mat-raised-button color="primary">Remove Item</a>
+                </div>
             </div>   
         </div>
 
         <div class="mb-3">
+            <a style="width: 100%;height: 56px;" (click)="addItem()" class mat-raised-button color="primary">Add Item</a>
+        </div>
+
+      
+        <div class="mb-3">
             <button style="width: 100%;height: 56px;" class mat-raised-button color="primary"
-               >Registre-se</button>
+                [disabled]="!formRegister.valid" (click)="save()">save</button>
         </div>
     </form>
 </div>
