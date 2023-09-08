@@ -8,12 +8,12 @@ import { environment } from "src/environments/environment";
 @Injectable({
     providedIn: 'root'
 })
-export class AppClient {
+export class AppClientAuth {
     public AUTH_API_BASE_URL = environment.AuthApi;
     public GATEWAY_API_BASE_URL = environment.GatewayApi;
-    private urlApiBase!: string;
+    protected urlApiBase!: string;
 
-    constructor(protected readonly _httpClient: HttpClient) {
+    constructor(private readonly _httpClient: HttpClient) {
         this.SetBaseUrl(this.AUTH_API_BASE_URL);
     }
 
@@ -42,7 +42,7 @@ export class AppClient {
         this.urlApiBase = baseUrl;
     }
 
-    private handleError<T>(error: HttpErrorResponse): ResponseDto<T> {
+    protected handleError<T>(error: HttpErrorResponse): ResponseDto<T> {
         if (error.error) {
             return error.error as ResponseDto<T>
         }
@@ -55,3 +55,14 @@ export class AppClient {
         }
     };
 }
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AppClient extends AppClientAuth{
+    constructor(private readonly httpClient: HttpClient) {
+        super(httpClient);
+        this.SetBaseUrl(this.GATEWAY_API_BASE_URL);
+    }
+}
+

@@ -6,11 +6,13 @@ import { ListComponent } from './components/list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { LayoutModule } from 'src/app/shared/theme/module/layout.module';
+import { FormComponent } from './components/form/form.component';
 
 
 @NgModule({
   declarations: [
-    ListComponent
+    ListComponent,
+    FormComponent
   ],
   imports: [
     CommonModule,

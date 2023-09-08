@@ -12,11 +12,11 @@
             </div>
             <div class="row">
                 <div class="col-12 mb-3 botoes">
-                    <button mat-raised-button color="primary">
+                    <button mat-raised-button color="primary" (click)="search()">
                         Buscar
                         <mat-icon>search</mat-icon>
                     </button>
-                    <button mat-raised-button color="accent">
+                    <button routerLink="/courses/create" mat-raised-button color="accent">
                         Novo
                         <mat-icon>add</mat-icon>
                     </button>

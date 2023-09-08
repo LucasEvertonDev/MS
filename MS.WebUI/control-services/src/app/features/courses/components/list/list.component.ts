@@ -1,4 +1,4 @@
-import { Subject, debounceTime, distinctUntilChanged, filter, switchMap, take, tap, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, filter, switchMap, take, tap, takeUntil, takeLast, last } from 'rxjs';
 import { CourseItem } from './../models/course-item.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CoursesService } from '../../services/courses.service';
@@ -30,7 +30,21 @@ export class ListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.formSearch = this.formBuilder.group<FormListCourses>(new FormListCourses());
+    this.searchCourses(this.pageEvent);
+    this.nameChanges();
+  }
 
+  public searchCourses(event: PageEvent) {
+    this.pageEvent = event;
+    this.coursesService.searchUsers(event.pageIndex, event.pageSize)
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.paginationResult = response.content;
+        this.items = response.content.items;
+      });
+  }
+  
+  private nameChanges(): void {
     this.formSearch.controls.name.valueChanges.pipe(
       // vai fazer uma requisição a cada 1000 mls/ 1s não a cada interpolação do usuário
       debounceTime(1000),
@@ -44,26 +58,18 @@ export class ListComponent implements OnInit, OnDestroy {
       switchMap(query => {
           return this.coursesService.searchUsers(this.pageEvent.pageIndex, this.pageEvent.pageSize, query == '' ? null : query)
       }),
-      takeUntil(this.ngUnsubscribe$)
+      last()
     )
     .subscribe((response) => {
       this.paginationResult = response.content;
       this.items = response.content.items;
     });
+  }
 
+  public search() {
     this.searchCourses(this.pageEvent);
   }
 
-  public searchCourses(event: PageEvent) {
-    this.pageEvent = event;
-    this.coursesService.searchUsers(event.pageIndex, event.pageSize)
-      .pipe(take(1))
-      .subscribe((response) => {
-        this.paginationResult = response.content;
-        this.items = response.content.items;
-      });
-  }
-  
   public ngOnDestroy(): void {
     // Emit a value so that takeUntil will handle the closing of our subscriptions;
     this.ngUnsubscribe$.next();

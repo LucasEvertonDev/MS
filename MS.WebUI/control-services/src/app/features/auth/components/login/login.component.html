@@ -8,7 +8,7 @@
     <h4 class="mb-2">Bem vindo ao Micro School! 👋</h4>
     <p class="mb-4">Por favor informe suas credencias para começar a aventura!</p>
 
-    <form class="form" [formGroup]="formLogin">
+    <form class="form" [formGroup]="formLogin" *ngIf="formLogin">
       <div class="mb-3">
         <mat-form-field>
           <mat-label>Login</mat-label>

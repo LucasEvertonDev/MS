@@ -6,6 +6,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormComponent } from './components/form/form.component';
+import { TranslocoRootModule } from 'src/app/shared/modules/transloco-root.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormComponent } from './components/form/form.component';
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    TranslocoRootModule,
   ]
 })
 export class CustomModule { }

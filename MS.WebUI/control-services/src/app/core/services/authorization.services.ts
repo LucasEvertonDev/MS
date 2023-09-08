@@ -1,6 +1,6 @@
 import { Injectable, Injector } from "@angular/core";
 import { BehaviorSubject, Observable, map } from "rxjs";
-import { AppClient, LoginRequest, LoginResponse, ResponseDto } from "../api";
+import { AppClientAuth, LoginRequest, LoginResponse, ResponseDto } from "../api";
 import { environment } from "src/environments/environment";
 @Injectable({
     providedIn: 'root'
@@ -9,8 +9,7 @@ export class AuthorizationService {
     private subjectUsuario: BehaviorSubject<any> = new BehaviorSubject(null);
     private subjectLogin: BehaviorSubject<any> = new BehaviorSubject(false);
 
-    constructor(protected httpClient: AppClient) { 
-        httpClient.SetBaseUrl(httpClient.AUTH_API_BASE_URL);
+    constructor(protected httpClient: AppClientAuth) { 
     }
 
     public login(login: LoginRequest): Observable<ResponseDto<LoginResponse>> {

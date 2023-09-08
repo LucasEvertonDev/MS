@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { AppClient, ResponseDto } from 'src/app/core/api';
+import { AppClientAuth, ResponseDto } from 'src/app/core/api';
 import { CreateUserRequest } from 'src/app/core/api/requests/auth/register/create-user-request.model';
 import { CreateUserResponse } from 'src/app/core/api/responses/auth/register/create-user-response.model';
 
@@ -9,8 +9,7 @@ import { CreateUserResponse } from 'src/app/core/api/responses/auth/register/cre
 })
 export class RegisterService {
 
-  constructor(protected httpClient: AppClient) {
-    httpClient.SetBaseUrl(httpClient.AUTH_API_BASE_URL);
+  constructor(protected httpClient: AppClientAuth) {
   }
 
   public registerUser(login: CreateUserRequest): Observable<ResponseDto<CreateUserResponse>> {

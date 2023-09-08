@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormCustom } from '../../models/custom.model';
-
+import { TranslocoService } from '@ngneat/transloco';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -9,7 +9,7 @@ import { FormCustom } from '../../models/custom.model';
 })
 export class FormComponent implements OnInit {
   public formRegister!: FormGroup<FormCustom>;
-  public constructor(private formBuilder: FormBuilder) {
+  public constructor(private formBuilder: FormBuilder, private service: TranslocoService) {
 
   }
   ngOnInit(): void {
@@ -28,5 +28,9 @@ export class FormComponent implements OnInit {
 
   public save(): void {
     alert(JSON.stringify(this.formRegister.value));
+  }
+
+  public changeIdioma(): void {
+    this.service.setActiveLang('pt');
   }
 }

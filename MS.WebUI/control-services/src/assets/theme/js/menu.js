@@ -529,7 +529,8 @@ class Menu {
         })
         this._scrollbar = menuScroll
       }
-      menuInner.classList.remove('overflow-auto')
+      if(menuInner != null)
+        menuInner.classList.remove('overflow-auto')
     }
   }
 
