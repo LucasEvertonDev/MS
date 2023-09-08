@@ -1,6 +1,6 @@
 import { AfterContentChecked, AfterViewInit, Component, OnInit } from '@angular/core';
 import { AuthorizationService } from './core/services/authorization.services';
-import { delay, tap } from 'rxjs';
+import { delay, tap, timer } from 'rxjs';
 import { LoadingService } from './shared/services/loading.service';
 
 @Component({

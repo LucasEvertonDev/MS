@@ -1,1 +1,49 @@
-<p>form works!</p>
+<div class="card">
+    <div class="card-header">
+        <h2 class="col-12">Cadastro de Cursos</h2>
+    </div>
+    <div class="card-body ">
+        <form class="form" [formGroup]="formCourses" *ngIf="formCourses">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 mb-3">
+                    <mat-form-field>
+                        <mat-label>Nome</mat-label>
+                        <input type="text" matInput [formControl]="formCourses.controls.name">
+                        <mat-error *ngIf="formCourses.controls.name.hasError('required')">Campo nome é obrigatório</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 mb-3">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Data de Início</mat-label>
+                        <input matInput [matDatepicker]="picker" [formControl]="formCourses.controls.startDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="formCourses.controls.startDate.hasError('required')">Campo data de início é obrigatório</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 mb-3">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Data Conclusão</mat-label>
+                        <input matInput [matDatepicker]="picker2" [formControl]="formCourses.controls.endDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="formCourses.controls.endDate.hasError('required')">Campo data conclusão é obrigatório</mat-error>
+                        <mat-error *ngIf="formCourses.controls.endDate.hasError('invalidPeriod')">Data de início não pode ser maior que a data de conclusão</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 mb-3 botoes">
+                    <button routerLink="/courses" mat-raised-button color="accent">
+                        Voltar
+                        <mat-icon>keyboard_backspace</mat-icon>
+                    </button>
+                    <button mat-raised-button color="primary" [disabled]="!formCourses.valid" (click)="saveCourse()">
+                        Cadastrar
+                        <mat-icon>save</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -23,7 +23,11 @@ import { BehaviorSubject } from "rxjs";
         this.loadingMap.delete(url);
       }
       if (this.loadingMap.size === 0) {
-        this.loadingSub.next(false);
+        setTimeout(() =>  this.loadingSub.next(false), 1000);
       }
+    }
+
+    private setLoadingFalse() {
+      
     }
   }

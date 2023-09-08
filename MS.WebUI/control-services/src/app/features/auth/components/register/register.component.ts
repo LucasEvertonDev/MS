@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public comparisonValidator(): any {
-    return (group: FormGroup<FormRegister>): any => {
+    return (group: FormGroup<FormRegister>): void => {
       const password = group.controls.password;
       const comfirmpassword = group.controls.comfirmpassword;
       if (password.value !== comfirmpassword.value) {

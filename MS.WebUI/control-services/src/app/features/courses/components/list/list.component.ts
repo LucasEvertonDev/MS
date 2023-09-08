@@ -1,11 +1,11 @@
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap, take, tap, takeUntil, takeLast, last } from 'rxjs';
-import { CourseItem } from './../models/course-item.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CoursesService } from '../../services/courses.service';
 import { PaginationReuslt, SearchCourseReponse } from 'src/app/core/api';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormListCourses } from '../models/form-list.model';
+import { FormListCourses } from '../../models/form-list.model';
+import { CourseItem } from '../../models/course-item.model';
 
 @Component({
   selector: 'app-list',
@@ -58,7 +58,7 @@ export class ListComponent implements OnInit, OnDestroy {
       switchMap(query => {
           return this.coursesService.searchUsers(this.pageEvent.pageIndex, this.pageEvent.pageSize, query == '' ? null : query)
       }),
-      last()
+      takeUntil(this.ngUnsubscribe$)
     )
     .subscribe((response) => {
       this.paginationResult = response.content;
