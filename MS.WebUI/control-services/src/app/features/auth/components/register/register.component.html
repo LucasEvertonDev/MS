@@ -5,7 +5,7 @@
         </div>
         <form class="form" [formGroup]="formRegister">
             <div class="mb-3">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Nome*</mat-label>
                     <input type="text" matInput [formControl]="formRegister.controls.name" autocomplete="off">
                     <mat-error *ngIf="formRegister.controls.name.hasError('required')">Nome é
@@ -13,7 +13,7 @@
                 </mat-form-field>
             </div>
 
-            <mat-form-field class="mb-3" style="display: none;">
+            <mat-form-field class="mb-3" style="display: none;" appearance="outline" >
                 <mat-label>Grupo de Usuário</mat-label>
                 <mat-select [formControl]="formRegister.controls.userGroupId">
                     <mat-option value="F97E565D-08AF-4281-BC11-C0206EAE06FA">Adminsitrador</mat-option>
@@ -23,8 +23,8 @@
                     obrigatório</mat-error>
             </mat-form-field>
 
-            <div class="mb-3">
-                <mat-form-field>
+            <div class="mb-3" >
+                <mat-form-field appearance="outline">
                     <mat-label>Email*</mat-label>
                     <input type="email" matInput [formControl]="formRegister.controls.email" autocomplete="off">
                     <mat-error *ngIf="formRegister.controls.email.hasError('required')">Email é
@@ -34,7 +34,7 @@
             </div>
 
             <div class="mb-3">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Login</mat-label>
                     <input #inputLogin matInput placeholder="Login" [formControl]="formRegister.controls.username">
                     <mat-error *ngIf="formRegister.controls.username.hasError('required')">Login é
@@ -43,7 +43,7 @@
             </div>
 
             <div class="mb-3">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Senha*</mat-label>
                     <input type="password" matInput [formControl]="formRegister.controls.password"
                         autocomplete="off">
@@ -55,8 +55,8 @@
             </div>
 
             <div class="mb-3">
-                <mat-form-field>
-                    <mat-label>Comfirme sua senha*</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cnfirme sua senha*</mat-label>
                     <input type="password" matInput [formControl]="formRegister.controls.comfirmpassword"
                         autocomplete="off">
                     <mat-error *ngIf="formRegister.controls.comfirmpassword.hasError('notEquivalent')">As senhas não conferem</mat-error>

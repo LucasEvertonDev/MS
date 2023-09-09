@@ -1,5 +1,5 @@
 import { AuthorizationService } from 'src/app/core/services/authorization.services';
-import { LoginService } from '../../services/login/login.service';
+import { LoginService } from '../../services/login.service';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormLogin } from '../../models/login/form-login.model';

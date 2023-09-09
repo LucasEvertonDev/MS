@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable, Injector } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
-import { optionsHttp } from "../http-models/options.model";
+import { optionsHttp } from "../models/options.model";
 import { ResponseDto } from "../responses/base/response.model";
 import { environment } from "src/environments/environment";
 

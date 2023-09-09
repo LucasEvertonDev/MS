@@ -22,8 +22,8 @@ public class TokenService : ITokenService
             {
                 new Claim(JWTUserClaims.Name, user.Name),
                 new Claim(JWTUserClaims.Email, user.Email),
-                //new Claim(JWTUserClaims.UserId, user.Id.ToString()),
-                //new Claim(JWTUserClaims.ClientId, clientId),
+                new Claim(JWTUserClaims.UserId, user.Id.ToString()),
+                new Claim(JWTUserClaims.ClientId, clientId),
             }),
             Expires = DateTime.UtcNow.AddMinutes(JWTContants.ExpireInMinutes),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

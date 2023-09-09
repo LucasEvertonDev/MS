@@ -10,7 +10,7 @@
 
     <form class="form" [formGroup]="formLogin" *ngIf="formLogin">
       <div class="mb-3">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Login</mat-label>
           <input #inputLogin matInput placeholder="Login" [formControl]="formLogin.controls.username" [appFocus]="true">
           <mat-error *ngIf="formLogin.controls.username.hasError('required')">Login é obirgatório</mat-error>
@@ -18,7 +18,7 @@
       </div>
 
       <div class="mb-3">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Senha*</mat-label>
             <input type="password" matInput [formControl]="formLogin.controls.password" autocomplete="off" > 
             <mat-error *ngIf="formLogin.controls.password.hasError('required')">Senha é obrigatório</mat-error>

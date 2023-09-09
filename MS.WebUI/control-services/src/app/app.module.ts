@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 
@@ -16,6 +15,7 @@ import { LoadingInterceptor } from './core/interceptors/loading-interceptor/load
 import { TranslocoRootModule } from './shared/modules/transloco-root.module';
 
 registerLocaleData(localePt);
+
 
 
 @NgModule({
@@ -32,7 +32,6 @@ registerLocaleData(localePt);
     TranslocoRootModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true  },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true  },
     LoadingService

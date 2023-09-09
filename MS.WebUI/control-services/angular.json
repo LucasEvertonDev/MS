@@ -37,7 +37,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies" : [
-              "flat"
+              "flat",
+              "moment"
             ]
           },
           "configurations": {

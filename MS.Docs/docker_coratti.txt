@@ -142,7 +142,10 @@ mysql -u root -p
 ### Salvando o bakcup no windows
 docker container run -d --name mysqldb -v c:/backup/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=lucas mysql:8.0
 
-docker run --name mysql8 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d mysql:8.0.20
+docker run --name mysql8 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d mysql:8.0.20
+
+
+docker run --name mysql8 -p 3306:3306 -v c:/backup/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.20
 
 
 ### Verificando a configuração da rede do do container

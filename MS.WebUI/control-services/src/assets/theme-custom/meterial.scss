@@ -49,6 +49,11 @@ $my-theme: mat.define-dark-theme((
 
 @include mat.all-component-themes($my-theme);
 
+.mat-form-custom {
+  @include mat.all-component-densities(-2.6);
+}
+
+
 // .kids-theme {
 //   $kids-primary: mat.define-palette(mat.$cyan-palette);
 //   $kids-accent: mat.define-palette(mat.$yellow-palette);

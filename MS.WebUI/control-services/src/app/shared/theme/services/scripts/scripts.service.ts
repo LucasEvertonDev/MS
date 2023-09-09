@@ -53,7 +53,7 @@ export class ScriptsService {
         script.src = this.scripts[name].src;
         script.onload = () => {
           this.scripts[name].loaded = true;
-          console.log(`${name} Loaded.`);
+          //console.log(`${name} Loaded.`);
           resolve({ script: name, loaded: true, status: 'Loaded' });
         };
         script.onerror = (error: any) => resolve({ script: name, loaded: false, status: 'Loaded' });

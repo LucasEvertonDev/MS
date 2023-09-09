@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormRegister } from '../../models/register/form-register.model';
 import { CreateUserRequest } from 'src/app/core/api/requests/auth/register/create-user-request.model';
-import { RegisterService } from '../../services/register/register.service';
 import { take } from 'rxjs';
 import { SnackBarService } from 'src/app/shared/services/snackbar.service';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   public formRegister!: FormGroup<FormRegister>;
   public createuser!: CreateUserRequest;
   public constructor(private formBuilder: FormBuilder,
-    private registerService: RegisterService,
+    private registerService: LoginService,
     private router: Router,
     private snackBar: SnackBarService) {
 

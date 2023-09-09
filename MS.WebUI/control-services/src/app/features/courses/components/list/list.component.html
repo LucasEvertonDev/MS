@@ -1,11 +1,12 @@
 <div class="card mb-12">
     <div class="card-header">
-        <h2 class="col-12">Consulta de Cursos</h2>
+        <h2>Consultar Cursos</h2>
+        <mat-divider class="mat-elevation-z2"></mat-divider>
     </div>
     <div class="card-body">
-        <form class="form" [formGroup]="formSearch" *ngIf="formSearch">
-            <div class="col-12">
-                <mat-form-field>
+        <form class="form mt-3" [formGroup]="formSearch" *ngIf="formSearch">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <mat-form-field appearance="outline" class="mat-form-custom">
                     <mat-label>Nome</mat-label>
                     <input type="text" matInput [formControl]="formSearch.controls.name" >
                     <button *ngIf="formSearch.controls.name.value" matSuffix mat-icon-button aria-label="Clear" (click)="formSearch.controls.name.setValue('')">
@@ -13,7 +14,8 @@
                     </button> 
                 </mat-form-field>
             </div>
-            <div class="row">
+            <mat-divider class="mb-3 mt-3 mat-elevation-z2"></mat-divider>
+            <div class="row mb-3">
                 <div class="col-12 mb-3 botoes">
                     <button mat-raised-button color="primary" (click)="search()">
                         Buscar
@@ -27,9 +29,9 @@
             </div>
         </form>
         <div>
-            <div class="mb-3">
-                <table class="table ">
-                    <thead class="table table-responsive">
+            <div class="mb-3 table-div table-responsive mat-elevation-z2">
+                <table class="table table-round-corner">
+                    <thead class="table mat-elevation-z2">
                         <tr>
                             <th colspan="5">
                                 Nome
@@ -65,7 +67,7 @@
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="items">
+            <div *ngIf="items" class="pb-2">
                 <mat-paginator [length]="paginationResult.totalElements" [pageSize]="paginationResult.pageSize"
                     [pageIndex]="paginationResult.pageNumber - 1" [pageSizeOptions]="[2, 10, 25, 100]"
                     aria-label="Select page" (page)="searchCourses($event)">

@@ -1,4 +1,4 @@
-.snack-background-red{ 
+.snack-background-red{
     div.mdc-snackbar__surface  {
         background-color: rgb(178, 25, 25, 1) !important;
         color: white !important;
@@ -25,42 +25,59 @@
 
 mat-form-field:not(.mat-mdc-paginator-page-size-select) {
     width: 100% !important;
-    div.mdc-text-field:not(.mdc-text-field--disabled)  {
-         background-color: #444564 !important;
-    }
-    div.mdc-text-field--focused:not(.mdc-text-field--disabled)  {
-        background-color: #444564 !important;
-    }
-    div.mdc-text-field--focused:not(.mdc-text-field--disabled):hover  {
-        background-color: #444564 !important;
-    }
-    mat-label {
-        font-weight: 500 !important;
+
+    margin-bottom: 4px !important;
+    margin-top: 4px !important;
+}
+
+.card-header {
+    label {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 32px;
+        font-family: Roboto, sans-serif;
+        letter-spacing: .0125em;
+        margin: 0 0 10px;
     }
 }
+// mat-form-field:not(.mat-mdc-paginator-page-size-select) {
+//     width: 100% !important;
+//     div.mdc-text-field:not(.mdc-text-field--disabled)  {
+//          background-color: #444564 !important;
+//     }
+//     div.mdc-text-field--focused:not(.mdc-text-field--disabled)  {
+//         background-color: #444564 !important;
+//     }
+//     div.mdc-text-field--focused:not(.mdc-text-field--disabled):hover  {
+//         background-color: #444564 !important;
+//     }
+//     mat-label {
+//         font-weight: 500 !important;
+//     }
+// }
 
 // .mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay {
 //     opacity: .001 !important;
 // }
 
-mat-form-field.mat-form-field-disabled {
-    div.mdc-text-field--disabled  {
-        background-color: #4a4a4a;
-        opacity: 1;
-        color: #3f51b5 !important;
-    }
-   
-    cursor: no-drop !important;
-    div, input, span{
-        cursor: no-drop !important;
-    }
-}
+// mat-form-field.mat-form-field-disabled {
+//     div.mdc-text-field--disabled  {
+//         background-color: #4a4a4a;
+//         opacity: 1;
+//         color: #3f51b5 !important;
+//     }
+
+//     cursor: no-drop !important;
+//     div, input, span{
+//         cursor: no-drop !important;
+//     }
+// }
 
 
-.mat-mdc-table, .mat-mdc-paginator {
-    background: #2b2c40a3 !important;
-    border-radius: 1rem;
-}
+// .mat-mdc-table, .mat-mdc-paginator {
+//     background: #2b2c40a3 !important;
+//     border-radius: 1rem;
+// }
 
 .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple){
     span, mat-pseudo-checkbox::after {
@@ -72,4 +89,86 @@ mat-form-field.mat-form-field-disabled {
 .mat-elevation-z2 {
     border-radius: 1rem;
     margin: 2px;
+}
+
+.botoes {
+    text-align: right;
+
+    button, a {
+        min-width: 120px;
+        min-height: 40px;
+    }
+
+    button, a:not(:first-child) { 
+        margin-left: 4px;
+    } 
+
+    button, a:not(:last-child) { 
+        margin-right: 4px;
+    } 
+}
+
+.bg-menu-theme .menu-inner>.menu-item.active>.menu-link {
+    color: #fff;
+    background-color: #46489d !important;
+}
+
+.bg-menu-theme .menu-inner>.menu-item.active:before {
+    background: #46489d !important;
+}
+
+.mat-mdc-paginator {
+    background: #2b2c40 !important;
+    border: none;
+}
+
+.table-div {
+    background: #46489d;
+    border: solid#454657 1px;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+
+    div {
+        background: #2b2c40;
+    }
+
+    table {
+        thead {
+            background: #46489d;
+            border-radius: none;
+            th{
+                color: white !important;
+                padding-top: 18px !important;
+                padding-bottom: 18px !important;
+            }
+        }
+    
+    }
+}
+
+.table-round-corner {
+    width: 100%;
+    text-align: center;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    overflow: hidden;
+
+    tbody  {
+        border: none !important;
+
+        tr {
+            background: #2b2c40;
+  
+            td {
+                border-bottom: solid#454657 1px;
+            }
+        }
+    }
+}
+
+
+.cdk-overlay-container {
+    z-index: 2000 !important;
 }
