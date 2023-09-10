@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'create',
     component: FormComponent
   },
+  {
+    path: 'edit/:id',
+    component: FormComponent
+  }
 ];
 
 @NgModule({

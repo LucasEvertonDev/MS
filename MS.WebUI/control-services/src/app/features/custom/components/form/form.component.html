@@ -1,26 +1,40 @@
 <div class="row">
     <form class="form" [formGroup]="formRegister" >
-        <div class="col-12">
-            <mat-form-field>
-                <mat-label transloco="hello"></mat-label>
-                <input type="text" matInput [formControl]="formRegister.controls.teste" autocomplete="off">
-                <mat-error *ngIf="formRegister.controls.teste.hasError('required')">Teste é
-                    obrigatório</mat-error>
-            </mat-form-field>
+        <div class="row">
+            <div class="col-4">
+                <mat-form-field appearance="outline" class="mat-form-custom">
+                    <mat-label transloco="hello"></mat-label>
+                    <input type="text" matInput [formControl]="formRegister.controls.teste" autocomplete="off">
+                    <mat-error *ngIf="formRegister.controls.teste.hasError('required')">Teste é
+                        obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="outline" class="mat-form-custom">
+                    <mat-label>Cpf/Cnpj</mat-label>
+                    <input type="text"  [formControl]="formRegister.controls.cpf" matInput mask="000.000.000-00||00.000.000/0000-00" [dropSpecialCharacters]="false" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="outline" class="mat-form-custom">
+                    <mat-label>Telefone</mat-label>
+                    <input type="text" [formControl]="formRegister.controls.telefone" matInput prefix="+55" mask=" (00) 00000 0000"[dropSpecialCharacters]="false" autocomplete="off">
+                </mat-form-field>
+            </div>
         </div>
 
         <div class="col-12" formArrayName="items" *ngFor="let item of formRegister.controls.items.controls;let i=index">
             <div class="row mb-3" [formGroupName]="i">
                 <div class="col-4">
-                    <mat-form-field>
+                    <mat-form-field appearance="outline" class="mat-form-custom">
                         <mat-label>Preco</mat-label>
-                        <input type="text" matInput [formControl]="item.controls.preco" autocomplete="off">
+                        <input type="text" matInput [formControl]="item.controls.preco" mask="separator.2" thousandSeparator="."  autocomplete="off">
                         <mat-error *ngIf="item.controls.preco.hasError('required')">Preco é
                             obrigatório</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-6">
-                    <mat-form-field>
+                <div class="col-6" >
+                    <mat-form-field appearance="outline" class="mat-form-custom">
                         <mat-label>nome</mat-label>
                         <input type="text" matInput [formControl]="item.controls.nome" autocomplete="off">
                         <mat-error *ngIf="item.controls.nome.hasError('required')">nome é
@@ -28,22 +42,23 @@
                     </mat-form-field>
                 </div>
                 <div class="col-2">
-                    <a style="width: 100%;height: 56px;" (click)="removeItem(i)" class mat-raised-button color="primary">Remove Item</a>
+                    <a style="width: 100%;height: 45.6px;" (click)="removeItem(i)" class mat-raised-button color="primary">Remove Item</a>
                 </div>
             </div>   
         </div>
 
         <div class="mb-3">
-            <a style="width: 100%;height: 56px;" (click)="addItem()" class mat-raised-button color="primary">Add Item</a>
+            <a style="width: 100%;height: 45.6px;" (click)="addItem()" class mat-raised-button color="primary">Add Item</a>
         </div>
 
         <div class="mb-3">
-            <a style="width: 100%;height: 56px;" (click)="changeIdioma()" class mat-raised-button color="primary">idioma</a>
+            <a style="width: 100%;height: 45.6px;" (click)="changeIdioma()" class mat-raised-button color="primary">idioma</a>
         </div>
-      
+ 
         <div class="mb-3">
-            <button style="width: 100%;height: 56px;" class mat-raised-button color="primary"
+            <button style="width: 100%;height: 45.6px;" class mat-raised-button color="primary"
                 [disabled]="!formRegister.valid" (click)="save()">save</button>
         </div>
+        
     </form>
 </div>

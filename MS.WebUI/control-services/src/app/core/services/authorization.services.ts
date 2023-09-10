@@ -58,9 +58,9 @@ export class AuthorizationService {
     private translateToken(response: ResponseDto<LoginResponse>) {
         var token: TokenModel = jwt_decode(response.content.tokenJWT);
 
-        token.expirationFormated = new Date(token.exp);
+        token.expirationFormated = response.content.dataExpiracao;
 
-        token.refreshTokenInMS = token.exp / 10000; // 3 minutos pra refresh token 
+        token.refreshTokenInMS = (new Date(token.expirationFormated).getTime() - new Date().getTime()) - (3 * 60000); // 3 minutos pra refresh token tempo em milisegundos
 
         console.log(token);
 

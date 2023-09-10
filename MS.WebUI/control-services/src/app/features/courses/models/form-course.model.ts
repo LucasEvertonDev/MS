@@ -1,10 +1,11 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms"
+import { DateHelper } from "src/app/core/helpers/date-helper"
 
 export class FormCourse {
     public constructor() {
         this.id = new FormControl<string>({ value: '', disabled: false }, { nonNullable: true, validators: [] },)
         this.name = new FormControl<string>({ value: '', disabled: false }, { nonNullable: true, validators: [Validators.required] },)
-        this.startDate = new FormControl<Date>({ value: new Date(), disabled: false }, { nonNullable: true, validators: [Validators.required] },)
+        this.startDate = new FormControl<Date>({ value: DateHelper.GetDateNow("yyyy-MM-dd"), disabled: false }, { nonNullable: true, validators: [Validators.required] },)
         this.endDate = new FormControl<Date | null>({ value: null, disabled: false }, { nonNullable: false, validators: [Validators.required] },)
     }
 

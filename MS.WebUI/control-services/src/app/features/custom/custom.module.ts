@@ -7,7 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormComponent } from './components/form/form.component';
 import { TranslocoRootModule } from 'src/app/shared/modules/transloco-root.module';
+import { IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
 
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [
@@ -21,6 +25,12 @@ import { TranslocoRootModule } from 'src/app/shared/modules/transloco-root.modul
     ReactiveFormsModule,
     MaterialModule,
     TranslocoRootModule,
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideEnvironmentNgxMask(maskConfig), // modulo global possivelmente
+    provideNgxMask()
   ]
 })
 export class CustomModule { }

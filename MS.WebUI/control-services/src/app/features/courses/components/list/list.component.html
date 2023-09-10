@@ -53,15 +53,20 @@
                                 {{item.name}}
                             </td>
                             <td colspan="3">
-                                {{item.startDate}}
+                                {{ item.startDate | date: 'dd/MM/yyyy hh:mm:ss' }}
                             </td>
                             <td colspan="3">
-                                {{item.endDate}}
+                                {{item.endDate | date: 'dd/MM/yyyy hh:mm:ss' }}
                             </td>
                             <td colspan="1">
-                                <a class="btn btn-default">
+                                <a class="btn btn-default" routerLink='/courses/edit/{{item.id}}' >
                                     <span class="tf-icons bx bx-edit"></span>
                                 </a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!items || items.length == 0 ">
+                            <td [colSpan]="12">
+                                Sem resultados para a consulta
                             </td>
                         </tr>
                     </tbody>
