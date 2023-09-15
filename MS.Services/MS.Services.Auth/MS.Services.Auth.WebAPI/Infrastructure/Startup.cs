@@ -69,7 +69,7 @@ public class Startup
 
         appSettings = new AppSettings(Configuration);
 
-        services.AddSingleton<AppSettings, AppSettings>();
+        services.AddSingleton<AppSettings>(appSettings);
 
         services.AddMemoryCache((options) =>{});
 
