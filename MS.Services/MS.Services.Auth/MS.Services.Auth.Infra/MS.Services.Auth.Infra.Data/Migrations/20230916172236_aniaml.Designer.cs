@@ -4,6 +4,7 @@ using MS.Services.Auth.Infra.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MS.Services.Auth.Infra.Data.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230916172236_aniaml")]
+    partial class aniaml
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,43 +97,6 @@ namespace MS.Services.Auth.Infra.Data.Migrations
                             CreateDate = new DateTime(2023, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Situation = 1
                         });
-                });
-
-            modelBuilder.Entity("MS.Services.Auth.Core.Domain.DbContexts.Entities.Contract", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Charge")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ClassName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Months")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Situation")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contracts", (string)null);
-
-                    b.HasDiscriminator<string>("ClassName").HasValue("Contract");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("MS.Services.Auth.Core.Domain.DbContexts.Entities.MapUserGroupRoles", b =>
@@ -317,36 +283,6 @@ namespace MS.Services.Auth.Infra.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Mammals");
-                });
-
-            modelBuilder.Entity("MS.Services.Auth.Core.Domain.DbContexts.Entities.BroadBandContract", b =>
-                {
-                    b.HasBaseType("MS.Services.Auth.Core.Domain.DbContexts.Entities.Contract");
-
-                    b.Property<int>("DownloadSpeed")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("MS.Services.Auth.Core.Domain.DbContexts.Entities.BroadBandContract");
-                });
-
-            modelBuilder.Entity("MS.Services.Auth.Core.Domain.DbContexts.Entities.MobileContract", b =>
-                {
-                    b.HasBaseType("MS.Services.Auth.Core.Domain.DbContexts.Entities.Contract");
-
-                    b.Property<string>("MobileNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("MS.Services.Auth.Core.Domain.DbContexts.Entities.MobileContract");
-                });
-
-            modelBuilder.Entity("MS.Services.Auth.Core.Domain.DbContexts.Entities.TvContract", b =>
-                {
-                    b.HasBaseType("MS.Services.Auth.Core.Domain.DbContexts.Entities.Contract");
-
-                    b.Property<int>("PackageType")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("MS.Services.Auth.Core.Domain.DbContexts.Entities.TvContract");
                 });
 
             modelBuilder.Entity("MS.Services.Auth.Core.Domain.DbContexts.Entities.MapUserGroupRoles", b =>

@@ -24,6 +24,15 @@ public class AuthDbContext : BaseDbContext<AuthDbContext>
 
     public DbSet<ClientCredentials> ClientsCredentials { get; set; }
 
+    public DbSet<Animal> Animals { get; set; }
+
+    public DbSet<Bird> Birds { get; set; }
+
+    public DbSet<Mammal> Mammals { get; set; }
+    public DbSet<Contract> Contracts { get; set; }
+    public DbSet<MobileContract> MobileContracts { get; set; }
+    public DbSet<TvContract> TvContracts { get; set; }
+    public DbSet<BroadBandContract> BroadBandContracts { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

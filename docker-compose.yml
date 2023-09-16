@@ -125,6 +125,7 @@ services:
     environment:
       - TZ=America/Sao_Paulo
     volumes:
+      - ./tmp/prometheus:/prometheus
       - ./MS.Observables/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       
   grafana:
