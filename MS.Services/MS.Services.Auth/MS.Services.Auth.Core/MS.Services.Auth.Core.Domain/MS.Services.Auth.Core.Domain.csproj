@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="21.0.0" />
+    <PackageReference Include="LcsEverton.MS.Libs.Core.Domain" Version="22.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
 
