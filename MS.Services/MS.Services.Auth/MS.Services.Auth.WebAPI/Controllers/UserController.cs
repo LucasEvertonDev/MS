@@ -6,6 +6,7 @@ using MS.Libs.WebApi.Controllers;
 using MS.Libs.WebApi.Infrastructure.Attributes;
 using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.UserServices;
+using Prometheus;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
 

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="LcsEverton.MS.Libs.Infra.IoC" Version="21.0.0" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

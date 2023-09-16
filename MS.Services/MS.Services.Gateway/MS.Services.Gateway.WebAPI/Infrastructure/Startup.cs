@@ -15,6 +15,7 @@ using MS.Services.Gateway.Plugins.AutoMapper.Profiles;
 using MS.Services.Gateway.WebAPI.Infrastructure.Filters;
 using MS.Services.Gateway.WebAPI.Infrastructure.RefitApis;
 using MS.Services.Gateway.WebAPI.Infrastructure.SwaggerFilters;
+using Prometheus;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
@@ -114,6 +115,10 @@ public class Startup
         app.UseMiddleware<AuthUnauthorizedMiddleware>();
 
         app.UseHttpsRedirection();
+
+        app.UseMetricServer();
+
+        app.UseHttpMetrics();
 
         app.UseRouting();
 

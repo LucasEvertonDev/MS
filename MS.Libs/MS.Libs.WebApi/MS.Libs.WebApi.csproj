@@ -8,14 +8,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>MS.Libs.WebApi</Title>
     <PackageId>LcsEverton.MS.Libs.WebApi</PackageId>
-	<Version>21.0.0</Version>
+	  <Version>21.0.0</Version>
     <Authors>Lucas Everton Santos de Oliveira</Authors>
-    <BaseOutputPath>C:\Users\lcsev\.nuget\packages\lcseverton.ms.libs.webapi\19.0.0\lib</BaseOutputPath>
+    <BaseOutputPath>C:\Users\lcsev\.nuget\packages\lcseverton.ms.libs.webapi\21.0.0\lib</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="prometheus-net" Version="8.0.1" />
     <PackageReference Include="Serilog" Version="2.12.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.8" />

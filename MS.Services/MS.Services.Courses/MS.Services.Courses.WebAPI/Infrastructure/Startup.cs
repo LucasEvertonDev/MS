@@ -11,6 +11,7 @@ using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.WebAPI.Infrastructure;
 using MS.Services.Courses.Infra.IoC;
+using Prometheus;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
@@ -103,6 +104,10 @@ public class Startup
         app.UseMiddleware<AuthUnauthorizedMiddleware>();
 
         app.UseHttpsRedirection();
+
+        app.UseMetricServer();
+
+        app.UseHttpMetrics();
 
         app.UseRouting();
 

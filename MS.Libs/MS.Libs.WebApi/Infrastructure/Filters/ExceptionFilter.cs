@@ -4,7 +4,9 @@ using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.Core.Domain.Models.Error;
 using MS.Libs.Infra.Utils.Exceptions;
 using MS.Libs.Infra.Utils.Exceptions.Base;
+using Prometheus;
 using System;
+using System.Diagnostics.Metrics;
 using System.Net;
 
 namespace MS.Libs.WebApi.Infrastructure.Filters;
@@ -12,7 +14,9 @@ namespace MS.Libs.WebApi.Infrastructure.Filters;
 public partial class ExceptionFilter : IExceptionFilter
 {
     private readonly ILogger<ExceptionFilter> _logger;
-
+    private static readonly Counter _requisicoesErradasCliente = Metrics.CreateCounter("ms_exception_badrequest", "requisicoes erradas do clinte");
+    private static readonly Counter _requisicoesBusiness = Metrics.CreateCounter("ms_exception_business", "validacao de negocio");
+    private static readonly Counter _requisicoesErroo500 = Metrics.CreateCounter("ms_exception", "erro geral");
     public ExceptionFilter(ILogger<ExceptionFilter> logger)
     {
         _logger = logger;
@@ -26,15 +30,18 @@ public partial class ExceptionFilter : IExceptionFilter
 
             if (context.Exception is ValidatorException)
             {
+                _requisicoesErradasCliente.Inc();
                 _logger.LogInformation(context.Exception, "Exception esperada controlando numero de recorrências -> " + context.Exception.Message);
             }
             else
             {
+                _requisicoesBusiness.Inc();
                 _logger.LogWarning(context.Exception, "Exception esperada controlando numero de recorrências -> " + context.Exception.Message);
             }
         }
         else
         {
+            _requisicoesErroo500.Inc();
             HandleUnknownError(context);
             _logger.LogCritical(context.Exception, "Exception não esperada. Erro servero urgente internção. -> " + context.Exception.Message);
         }

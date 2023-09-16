@@ -7,6 +7,7 @@ using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
 using MS.Services.Auth.Core.Domain.Services.UserServices;
 using Newtonsoft.Json.Linq;
+using Prometheus;
 using System.Buffers.Text;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
@@ -17,7 +18,6 @@ public class AuthController : BaseController
     private readonly ILoginService _loginService;
     private readonly ICreateUserService _createUserService;
     private readonly IRefreshTokenService _refreshTokenService;
-
     public AuthController(ICreateUserService createUserService,
          ILoginService loginservice,
          IRefreshTokenService refreshTokenService)

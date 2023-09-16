@@ -11,6 +11,7 @@ using MS.Libs.WebApi.Infrastructure.Extensions;
 using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.Infra.IoC;
+using Prometheus;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
@@ -104,6 +105,10 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
+
+        app.UseMetricServer();
+
+        app.UseHttpMetrics();
 
         app.UseCors(x => x
             .AllowAnyOrigin()
