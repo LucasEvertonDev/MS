@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 
 namespace MS.Libs.Infra.Data.Context.UnitOfWork;
@@ -10,6 +11,40 @@ public class UnitOfWork<TDbContext> : IUnitOfWork where TDbContext : DbContext
     public UnitOfWork(TDbContext applicationDbContext)
     {
         _context = applicationDbContext;
+    }
+
+    public async Task OnTransactionAsync(Func<Task> func)
+    {
+        var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            await func();
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task<TRetorno> OnTransactionAsync<TRetorno>(Func<Task<TRetorno>> func)
+    {
+        var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            TRetorno retorno = await func();
+
+            await transaction.CommitAsync();
+
+            return retorno;
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task CommitAsync()

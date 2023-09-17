@@ -50,6 +50,7 @@ public abstract class BaseService<TParam>
     {
         try
         {
+
             await func();
             await _unitOfWork.CommitAsync();
         }
