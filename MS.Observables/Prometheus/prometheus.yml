@@ -1,4 +1,4 @@
-﻿global:
+global:
   scrape_interval: 15s
   scrape_timeout: 10s
   evaluation_interval: 15s
@@ -10,15 +10,57 @@ alerting:
     static_configs:
     - targets: []
 scrape_configs:
-- job_name: TrackApiUsage
+- job_name: auth_api
   honor_timestamps: true
   scrape_interval: 15s  
   scrape_timeout: 10s  
   metrics_path: /metrics  
   scheme: http  
   static_configs:  
-  - targets:  
-    - host.docker.internal:4000
-    - host.docker.internal:4002
-    - host.docker.internal:4001
-    - host.docker.internal:4003
+  - targets: [ 'host.docker.internal:4000' ]
+    labels:
+      instance: 'auth_api'
+
+- job_name: course_api
+  honor_timestamps: true
+  scrape_interval: 15s  
+  scrape_timeout: 10s  
+  metrics_path: /metrics  
+  scheme: http  
+  static_configs:  
+  - targets: [ 'host.docker.internal:4001' ]
+    labels:
+      instance: 'course_api'
+
+- job_name: students_api
+  honor_timestamps: true
+  scrape_interval: 15s  
+  scrape_timeout: 10s  
+  metrics_path: /metrics  
+  scheme: http  
+  static_configs:  
+  - targets: [ 'host.docker.internal:4002' ]
+    labels:
+      instance: 'students_api'
+
+- job_name: gateway_api
+  honor_timestamps: true
+  scrape_interval: 15s  
+  scrape_timeout: 10s  
+  metrics_path: /metrics  
+  scheme: http  
+  static_configs:  
+  - targets: [ 'host.docker.internal:4003' ]
+    labels:
+      instance: 'gateway_api'
+ 
+- job_name: docker
+  honor_timestamps: true
+  scrape_interval: 15s  
+  scrape_timeout: 10s  
+  metrics_path: /metrics  
+  scheme: http  
+  static_configs:  
+  - targets: ['localhost:9323']
+    labels:
+      instance: 'docker'
