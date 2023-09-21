@@ -1,0 +1,17 @@
+{
+	"ulid": "01HASXB2RWGES4Z2VEQZSEMB3G",
+	"minTime": 1695215288234,
+	"maxTime": 1695218400000,
+	"stats": {
+		"numSamples": 30245,
+		"numSeries": 719,
+		"numChunks": 719
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01HASXB2RWGES4Z2VEQZSEMB3G"
+		]
+	},
+	"version": 1
+}

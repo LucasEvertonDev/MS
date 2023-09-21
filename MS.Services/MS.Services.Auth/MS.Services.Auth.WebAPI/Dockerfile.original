@@ -1,8 +1,5 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat
-
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -15,7 +12,6 @@ COPY ["MS.Services.Auth.Infra/MS.Services.Auth.Infra.IoC/MS.Services.Auth.Infra.
 COPY ["MS.Services.Auth.Core/MS.Services.Auth.Core.Application/MS.Services.Auth.Core.Application.csproj", "MS.Services.Auth.Core/MS.Services.Auth.Core.Application/"]
 COPY ["MS.Services.Auth.Core/MS.Services.Auth.Core.Domain/MS.Services.Auth.Core.Domain.csproj", "MS.Services.Auth.Core/MS.Services.Auth.Core.Domain/"]
 COPY ["MS.Services.Auth.Infra/MS.Services.Auth.Infra.Data/MS.Services.Auth.Infra.Data.csproj", "MS.Services.Auth.Infra/MS.Services.Auth.Infra.Data/"]
-COPY ["MS.Services.Auth.Infra/MS.Services.Auth.Plugins/MS.Services.Auth.Plugins.csproj", "MS.Services.Auth.Infra/MS.Services.Auth.Plugins/"]
 RUN dotnet restore "MS.Services.Auth.WebAPI/MS.Services.Auth.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/MS.Services.Auth.WebAPI"

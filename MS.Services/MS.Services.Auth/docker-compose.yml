@@ -28,7 +28,7 @@ services:
     image: msservicesauthwebapi
     container_name: msservicesauthwebapi
     build:
-      context: ./MS.Services/MS.Services.Auth/
+      context: .
       dockerfile: ./MS.Services.Auth.WebAPI/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

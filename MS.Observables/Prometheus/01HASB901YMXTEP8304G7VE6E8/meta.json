@@ -1,0 +1,17 @@
+{
+	"ulid": "01HASB901YMXTEP8304G7VE6E8",
+	"minTime": 1694966400000,
+	"maxTime": 1694973600000,
+	"stats": {
+		"numSamples": 185255,
+		"numSeries": 739,
+		"numChunks": 2217
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01HASB901YMXTEP8304G7VE6E8"
+		]
+	},
+	"version": 1
+}

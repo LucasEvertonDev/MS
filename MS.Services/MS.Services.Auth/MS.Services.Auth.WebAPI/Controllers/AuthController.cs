@@ -2,13 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using MS.Libs.Core.Domain.Models.Dto;
 using MS.Libs.WebApi.Controllers;
+using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Models.Auth;
-using MS.Services.Auth.Core.Domain.Models.Users;
 using MS.Services.Auth.Core.Domain.Services.AuthServices;
 using MS.Services.Auth.Core.Domain.Services.UserServices;
-using Newtonsoft.Json.Linq;
-using Prometheus;
-using System.Buffers.Text;
 
 namespace MS.Services.Auth.WebAPI.Controllers;
 
@@ -31,6 +28,8 @@ public class AuthController : BaseController
     [ProducesResponseType(typeof(ResponseDto<TokenModel>), StatusCodes.Status200OK)]
     public async Task<ActionResult> Login(LoginDto loginModel)
     {
+        new User().CreateUser();
+
         await _loginService.ExecuteAsync(loginModel);
 
         return Ok(new ResponseDto<TokenModel>()
