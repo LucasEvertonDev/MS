@@ -30,13 +30,13 @@ public class CreateUserValidator : BaseValidator<CreateUserModel>, IValidatorMod
             RuleFor(c => c.Password.Length).GreaterThanOrEqualTo(6).WithError(UserErrors.Validators.PASSWORD_LENGTH);
         });
 
-        ////////RuleFor(x => x.UserGroupId).MustAsync(async (userGroup, cancelation) =>
-        ////////{
-        ////////    if (!string.IsNullOrEmpty(userGroup))
-        ////////    {
-        ////////        return !((await searchUserGroupRepository.FirstOrDefaultAsync(u => u.Id.ToString() == userGroup)) == null);
-        ////////    }
-        ////////    return true;
-        ////////}).WithError(UserErrors.Validators.USER_GROUP_NOT_FOUND);
+        RuleFor(x => x.UserGroupId).MustAsync(async (userGroup, cancelation) =>
+        {
+            if (!string.IsNullOrEmpty(userGroup))
+            {
+                return !((await searchUserGroupRepository.FirstOrDefaultAsync(u => u.Id.ToString() == userGroup)) == null);
+            }
+            return true;
+        }).WithError(UserErrors.Validators.USER_GROUP_NOT_FOUND);
     }
 }

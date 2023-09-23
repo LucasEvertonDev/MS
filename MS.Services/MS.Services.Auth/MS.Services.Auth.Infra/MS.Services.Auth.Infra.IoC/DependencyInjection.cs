@@ -96,6 +96,5 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
     protected override void AddValidators(IServiceCollection services, AppSettings configuration)
     {
         services.AddValidatorsFromAssemblyContaining<BaseValidator>();
-        services.AddFluentValidationAutoValidation();
     }
 }

@@ -91,6 +91,8 @@ public class Startup
         });
 
         services.AddSwaggerExamples();
+
+        services.AddScoped<ICustomValidatorFactory, CustomValidatorFactory>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
