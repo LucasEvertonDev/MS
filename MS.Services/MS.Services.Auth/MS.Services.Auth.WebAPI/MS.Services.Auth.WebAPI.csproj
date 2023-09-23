@@ -15,13 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\NovaPasta\**" />
-    <Content Remove="Infrastructure\NovaPasta\**" />
-    <EmbeddedResource Remove="Infrastructure\NovaPasta\**" />
-    <None Remove="Infrastructure\NovaPasta\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Infrastructure\HttpRequestInfo.cs" />
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>

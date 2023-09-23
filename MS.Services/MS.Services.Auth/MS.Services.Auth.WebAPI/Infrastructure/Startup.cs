@@ -11,6 +11,7 @@ using MS.Libs.WebApi.Infrastructure.Extensions;
 using MS.Libs.WebApi.Infrastructure.Filters;
 using MS.Libs.WebApi.Infrastructure.Middlewares;
 using MS.Services.Auth.Infra.IoC;
+using MS.Services.Auth.WebAPI.Infrastructure.Filters;
 using Prometheus;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -35,13 +36,14 @@ public class Startup
         // Filtro de exceptios
         services.AddMvc(options =>
         {
-            options.Filters.Add(typeof(ExceptionFilter));
+            ////options.Filters.Add(typeof(ExceptionFilter));
             options.Filters.Add(new Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute(typeof(ResponseError<ErrorsModel>), 401));
         });
 
-  
+
         // Add services to the container.
-        services.AddControllers();
+        services.AddControllers(options => options.Filters.Add(typeof(ValidationFilter)));
+                
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
 

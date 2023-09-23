@@ -14,19 +14,16 @@ public class UpdatePasswordService : BaseService<UpdatePasswordUserDto>, IUpdate
 {
     private readonly ISearchRepository<User> _searchUserRepository;
     private readonly IPasswordHash _passwordHash;
-    private readonly IValidatorModel<UpdatePasswordUserModel> _updateUserValidatorModel;
     private readonly IUpdateRepository<User> _updateUserRepository;
 
     public UpdatePasswordService(IServiceProvider serviceProvider,
         ISearchRepository<User> searchUserRepository,
         IPasswordHash passwordHash,
-        IValidatorModel<UpdatePasswordUserModel> updateUserValidatorModel,
         IUpdateRepository<User> updateUserRepository
     ) : base(serviceProvider)
     {
         _searchUserRepository = searchUserRepository;
         _passwordHash = passwordHash;
-        _updateUserValidatorModel = updateUserValidatorModel;
         _updateUserRepository = updateUserRepository;
     }
 
@@ -51,7 +48,5 @@ public class UpdatePasswordService : BaseService<UpdatePasswordUserDto>, IUpdate
         {
             throw new BusinessException(UserErrors.Business.USER_NOT_FOUND);
         }
-
-        await _updateUserValidatorModel.ValidateModelAsync(param.Body);
     }
 }

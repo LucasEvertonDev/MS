@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MS.Libs.Core.Domain.DbContexts.UnitOfWork;
 using MS.Libs.Core.Domain.Infra.AppSettings;
@@ -20,6 +23,7 @@ using MS.Services.Auth.Infra.Data.Contexts;
 using MS.Services.Auth.Infra.Data.Contexts.Repositorys;
 using MS.Services.Auth.Infra.IoC.Extensions;
 using MS.Services.Auth.Plugins.AutoMapper.Profiles;
+using MS.Services.Auth.Plugins.FluentValidation;
 using MS.Services.Auth.Plugins.FluentValidation.User;
 using MS.Services.Auth.Plugins.Hasher;
 using MS.Services.Auth.Plugins.TokenJWT;
@@ -91,8 +95,7 @@ public class DependencyInjection: BaseDependencyInjection<AppSettings>
 
     protected override void AddValidators(IServiceCollection services, AppSettings configuration)
     {
-        services.AddTransient<IValidatorModel<CreateUserModel>, CreateUserValidator>();
-        services.AddTransient<IValidatorModel<UpdateUserModel>, UpdateUserValidator>();
-        services.AddTransient<IValidatorModel<UpdatePasswordUserModel>, UpdatePasswordUserValidator>();
+        services.AddValidatorsFromAssemblyContaining<BaseValidator>();
+        services.AddFluentValidationAutoValidation();
     }
 }

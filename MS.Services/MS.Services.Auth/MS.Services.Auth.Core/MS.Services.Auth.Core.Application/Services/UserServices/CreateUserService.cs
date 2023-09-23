@@ -1,7 +1,5 @@
 ﻿using MS.Libs.Core.Application.Services;
 using MS.Libs.Core.Domain.DbContexts.Repositorys;
-using MS.Libs.Core.Domain.Plugins.Validators;
-using MS.Libs.Infra.Utils.Exceptions;
 using MS.Services.Auth.Core.Domain.Contansts;
 using MS.Services.Auth.Core.Domain.DbContexts.Entities;
 using MS.Services.Auth.Core.Domain.Models.Users;
@@ -14,7 +12,6 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
     {
         private readonly ISearchRepository<User> _searchRepository;
         private readonly IPasswordHash _passwordHash;
-        private readonly IValidatorModel<CreateUserModel> _createUserValidatorModel;
         private readonly ICreateRepository<User> _createRepository;
 
         public CreatedUserModel CreatedUser { get; set; }
@@ -22,13 +19,11 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
         public CreateUserService(IServiceProvider serviceProvider,
             ISearchRepository<User> searchRepository,
             IPasswordHash passwordHash,
-            IValidatorModel<CreateUserModel> createUserValidatorModel,
             ICreateRepository<User> createRepository) : base(serviceProvider)
         {
             _createRepository = createRepository;
             _searchRepository = searchRepository;
             _passwordHash = passwordHash;
-            _createUserValidatorModel = createUserValidatorModel;
         }
 
         public override async Task ExecuteAsync(CreateUserModel param)
@@ -48,7 +43,7 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
             });
         }
 
-        protected override async Task ValidateAsync(CreateUserModel param)
+        protected override Task ValidateAsync(CreateUserModel param)
         {
             if (_searchRepository.AsQueriable().Where(u => u.Username == param.Username).Any())
             {
@@ -60,7 +55,7 @@ namespace MS.Services.Auth.Core.Application.Services.UserServices
                 BusinessException(UserErrors.Business.ALREADY_EMAIL);
             }
 
-            await _createUserValidatorModel.ValidateModelAsync(param);
+            return Task.CompletedTask;
         }
     }
 }

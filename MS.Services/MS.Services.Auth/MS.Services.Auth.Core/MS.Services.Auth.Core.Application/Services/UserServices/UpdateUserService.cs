@@ -13,7 +13,6 @@ public class UpdateUserService : BaseService<UpdateUserDto>, IUpdateUserService
 {
     private readonly IUpdateRepository<User> _updateUserRepository;
     private readonly ISearchRepository<User> _searchUserRepository;
-    private readonly IValidatorModel<UpdateUserModel> _validatorUpdateuserModel;
     private readonly ISearchRepository<UserGroup> _searchUserGroupRepository;
 
     public UpdatedUserModel UpdatedUser { get; set; }
@@ -21,13 +20,11 @@ public class UpdateUserService : BaseService<UpdateUserDto>, IUpdateUserService
     public UpdateUserService(IServiceProvider serviceProvider,
         IUpdateRepository<User> updateUserRepository,
         ISearchRepository<User> searchUserRepository,
-        ISearchRepository<UserGroup> searchUserGroupRepository,
-        IValidatorModel<UpdateUserModel> validatorUpdateuserModel
+        ISearchRepository<UserGroup> searchUserGroupRepository
     ) : base(serviceProvider)
     {
         _updateUserRepository = updateUserRepository;
         _searchUserRepository = searchUserRepository;
-        _validatorUpdateuserModel = validatorUpdateuserModel;
         _searchUserGroupRepository = searchUserGroupRepository;
     }
 
@@ -63,7 +60,5 @@ public class UpdateUserService : BaseService<UpdateUserDto>, IUpdateUserService
         {
             throw new BusinessException(UserErrors.Business.ALREADY_EMAIL);
         }
-
-        await _validatorUpdateuserModel.ValidateModelAsync(param.Body);
     }
 }
